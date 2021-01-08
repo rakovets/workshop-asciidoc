@@ -1,3 +1,41 @@
 = workshop-git
 
 Workshop "Using Git with the CLI"
+
+== Process
+
+1. Клонируем репозиторий.
+2. Создаем ветку согласно паттерну `feature-${surname}`, где `${surname}` - фамилия на английском языке.
+3. Создаем документацию по теме (adoc + images).
+4. Фиксируем изменения в локальном репозитории.
+5. Добавляем ссылку на файл в `index.adoc`.
+6. Фиксируем изменения в локальном репозитории.
+7. Удаляем пример:
+* документацию
+* изображение
+* ссылку в `index.adoc`
+8. Фиксируем изменения в локальном репозитории.
+9. Загружаем изменения в удаленый репозиторий.
+10. Создаем запрос на слияние.
+11. Ожидаем необходимого количества подтверждений от команд.
+* если кто-то указал на ошибку, то исправляем ее
+12. Делаем слияние `feature` ветки в `develop`.
+* если возник конфлик слияние, то решаем его
+13. Проверяем результат: https://dmitryrakovets.com/workshop-git/
+
+
+== Theme for task
+
+|===
+|Вегера Андрей Андреевич|https://habr.com/ru/company/playrix/blog/350492/																													
+|Гаврилюк Анастасия Сергеевна|https://habr.com/ru/company/playrix/blog/348864/																													
+|Герман Андрей Дмитриевич|https://devpractice.ru/git-for-beginners-part-9-how-undo-commit-in-git/																													
+|Гринкевич Сергей Витальевич|https://devpractice.ru/git-for-beginners-part-8-add-remove-rename/																													
+|Дунин Евгений Валерьевич|https://devpractice.ru/git-for-beginners-part-7-head-and-tree-ish/																													
+|Ермалицкая Татьяна Юрьевна|https://devpractice.ru/git-for-beginners-part-6-git-log-work/																													
+|Перегуд Оксана Александровна|https://devpractice.ru/git-for-beginners-part-5-create-repo-and-commit/																													
+|Рудой Алексей Юрьевич|https://devpractice.ru/git-for-beginners-part-4-git-arch/																													
+|Тушинский Владислав Александрович|https://devpractice.ru/git-for-beginners-part-3-config-git/																													
+|Филиппов Евгений Викторович|https://devpractice.ru/git-for-beginners-part-2-install-git/																													
+|Храмов Антон Витальевич|https://devpractice.ru/git-for-beginners-part-1-what-is-vcs/																													
+|===
