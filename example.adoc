@@ -4,4 +4,4 @@
 
 This is Example Paragrath
 
-image::/img/example.png[This is alternative text]
+image::img/example.png[This is alternative text]
