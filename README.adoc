@@ -1,0 +1,3 @@
+= workshop-git
+
+Workshop "Using Git with the CLI"
