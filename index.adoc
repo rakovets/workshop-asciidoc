@@ -11,4 +11,4 @@ Wiki for Git.
 
 :leveloffset: +1
 
-
+include::article part 6.adoc []
