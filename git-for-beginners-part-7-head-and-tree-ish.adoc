@@ -72,31 +72,28 @@ a98cce4 [create repository]
 image::/img/git-head-pic4.png[]
 
 Для этого передадим команде _checkout_ идентификатор коммита.
-[source]
+[source, sh]
+----
 > git checkout 2b826bb
 Note: checking out '2b826bb'.
 
-[source]
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
 state without impacting any branches by performing another checkout.
 
-[source]
 If you want to create a new branch to retain commits you create, you may
 do so (now or later) by using -b with the checkout command again. Example:
 
-[source]
   git checkout -b <new-branch-name>
 
-[source]
 HEAD is now at 2b826bb... [create]: main file of programm
-
+----
 Обратите внимание на текст, который напечатал _git_, после того, как была выполнена эта команда.
 Нас интересует самая последняя строка _“HEAD is now at 2b826bb…”_,
 теперь _HEAD_ указывает на коммит с _id=2b826bb_ – именно то, что мы хотели.
 Посмотрим на текущий список коммитов.
 
-[source]
+[source, sh]
 > git log --oneline
 2b826bb [create]: main file of programm
 bc067c8 [add]: caption into README file
@@ -106,12 +103,12 @@ _Git_ выводит коммиты, которые были сделаны до
 на который ссылается _HEAD_.
 
 Вернем _HEAD_ на прежнее место.
-[source]
+[source, sh]
+----
 > git checkout cf3d9d8
 Previous HEAD position was 2b826bb... [create]: main file of programm
 HEAD is now at cf3d9d8... [add] ignore .tmp files
 
-[source]
 > git log --oneline
 cf3d9d8 [add] ignore .tmp files
 a7b88ee [create]: git ignore file
@@ -119,13 +116,13 @@ c185b80 [create]: header for main
 2b826bb [create]: main file of programm
 bc067c8 [add]: caption into README file
 a98cce4 [create repository]
-
+----
 Все вернулось на прежнее место. Таким образом, вы можете получать в виде рабочей копии
 содержимое репозитория на момент отправки того или иного коммита.
 Перейдем в каталог ._git_, в котором находится наш репозиторий, он расположен в корневой директории
 нашего проекта, и посмотрим его содержимое.
 
-[source]
+[source, sh]
 > cd .git
 > ls -la
 total 21
@@ -145,7 +142,7 @@ drwxr-xr-x 1 User 197121   0 мар  5 23:10 refs/
 В данном каталоге содержится файл _HEAD_, в нем находится идентификатор, на который ссылается данный указатель.
 Посмотрим содержимое файла _HEAD_.
 
-[source]
+[source, sh]
 > cat HEAD
 cf3d9d8f7b283267a085986e85cc8f152cca420d
 
@@ -157,7 +154,7 @@ _HEAD_ указывает на коммит _cf3d9d8_.
 _Tree-ish_ – это то, что указывает на коммит,
 эту сущность мы можем передавать в качестве аргумента для команд _git_. Вот список того, чем может являться _tree-ish_.
 
-[source]
+[source, sh]
  ----------------------------------------------------------------------
  |          Tree-ish         | Examples
  ----------------------------------------------------------------------
@@ -179,7 +176,8 @@ _Tree-ish_ – это то, что указывает на коммит,
  ----------------------------------------------------------------------
  Рассмотрим работу с tree-ish на примере команды git show.
 
-[source]
+[source, sh]
+----
 > git show cf3d9d8f -q
 commit cf3d9d8f7b283267a085986e85cc8f152cca420d
 Author: Writer <writer@somecompany.com>
@@ -187,7 +185,6 @@ Date:   Mon Mar 5 23:21:59 2018 +0500
 
     [add] ignore .tmp files
 
-[source]
 > git show -q HEAD
 commit cf3d9d8f7b283267a085986e85cc8f152cca420d
 Author: Writer <writer@somecompany.com>
@@ -195,7 +192,6 @@ Date:   Mon Mar 5 23:21:59 2018 +0500
 
     [add] ignore .tmp files
 
-[source]
 > git show -q master
 commit cf3d9d8f7b283267a085986e85cc8f152cca420d
 Author: Writer <writer@somecompany.com>
@@ -203,12 +199,11 @@ Date:   Mon Mar 5 23:21:59 2018 +0500
 
     [add] ignore .tmp files
 
-[source]
 > git show -q @{5}
 commit cf3d9d8f7b283267a085986e85cc8f152cca420d
 Author: Writer <writer@somecompany.com>
 Date:   Mon Mar 5 23:21:59 2018 +0500
 
     [add] ignore .tmp files
-
+----
 Во всех примерах, представленных выше, команде _git show_ мы передаем различные _tree-ish_, которые на самом деле указывают на одно и тоже место – последний коммит.
