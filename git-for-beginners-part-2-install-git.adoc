@@ -25,9 +25,9 @@ image::/img/git-part2-3.jpg[]
 
 image::/img/git-part2-4.jpg[]
 
-.В этом окне доступны три возможных варианта:
+В этом окне доступны три возможных варианта:
 
-* _Use Git from Git Bash only_
+* *_Use Git from Git Bash only_*
 Переменная PATH не модифицируется и работа с Git возможна только через специализированную оболочку, которая называется Git Bash.
 
 **_Use Git from the Windows Command Prompt_*
