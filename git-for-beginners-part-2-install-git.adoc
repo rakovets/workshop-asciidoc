@@ -30,10 +30,10 @@ image::/img/git-part2-4.jpg[]
 * *_Use Git from Git Bash only_*
 Переменная PATH не модифицируется и работа с Git возможна только через специализированную оболочку, которая называется Git Bash.
 
-**_Use Git from the Windows Command Prompt_*
+* *_Use Git from the Windows Command Prompt_*
 В этом случае происходит минимальная модификация переменной окружения PATH, которая позволит работать с Git через командную стоку Windows. Работа через Git Bash также возможна.
 
-**_Use Git and optional Unix tools from the Windows Command Prompt_*
+* *_Use Git and optional Unix tools from the Windows Command Prompt_*
 В переменную PATH вносится значительное количество модификаций, которые позволят, в рамках командной строки Windows, использовать как Git так и утилиты Unix, которые поставляются вместе с дистрибутивом Git.
 
 Наша рекомендация: опция Use Git from the Windows Command Prompt.
