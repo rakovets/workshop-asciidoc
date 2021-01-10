@@ -2,13 +2,13 @@
 Для того, чтобы начать работать с системой контроля версий _Git_ ее необходимо предварительно установить. Рассмотрим варианты установки этой _VCS_ под _MS Windows_ и _Linux_.
 
 === Установка Git под Windows
-Для установки Git под Windows необходимо предварительно скачать дистрибутив. Для этого перейдите на страницу https://git-scm.com/
+Для установки _Git_ под _Windows_ необходимо предварительно скачать дистрибутив. Для этого перейдите на страницу https://git-scm.com/
 
-Если вы зашли из под операционной системы (ОС) Windows, главная страница сайта будет выглядеть примерно так, как показано на рисунке ниже. Для других ОС отличие будет заключаться в том, что изменится область для скачивания дистрибутива (см. правый нижний угол).
+Если вы зашли из под операционной системы (ОС) _Windows_, главная страница сайта будет выглядеть примерно так, как показано на рисунке ниже. Для других ОС отличие будет заключаться в том, что изменится область для скачивания дистрибутива (см. правый нижний угол).
 
 image::/img/git-part2-1.jpg[]
 
-Для того чтобы скачать Git нужно нажать на кнопку Downloads for Windows, расположенную в правой части окна.
+Для того чтобы скачать _Git_ нужно нажать на кнопку _Downloads for Windows_, расположенную в правой части окна.
 
 Процесс дальнейшей установки Git выглядит так.
 
@@ -27,13 +27,13 @@ image::/img/git-part2-4.jpg[]
 
 В этом окне доступны три возможных варианта:
 
-*_Use Git from Git Bash only_*
+**_Use Git from Git Bash only_*
 Переменная PATH не модифицируется и работа с Git возможна только через специализированную оболочку, которая называется Git Bash.
 
-_*Use Git from the Windows Command Prompt*_
+**_Use Git from the Windows Command Prompt_*
 В этом случае происходит минимальная модификация переменной окружения PATH, которая позволит работать с Git через командную стоку Windows. Работа через Git Bash также возможна.
 
-_*Use Git and optional Unix tools from the Windows Command Prompt*_
+**_Use Git and optional Unix tools from the Windows Command Prompt_*
 В переменную PATH вносится значительное количество модификаций, которые позволят, в рамках командной строки Windows, использовать как Git так и утилиты Unix, которые поставляются вместе с дистрибутивом Git.
 
 Наша рекомендация: опция Use Git from the Windows Command Prompt.
@@ -41,3 +41,115 @@ _*Use Git and optional Unix tools from the Windows Command Prompt*_
 === *5. Настройка правил окончания строки
 
 image::/img/git-part2-5.jpg[]
+
+Существует два варианта формирования конца строки в текстовых файлах – это Windows стиль и Unix стиль. Данное окно позволяет выбрать одну из опций, определяющих правило формирования окончания строки:
+
+Checkout Windows-style, commit Unix-style line endings
+Checkout (операция извлечения документа из хранилища и создания рабочей копии) производится в Windows стиле, а commit (операция отправки изменений в репозиторий) в Unix стиле.
+
+Checkout as-is, commit Unix-style line endigns
+Checkout производится в том формате, в котором данные хранятся в репозитории, а commit осуществляется в Unix стиле.
+
+Checkout as-is, commit as-is
+Checkout и commit производятся без дополительных преобразований.
+
+Наша рекомендация: опция Checkout Windows-style, commit Unix-style line endings.
+
+==== *6. Выбор эмулятора терминала, который будет использован с Git Bash*
+
+image::/img/git-part2-6.jpg[]
+
+Возможен выбор из двух вариантов:
+
+Use MinTTY (the defaul terminal of MSYS2)
+Git Bash будет использовать в качестве эмулятора терминала MinTTY.
+
+Use Windows’ default console window
+Git будет использовать Windows консоль (“cmd.exe”).
+
+Наша рекомендация: опция Use MinTTY (the defaul terminal of MSYS2).
+
+==== *7. Настройка дополнительных параметров*
+
+image::/img/git-part2-7.jpg[]
+
+Доступны следующие параметры:
+
+Enable file system caching
+Включение операции кэширования при работе с файлами. Эта опция позволит значительно повысить производительность.
+
+Enable Git Credential Manager
+Предоставляет возможность работы с защищенным хранилищем.
+
+Enable symbolic links
+Активирует работу с символьными ссылками.
+
+Наша рекомендация: опции Enable file system caching и Enable Git Credential Manager.
+
+==== *8. Завершение установки*
+После нажатия на кнопку Install будет произведена установка Git на Windows, по окончании установки пользователь получит соответствующее сообщение.
+
+image::/img/git-part2-8.jpg[]
+
+Установка Git под Linux
+Для установки Git под Linux, также необходимо зайти на сайт  https://git-scm.com/ и перейти в раздел Downloads. В зависимости от используемой вами версии операционной системы Linux необходимо выбрать тот или иной способ установки Git.
+
+Debian/Ubuntu
+[source, sh]
+> apt-get install git
+
+Fedora
+(Fedora 21)
+
+[source, sh]
+> yum install git
+
+(Fedora 22)
+
+[source, sh]
+> dnf install git
+
+Gentoo
+
+[source, sh]
+> emerge --ask --verbose dev-vcs/git
+
+Arch Linux
+
+[source, sh]
+> pacman -S git
+
+openSUSE
+
+[source, sh]
+> zypper install git
+
+Mageia
+
+[source, sh]
+> urpmi git
+
+FreeBSD
+
+[source, sh]
+> pkg install git
+
+Solaris 9/10/11 (OpenCSW)
+
+[source, sh]
+> pkgutil -i git
+
+Solaris 11 Express
+
+[source, sh]
+> pkg install developer/versioning/git
+
+OpenBSD
+
+[source, sh]
+> pkg_add git
+
+Alpine
+
+[source, sh]
+> apk add git
