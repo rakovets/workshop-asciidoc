@@ -53,12 +53,13 @@ image::/img/git-head-pic3.png[]
 Для того, чтобы скопировать снимок репозитория относительно последнего коммита ветки _master_,
 т.е. того на который указывает _HEAD_, необходимо выполнить следующую команду.
 
- > git checkout master
+[source, sh]
+> git checkout master
 Switched to branch 'master'
 
 Содержимое репозитория, в данном случае, выглядит так.
 
-[source]
+[source, sh]
 > git log --oneline
 cf3d9d8 [add] ignore .tmp files
 a7b88ee [create]: git ignore file
