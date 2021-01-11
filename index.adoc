@@ -11,4 +11,4 @@ Wiki for Git.
 
 :leveloffset: +1
 
-include::article part 6.adoc[https://github.com/rakovets/workshop-git/blob/feature-yermalitskaya/article%20part%206.adoc]
+include::git-for-beginners-part-6.adoc[]
