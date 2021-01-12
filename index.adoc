@@ -11,4 +11,8 @@ Wiki for Git.
 
 :leveloffset: +1
 
-include::git-tips-for-beginners-part-2.adoc[]
+include::install-git.adoc[]
+
+include::git-for-beginners-part-8.adoc[]
+
+include::git-branch-management.adoc[]
