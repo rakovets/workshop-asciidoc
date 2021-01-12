@@ -13,4 +13,5 @@ Wiki for Git.
 
 
 include::install-git.adoc[]
+
 include::git-for-beginners-part-8.adoc[]
