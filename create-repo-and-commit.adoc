@@ -1,59 +1,62 @@
-== Git для начинающих. Часть 5. Создание репозитория и первый коммит
+= Git для начинающих. Часть 5. Создание репозитория и первый коммит
 
 В этом уроке мы рассмотрим, как создать пустой git репозиторий, добавить в него файлы и сделать первый коммит. Также коснемся вопроса просмотра коммитов и состояния рабочего каталога.
 
 * <<Создание репозитория, Создание репозитория _git_>>
 * <<Создание первого коммита, Создание первого коммита>>
 
-
-=== Создание репозитория
+== Создание репозитория
 
 Для того чтобы создать репозиторий, для начала, создайте папку, в которой он будет располагаться. В нашем случае это будет каталог с названием _repo_.
 
-[source, sh]
-> mkdir repo
+[source, shell script]
+mkdir repo
 
 Теперь перейдем в этот каталог.
 
-[source, sh]
->cd repo
+[source, shell script]
+cd repo
 
 Создадим в нем пустой _git_ репозиторий.
 
-[source, sh]
-> git init
+[source, shell script]
+git init
 
-=== Создание первого коммита
+== Создание первого коммита
 
 Если мы посмотрим на список коммитов, которые были отправлены в репозиторий, то увидим, что он пустой – это правильно, т.к. мы пока только создали репозиторий и ничего ещё туда не отправляли.
 
-[source, sh]
-> git log
+[source, shell script]
+----
+git log
+
 fatal: your current branch 'master' does not have any commits yet
+----
 
 Для просмотра состояния рабочего каталога воспользуемся командой _git status_.
 
-[source, sh]
+[source, shell script]
 ----
-> git status
+git status
+
 On branch master
 
 Initial commit
 
 nothing to commit (create/copy files and use "git add" to track)
-
 ----
 
 Создадим в нашем каталоге пустой файл.
 
-[source, sh]
-> touch README.md
+[source, shell script]
+touch README.md
 
 Теперь, если мы выполним команду _git status_, то увидим, что в нашем каталоге появился один неотслеживаемый файл: _README.md_.
 
-[source, sh]
+[source, shell script]
 ----
-> git status
+git status
+
 On branch master
 
 Initial commit
@@ -66,18 +69,19 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ----
 
-Добавим, созданный файл в _stage_. _Stage_ (или _cache_) – это хранилище для файлов с изменениями, информация о которых попадет в единый коммит. _Stage_ является элементом архитектуры трех деревьев, на базе которой построен _git_, более подробно смотрите https://devpractice.ru/git-for-beginners-part-4-git-arch/[здесь]. Для добавления файла _README.md_ в _stage_ необходимо воспользоваться командой _git add_.
+Добавим, созданный файл в _stage_. _Stage_ (или _cache_) – это хранилище для файлов с изменениями, информация о которых попадет в единый коммит. _Stage_ является элементом архитектуры трех деревьев, на базе которой построен _git_. Для добавления файла _README.md_ в _stage_ необходимо воспользоваться командой _git add_.
 
-[source, sh]
-> git add README.md
+[source, shell script]
+git add README.md
 
 Если изменение было произведено в нескольких файлах, и мы хотим их все отправить в _stage_, то вместо имени файла поставьте точку.
 
 Выполним _git status_ для того, чтобы посмотреть на то, что сейчас происходит в нашем каталоге.
 
-[source, sh]
+[source, shell script]
 ----
-> git status
+git status
+
 On branch master
 
 Initial commit
@@ -90,26 +94,34 @@ Changes to be committed:
 
 Как видно, в _stage_ был добавлен один файл с именем _README.md_ и теперь представленный набор изменений готов к отправке в репозиторий – т.е. к коммиту. Сделаем это.
 
-[source, sh]
-> git commit -m "[create repository]"
+[source, shell script]
+----
+git commit -m "[create repository]"
+
 [master (root-commit) 500067c] [create repository]
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 README.md
+1 file changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 README.md
+----
 
 Проверим статус каталога.
 
-[source, sh]
-> git status
+[source, shell script]
+----
+git status
+
 On branch master
+
 nothing to commit, working tree clean
+----
 
 Как видно с момента последнего коммита никаких изменений в рабочем каталоге не производилось.
 
 Теперь взглянем на список коммитов.
 
-[source, sh]
+[source, shell script]
 ----
-> git log
+git log
+
 commit 500067cc0b80643d38e2a24e9e0699031ada6be3
 Author: Writer <writer@someserver.com>
 Date:   Mon Feb 12 22:51:14 2018 +0500
@@ -119,38 +131,41 @@ Date:   Mon Feb 12 22:51:14 2018 +0500
 
 Из приведенной информации видно, что был отправлен один коммит, который имеет _ID_: 500067cc0b80643d38e2a24e9e0699031ada6be3, более подробно об идентификаторах будет рассказано в следующих уроках. Автор данного коммита _Writer_, он (коммит) был создан _Mon Feb_ 12 22:51:14 2018 +0500, с сообщением:  _[create repository]_. Это довольно подробная информация, когда коммитов станет много, такой формат вывода будет не очень удобным, сокращенный вариант выглядит так.
 
-[source, sh]
-> git log --oneline
+[source, shell script]
+----
+git log --oneline
+
 500067c [create repository]
+----
 
 Подведем небольшое резюме вышесказанному.
 
 Создание пустого репозитория.
 
-[source, sh]
-> git init
+[source, shell script]
+git init
 
 Добавление файлов в _stage_.
 
-[source, sh]
-> git add filename
+[source, shell script]
+git add filename
 
 Создание коммита.
 
-[source, sh]
-> git commit -m “message”
+[source, shell script]
+git commit -m “message”
 
 Просмотр статуса каталога.
 
-[source, sh]
-> git status
+[source, shell script]
+git status
 
 Просмотр коммитов в репозитории.
 
-[source, sh]
-> git log
+[source, shell script]
+git log
 
 Просмотр коммитов в репозитории с сокращенным выводом информации.
 
-[source, sh]
-> git log --oneline
+[source, shell script]
+git log --oneline
