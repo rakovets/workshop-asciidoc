@@ -11,4 +11,4 @@ Wiki for Git.
 
 :leveloffset: +1
 
-include::HEAD_and_tree_ish.adoc[]
+include::head-and-tree-ish.adoc[]
