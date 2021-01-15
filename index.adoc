@@ -11,4 +11,3 @@ Wiki for Git.
 
 :leveloffset: +1
 
-include::git-for-beginners-part-8.adoc[]
