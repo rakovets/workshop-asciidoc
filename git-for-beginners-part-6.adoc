@@ -1,20 +1,19 @@
-== Git для начинающих. Часть 6. Просмотр информации по коммитам
+= Git для начинающих. Часть 6. Просмотр информации по коммитам
 Рассмотрим инструмент системы контроля версий _git_, который позволяет делать выборку и представлять пользователю коммиты, отправленные в репозиторий, в соответствии с заданными параметрами.
 
 В прошлом уроке мы разобрались с тем, как фиксировать изменения в рабочей директории и отправлять коммиты в репозиторий. Рабочий процесс с использованием _git_, в упрощенном виде, выглядит следующим образом (пока не рассматриваем работу с удаленным репозиторием):
 
-. Внесение изменений в рабочую директорию.
-
-. Отправка изменений в _stage_.
-
-. Формирование и отправка коммита на базе того, что лежит в _stage_, в репозиторий.
+* Внесение изменений в рабочую директорию.
+* Отправка изменений в _stage_.
+* Формирование и отправка коммита на базе того, что лежит в _stage_, в репозиторий.
 
 В процессе работы, в вашем репозитории накопится больше количество коммитов и довольно часто будет возникать необходимость их просматривать. _Git_ предоставляет удобный способ просмотра информации по коммитам. Для демонстрации возможностей _git_, создадим репозиторий и добавим в него один файл – _README.md_, о том, как это сделать, можете прочитать в предыдущем уроке.
 
 Для просмотра информации по сделанным вами (или вашими коллегами) коммитам используется команда *_git log_*.
 
+[source,shell script]
 ----
-> git log
+git log
 commit a98cce47b59256d00a853c421af4f7b9f0dc0a29
 Author: Writer <writer@somecompany.com>
 Date:   Mon Mar 5 23:10:51 2018 +0500
@@ -26,29 +25,33 @@ Date:   Mon Mar 5 23:10:51 2018 +0500
 
 Внесем еще несколько изменений в наш репозитории. Добавим текст в файл _README.md._
 
+[source,shell script]
 ----
-> echo "Project 51" > README.md
+ echo "Project 51" > README.md
 ----
 
 Зафиксируем эти изменения в репозитории.
 
+[source,shell script]
 ----
-> git add .
-> git commit -m "[add]: caption into README file"
+git add .
+git commit -m "[add]: caption into README file"
 ----
 
 Создадим файл _main.c_ и добавим его в репозиторий.
 
+[source,shell script]
 ----
-> touch main.c
-> git add .
-> git commit -m "[create]: main file of program"
+touch main.c
+git add .
+git commit -m "[create]: main file of program"
 ----
 
 Таким образом в нашем репозитории уже должно быть три коммита, проверим это.
 
+[source,shell script]
 ----
-> git log
+git log
 commit 2b826bb4929fb1c8166ef05b540ce2cc68f3ebb2
 Author: Writer <writer@somecompany.com>
 Date:   Mon Mar 5 23:17:08 2018 +0500
@@ -70,22 +73,24 @@ Date:   Mon Mar 5 23:10:51 2018 +0500
 
 Коммиты располагаются от новых к старым. Сделаем ещё несколько изменений.
 
+[source,shell script]
 ----
-> touch main.h
-> git add .
-> git commit -m "[create]: header for main"
-> touch .gitignore
-> git add .
-> git commit -m "[create]: git ignore file"
-> echo "*.tmp" > .gitignore
-> git add .
-> git commit -m "[add] ignore .tmp files">
+touch main.h
+git add .
+git commit -m "[create]: header for main"
+touch .gitignore
+git add .
+git commit -m "[create]: git ignore file"
+echo "*.tmp" > .gitignore
+git add .
+git commit -m "[add] ignore .tmp files">
 ----
 
 Снова получим список всех коммитов.
 
+[source,shell script]
 ----
-> git log
+git log
 commit cf3d9d8f7b283267a085986e85cc8f152cca420d
 Author: Writer <writer@somecompany.com>
 Date:   Mon Mar 5 23:21:59 2018 +0500
@@ -125,8 +130,11 @@ Date:   Mon Mar 5 23:10:51 2018 +0500
 
 Количество коммитов в репозитории уже такое, что просматривать информацию о них в том виде, в котором выдает *_git log_* уже неудобно. Для того, чтобы сократить количество показываемой информации можно воспользоваться ключом *_–oneline_*, при этом будет выведена часть идентификатора и сообщение коммита.
 
+[source,shell script]
 ----
-> git log --oneline
+git log --oneline
+----
+----
 cf3d9d8 [add] ignore .tmp files
 a7b88ee [create]: git ignore file
 c185b80 [create]: header for main
@@ -137,8 +145,11 @@ a98cce4 [create repository]
 
 В таком виде работать с коммитами уже намного удобнее. Если вы хотите просмотреть _n_ последних коммитов, то укажите количество коммитов после ключа _-n_. Выведем три последних коммита.
 
+[source,shell script]
 ----
-> git log -n 3 --oneline
+git log -n 3 --oneline
+----
+----
 cf3d9d8 [add] ignore .tmp files
 a7b88ee [create]: git ignore file
 c185b80 [create]: header for main
@@ -146,16 +157,22 @@ c185b80 [create]: header for main
 
 Для вывода списка коммитов, начиная с какой-то временной метки, используйте ключ *_–since=”<date> <time>”_*. Например, получим все коммиты, сделанные после 5-го марта 2018 года 23:21.
 
+[source,shell script]
 ----
-> git log --since="2018-03-05 23:21:00" --oneline
+git log --since="2018-03-05 23:21:00" --oneline
+----
+----
 cf3d9d8 [add] ignore .tmp files
 a7b88ee [create]: git ignore file
 ----
 
 Для вывода списка коммитов до какой-то даты используется ключ *_–until_*. Получим список коммитов, сделанных до 5-го марта 2018 года 23:21.
 
+[source,shell script]
 ----
-> git log --until="2018-03-05 23:21:00" --oneline
+git log --until="2018-03-05 23:21:00" --oneline
+----
+----
 c185b80 [create]: header for main
 2b826bb [create]: main file of program
 bc067c8 [add]: caption into README file
@@ -164,8 +181,11 @@ a98cce4 [create repository]
 
 Еще одним полезным ключом является *_–author_*, который позволяет вывести список коммитов, сделанных конкретным автором.
 
+[source,shell script]
 ----
-> git log --author="Writer" --oneline
+git log --author="Writer" --oneline
+----
+----
 cf3d9d8 [add] ignore .tmp files
 a7b88ee [create]: git ignore file
 c185b80 [create]: header for main
@@ -178,8 +198,11 @@ a98cce4 [create repository]
 
 И, напоследок, рассмотрим еще один инструмент. Если вы работали с _Linux_, то наверное, сталкивались с такой программой как _grep_ – это утилита командной строки, которая, в переданном ей тексте, находит вхождения, соответствующие заданному регулярному выражению. Выведем все коммиты, в которых встречается слово _create_.
 
+[source,shell script]
 ----
-> git log --grep="create" --oneline
+git log --grep="create" --oneline
+----
+----
 a7b88ee [create]: git ignore file
 c185b80 [create]: header for main
 2b826bb [create]: main file of program
@@ -188,15 +211,15 @@ a98cce4 [create repository]
 
 Теперь коммиты со словом _add_.
 
+[source,shell script]
 ----
-> git log --grep="add" --oneline
+git log --grep="add" --oneline
+----
+----
 cf3d9d8 [add] ignore .tmp files
 bc067c8 [add]: caption into README file
 ----
 
 Для более продуктивного использования данной команды рекомендуем ознакомиться с возможностями утилиты _grep_. На этом мы закончим обзор команды _git log_.
 
-====
-_Отличный курс по git  делают ребята из link:https://geekbrains.ru[GeekBrains], найдите в разделе “Курсы” курс link:https://geekbrains.ru/courses[“Git. Быстрый старт”], он *бесплатный*!_
-====
 
