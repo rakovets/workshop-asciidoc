@@ -14,17 +14,17 @@ image::/img/install-git-first-page.jpg[first page]
 
 Процесс дальнейшей установки Git выглядит так.
 
-=== 1. Запустить установочный файл
+=== Запустить установочный файл
 
-=== 2. Ознакомиться, если есть желание, с лицензионным соглашением и нажать на кнопку Next
+=== Ознакомиться, если есть желание, с лицензионным соглашением и нажать на кнопку Next
 
 image::/img/install-git-license-terms.jpg[license terms]
 
-=== 3. Выбрать компоненты, которые следует установить
+=== Выбрать компоненты, которые следует установить
 
 image::/img/install-git-selection-of-components.jpg[selection of components]
 
-=== 4. Указать способ использования Git
+=== Указать способ использования Git
 
 image::/img/install-git-way-to-use.jpg[way to use]
 
@@ -44,7 +44,7 @@ image::/img/install-git-way-to-use.jpg[way to use]
 
 Наша рекомендация: опция _Use Git from the Windows Command Prompt_.
 
-=== 5. Настройка правил окончания строки
+=== Настройка правил окончания строки
 
 image::/img/install-git-setting-line-ending-rules.jpg[setting line ending rules]
 
@@ -64,7 +64,7 @@ _Checkout_ и _commit_ производятся без дополительны�
 
 Наша рекомендация: опция _Checkout Windows-style, commit Unix-style line endings_.
 
-=== 6. Выбор эмулятора терминала, который будет использован с Git Bash
+=== Выбор эмулятора терминала, который будет использован с Git Bash
 
 image::/img/install-git-choosing-a-terminal-emulator.jpg[choosing a terminal emulator]
 
@@ -80,7 +80,7 @@ _Git_ будет использовать Windows консоль (“_cmd.exe_�
 
 Наша рекомендация: опция _Use MinTTY (the defaul terminal of MSYS2)_.
 
-=== 7. Настройка дополнительных параметров
+=== Настройка дополнительных параметров
 
 image::/img/install-git-setting-additional-parameters.jpg[setting additional parameters]
 
@@ -100,7 +100,7 @@ image::/img/install-git-setting-additional-parameters.jpg[setting additional par
 
 Наша рекомендация: опции _Enable file system caching_ и _Enable Git Credential Manager_.
 
-=== 8. Завершение установки
+=== Завершение установки
 
 После нажатия на кнопку _Install_ будет произведена установка _Git_ на _Windows_, по окончании установки пользователь получит соответствующее сообщение.
 
@@ -110,62 +110,62 @@ image::/img/install-git-completing-the-installation.jpg[completing the installat
 
 Для установки _Git_ под _Linux_, также необходимо зайти на сайт  https://git-scm.com/ и перейти в раздел _Downloads_. В зависимости от используемой вами версии операционной системы _Linux_ необходимо выбрать тот или иной способ установки _Git_.
 
-== Debian/Ubuntu
+=== Debian/Ubuntu
 [source, shell script]
 apt-get install git
 
-Fedora +
-(Fedora 21)
+=== Fedora +
+=== (Fedora 21)
 
 [source, shell script]
 yum install git
 
-(Fedora 22)
+=== (Fedora 22)
 
 [source, shell script]
 dnf install git
 
-Gentoo
+=== Gentoo
 
 [source, shell script]
 emerge --ask --verbose dev-vcs/git
 
-Arch Linux
+=== Arch Linux
 
 [source, shell script]
 pacman -S git
 
-openSUSE
+=== openSUSE
 
 [source, shell script]
 zypper install git
 
-Mageia
+=== Mageia
 
 [source, shell script]
 urpmi git
 
-FreeBSD
+=== FreeBSD
 
 [source, shell script]
 pkg install git
 
-Solaris 9/10/11 (OpenCSW)
+=== Solaris 9/10/11 (OpenCSW)
 
 [source, shell script]
 pkgutil -i git
 
-Solaris 11 Express
+=== Solaris 11 Express
 
 [source, shell script]
 pkg install developer/versioning/git
 
-OpenBSD
+=== OpenBSD
 
 [source, shell script]
 pkg_add git
 
-Alpine
+=== Alpine
 
 [source, shell script]
 apk add git
