@@ -11,3 +11,4 @@ Wiki for Git.
 
 :leveloffset: +1
 
+include::install-git.adoc[]
