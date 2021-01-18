@@ -1,13 +1,1 @@
-= Git
-:source-highlighter: prettify
-:sectnums:
-:toc: left
-:toclevels: 2
-//:data-uri:
-
-:toc!:
-
-Wiki for Git.
-
-:leveloffset: +1
-
+include::git-for-beginners-part-3.adoc[]
