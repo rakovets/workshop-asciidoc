@@ -19,4 +19,6 @@ include::head-and-tree-ish.adoc[]
 
 include::git-branch-management.adoc[]
 
-include::git-for-beginners-part-8.adoc[]
+include::create-repo-and-commit.adoc[]
+
+include::add-delete-and-rename-files-in-repo.adoc[]
