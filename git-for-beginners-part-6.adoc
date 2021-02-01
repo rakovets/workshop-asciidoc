@@ -14,6 +14,9 @@
 [source,shell script]
 ----
 git log
+----
+
+----
 commit a98cce47b59256d00a853c421af4f7b9f0dc0a29
 Author: Writer <writer@somecompany.com>
 Date:   Mon Mar 5 23:10:51 2018 +0500
