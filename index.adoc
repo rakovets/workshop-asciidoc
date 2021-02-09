@@ -22,3 +22,5 @@ include::git-branch-management.adoc[]
 include::create-repo-and-commit.adoc[]
 
 include::add-delete-and-rename-files-in-repo.adoc[]
+
+include::information-on-commits.adoc[]
