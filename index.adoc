@@ -3,12 +3,9 @@
 :sectnums:
 :toc: left
 :toclevels: 2
-//:data-uri:
 
 :toc!:
 
 Wiki for Git.
 
-:leveloffset: +1
-
-include::example.adoc[]
+include::dir-example/example.adoc[leveloffset=1]
