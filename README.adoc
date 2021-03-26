@@ -1,6 +1,6 @@
-= workshop
+= workshop-asciidoc
 
-Workshop "${workshop-name}"
+Workshop for theme 'AsciiDoc'
 
 == Process
 
@@ -21,4 +21,4 @@ Workshop "${workshop-name}"
 * если кто-то указал на ошибку, то исправляем ее.
 12. Делаем слияние `feature` ветки в `develop`.
 * если возник конфликт слияние, то решаем его.
-13. Проверяем результат: https://dmitryrakovets.com/workshop/
+13. Проверяем результат: https://dmitryrakovets.com/workshop-asciidoc/
