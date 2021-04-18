@@ -1,15 +1,26 @@
-name: deploy-ghpages
+name: deploy to github-pages
 on:
   push:
-    branches: [develop]
-  pull_request:
-    branches: [develop]
+    branches:
+    - develop
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  adoc_build:
+    runs-on: ubuntu-18.04
+    name: asciidoctor -D . --backend=html5 -o index.html -a toc2 index.adoc 
     steps:
-      - uses: actions/checkout@v2
-      - name: asciidoctor-ghpages
-        uses: manoelcampos/asciidoctor-ghpages-action@v2
-        with:
-          asciidoctor_params: --attribute=nofooter
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Get build container
+      id: adocbuild
+      uses: avattathil/asciidoctor-action@master
+      with:
+          program: "asciidoctor -D . --backend=html5 -o index.html index.adoc"
+    - name: Print execution time
+      run: echo "Time ${{ steps.adocbuild.outputs.time }}"
+    - name: Deploy docs to ghpages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./
+  
