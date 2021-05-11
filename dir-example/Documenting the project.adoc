@@ -54,7 +54,7 @@ mvn site
 
 После этого перейдём в директорию *target/site* и откроем файл index.html
 
-image::asciiErmakov.png[содержимое файла index.html]
+image::ProjectSummary.png[Окно создания информации о проекте]
 
 Maven создаёт документацию с помощью механизма documentation-processing, который называется Doxia, который считывает различные форматы в один документ.
 
