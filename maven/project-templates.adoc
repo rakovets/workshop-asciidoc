@@ -1,28 +1,29 @@
-== Шаблоны проектов
----
+= Шаблоны проектов
+:imagesdir: ../assets/img/maven
+
 Wiki for Maven
 
-=== Архитип
+== Архитип
 
-*Архитип* – это плагин Maven, задача которого состоит
-в создании структуры проекта по определённому шаблону.
-Рассмотрим архитип `quickstart` и создадим с его помощью
-java-приложение.
+*Архитип* – это плагин *Maven*, задача которого состоит в создании структуры проекта по определённому шаблону. Рассмотрим архитип `quickstart` и создадим с его помощью java-приложение.
 
-==== Создание приложения
+=== Создание приложения
 
-Переходим в нужную нам директорию и выполняем в терминале
-следющую команду:
+Переходим в нужную нам директорию и выполняем в терминале следющую команду:
+
+[sourse,shell script]
 ----
 mvn archetype:generate
 ----
+
 В результате мы получим следующее:
+
+[sourse,shell script]
 ----
 1576: remote -> uk.ac.ebi.gxa:atlas-archetype (Archetype for generating a custom Atlas webapp)
 1577: remote -> uk.ac.rdg.resc:edal-ncwms-based-webapp (-)
 1578: remote -> uk.co.nemstix:basic-javaee7-archetype (A basic Java EE7 Maven archetype)
-1579: remote -> uk.co.solong:angular-spring-archetype (So Long archetype for RESTful spring services with an AngularJS
-frontend. Includes debian deployment)
+1579: remote -> uk.co.solong:angular-spring-archetype (So Long archetype for RESTful spring services with an AngularJS frontend. Includes debian deployment)
 1580: remote -> us.fatehi:schemacrawler-archetype-maven-project (-)
 1581: remote -> us.fatehi:schemacrawler-archetype-plugin-command (-)
 1582: remote -> us.fatehi:schemacrawler-archetype-plugin-dbconnector (-)
@@ -30,8 +31,9 @@ frontend. Includes debian deployment)
 Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): 771: 7
 ----
 
-Выбираем число 7 и нужную нам версию.
-После этого указываем наши параметры.
+Выбираем число `7` и нужную нам версию. После этого указываем наши параметры.
+
+[sourse,shell script]
 ----
 Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): 771: 7
 Choose am.ik.archetype:spring-boot-jersey-blank-archetype version:
@@ -48,6 +50,7 @@ Define value for property 'package':  Tutorials: : net.proselyte.mavenproject
 И вводим `Y`, после чего нажимаем _Enter_.
 
 В итоге мы получим следующий результат:
+
 ----
 [INFO] ----------------------------------------------------------------------------
 [INFO] Using following parameters for creating project from Archetype: spring-boot-jersey-blank-archetype:1.0.0
@@ -70,34 +73,37 @@ Define value for property 'package':  Tutorials: : net.proselyte.mavenproject
 [INFO] Final Memory: 17M/222M
 [INFO] ------------------------------------------------------------------------
 ----
+
 В результате мы получим следующую структуру проекта:
 
-image::assets/img/maven/MavenStructureProject.png[width=256,alt="maven structure project"]
+image::project-structure-example.png[project structure]
 
-Наш *pom.xml* файл будет выглядеть следующим образом:
+Наш `pom.xml` файл будет выглядеть следующим образом:
 
+[source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
-<groupId>Tutorials</groupId>
-<artifactId>MavenProject</artifactId>
-<version>1.0-SNAPSHOT</version>
-<packaging>jar</packaging>
-<name>MavenTutorial</name>
-<url>http://maven.apache.org</url>
-<properties>
-<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-</properties>
-<dependencies>
-<dependency>
-<groupId>junit</groupId>
-<artifactId>junit</artifactId>
-<version>3.8.1</version>
-<scope>test</scope>
-</dependency>
-</dependencies>
+
+    <groupId>Tutorials</groupId>
+    <artifactId>MavenProject</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>MavenTutorial</name>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
 ----
