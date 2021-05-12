@@ -1,5 +1,5 @@
 = Documenting the project
-:imagesdir: ../assets/img/imagesMaven
+:imagesdir: ../assets/img/maven
 
 Чтобы создать документацию проекта, необходимо перейти в директорию нашего проекта и выполнить в терминале следующую команду:
 
