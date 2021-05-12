@@ -9,4 +9,5 @@
 Wiki for Maven.
 
 include::maven/introducing.adoc[leveloffset=1]
+
 include::maven/creating-documentation-for-project.adoc[leveloffset=1]
