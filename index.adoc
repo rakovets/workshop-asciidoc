@@ -1,11 +1,13 @@
-= Theme
+= Maven
 :source-highlighter: prettify
 :sectnums:
 :toc: left
-:toclevels: 2
+:toclevels: 1
 
 :toc!:
 
 Wiki for Maven.
 
+
 include::dir-example/introducing-to-maven.adoc[leveloffset=1]
+include::maven/creating-documentation-for-project.adoc[leveloffset=1]
