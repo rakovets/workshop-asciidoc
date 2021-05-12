@@ -3,6 +3,9 @@
 :sectnums:
 :toc: left
 :toclevels: 1
+
 :toc!:
+
 Wiki for Maven.
+
 include::maven/creating-documentation-for-project.adoc[leveloffset=1]
