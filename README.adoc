@@ -27,4 +27,4 @@ Workshop for theme 'AsciiDoc'
 * если кто-то указал на ошибку, то исправляем ее.
 12. Делаем слияние `feature` ветки в `develop`:
 * если возник конфликт слияние, то решаем его.
-13. Проверяем результат: https://dmitryrakovets.com/workshop-asciidoc/
+13. Проверяем результат: https://workshop-asciidoc-gh.dmitryrakovets.com
