@@ -8,4 +8,4 @@
 
 Wiki for Maven.
 
-include::dir-example/introducing-to-maven.adoc[leveloffset=1]
+include::maven/introducing.adoc[leveloffset=1]
