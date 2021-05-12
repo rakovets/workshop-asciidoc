@@ -6,6 +6,6 @@
 
 :toc!:
 
-Wiki for Git.
+Wiki for Maven.
 
 include::dir-example/introducing-to-maven.adoc[leveloffset=1]
