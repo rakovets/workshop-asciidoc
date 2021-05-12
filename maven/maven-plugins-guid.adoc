@@ -38,25 +38,25 @@ mvn compiler:compile
 Вот список, наиболее используемых плагинов:
 
 * *clean* +
-Очищает цель после сборки. Удаляет директорию target.
+Очищает цель после сборки. Удаляет директорию `target`.
 
 * *compiler* +
-Компилирует исходные Java файлы.
+Компилирует исходные *Java* файлы.
 
 * *surefire* +
-Запускает тесты JUnit. Создаёт отчёты о тестировании.
+Запускает тесты *JUnit*. Создаёт отчёты о тестировании.
 
 * *jar* +
-Собирает JAR файл текущего проекта.
+Собирает *JAR* файл текущего проекта.
 
 * *war* +
-Собирает WAR файл текущего проекта.
+Собирает *WAR* файл текущего проекта.
 
 * *javadoc* +
-Генерирует Javadoc проекта.
+Генерирует *Javadoc* проекта.
 
 * *antrun* +
-Запускает набор задач ant из любой указанной фазы.
+Запускает набор задач *ant* из любой указанной фазы.
 
 Для понимания того, как это работает на практике, рассмотрим следующий пример:
 
@@ -64,9 +64,9 @@ mvn compiler:compile
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <groupId>ProselyteTutorials</groupId>
     <artifactId>MavenTutorial</artifactId>
@@ -124,7 +124,6 @@ mvn compile
 
 В результате выполнения команды, получим, примерно, следующий результат:
 
-[source, shell script]
 ----
 [INFO] Scanning for projects...
 [INFO]
