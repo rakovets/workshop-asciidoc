@@ -1,4 +1,4 @@
-= Theme
+= Maven
 :source-highlighter: prettify
 :sectnums:
 :toc: left
