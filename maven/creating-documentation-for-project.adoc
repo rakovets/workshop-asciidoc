@@ -1,8 +1,9 @@
-:imagesdir: ../assets/img/imagesMaven
 = Documenting the project
+:imagesdir: ../assets/img/imagesMaven
 
 Чтобы создать документацию проекта, необходимо перейти в директорию нашего проекта и выполнить в терминале следующую команду:
 
+[source, shell script]
 ----
 mvn site
 ----
