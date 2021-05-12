@@ -1,0 +1,5 @@
+= Maven
+
+Wiki for Maven
+
+link:Maven.adoc[]

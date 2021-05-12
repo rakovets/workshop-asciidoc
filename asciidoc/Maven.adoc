@@ -72,7 +72,7 @@ Define value for property 'package':  Tutorials: : net.proselyte.mavenproject
 ----
 В результате мы получим следующую структуру проекта:
 
-image::assets/img/maven/MavenStructureProject.png[width=256,alt="maven project structure"]
+image::assets/img/maven/MavenStructureProject.png[width=256,alt="maven structure project"]
 
 Наш *pom.xml* файл будет выглядеть следующим образом:
 
