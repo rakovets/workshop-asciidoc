@@ -18,7 +18,6 @@ mvn archetype:generate
 
 В результате мы получим следующее:
 
-[sourse,shell script]
 ----
 1576: remote -> uk.ac.ebi.gxa:atlas-archetype (Archetype for generating a custom Atlas webapp)
 1577: remote -> uk.ac.rdg.resc:edal-ncwms-based-webapp (-)
@@ -33,7 +32,6 @@ Choose a number or apply filter (format: [groupId:]artifactId, case sensitive co
 
 Выбираем число `7` и нужную нам версию. После этого указываем наши параметры.
 
-[sourse,shell script]
 ----
 Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): 771: 7
 Choose am.ik.archetype:spring-boot-jersey-blank-archetype version:
@@ -76,17 +74,17 @@ Define value for property 'package':  Tutorials: : net.proselyte.mavenproject
 
 В результате мы получим следующую структуру проекта:
 
-image::project-structure-example.png[project structure]
+image::project-structure-example.png[Project structure]
 
 Наш `pom.xml` файл будет выглядеть следующим образом:
 
 [source,xml]
 ----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <groupId>Tutorials</groupId>
     <artifactId>MavenProject</artifactId>
