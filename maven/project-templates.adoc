@@ -9,14 +9,14 @@ Wiki for Maven
 
 === Создание приложения
 
-Переходим в нужную нам директорию и выполняем в терминале следющую команду:
+Переходим в нужную директорию и выполняем в терминале следующую команду:
 
 [sourse,shell script]
 ----
 mvn archetype:generate
 ----
 
-В результате мы получим следующее:
+В результате получим следующее:
 
 ----
 1576: remote -> uk.ac.ebi.gxa:atlas-archetype (Archetype for generating a custom Atlas webapp)
@@ -30,7 +30,7 @@ mvn archetype:generate
 Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): 771: 7
 ----
 
-Выбираем число `7` и нужную нам версию. После этого указываем наши параметры.
+Выбираем число `7` и нужную версию. После этого указываем параметры.
 
 ----
 Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): 771: 7
@@ -45,9 +45,9 @@ Define value for property 'version':  1.0-SNAPSHOT: :
 Define value for property 'package':  Tutorials: : net.proselyte.mavenproject
 ----
 
-И вводим `Y`, после чего нажимаем _Enter_.
+Вводим `Y`, после чего нажимаем _Enter_.
 
-В итоге мы получим следующий результат:
+В итоге получим следующий результат:
 
 ----
 [INFO] ----------------------------------------------------------------------------
@@ -72,11 +72,11 @@ Define value for property 'package':  Tutorials: : net.proselyte.mavenproject
 [INFO] ------------------------------------------------------------------------
 ----
 
-В результате мы получим следующую структуру проекта:
+В результате получим следующую структуру проекта:
 
 image::project-structure-example.png[Project structure]
 
-Наш `pom.xml` файл будет выглядеть следующим образом:
+Файл `pom.xml` будет выглядеть следующим образом:
 
 [source,xml]
 ----
