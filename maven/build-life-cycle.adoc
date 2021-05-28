@@ -423,7 +423,7 @@ proselyte@proselyte:~/Programming/Projects/Proselyte/MavenTutorial$ mvn compile
 * *post-site*
 * *site-deploy*
 
-В примере ниже прикрепляем задачу *maven-antrun-plugin:run* ко всем фазам *жизненного цикла* *Site*. Это позволяет вызывать текстовые сообщения для отображения фаз жизненного цикла.
+В примере ниже прикрепляем задачу `maven-antrun-plugin:run` ко всем фазам *жизненного цикла* *Site*. Это позволяет вызывать текстовые сообщения для отображения фаз жизненного цикла.
 
 Пример:
 
