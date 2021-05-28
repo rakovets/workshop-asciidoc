@@ -48,7 +48,7 @@ mvn post-clean
 
 Можем настроить это поведение указав эти задачи в любой из фаз сборки.
 
-Рассмотрим пример, в котором привяжем задачу *maven-antrun-plugin:run* к фазам *pre-clean*, *clean* и *post-clean*.
+Рассмотрим пример, в котором привяжем задачу `maven-antrun-plugin:run` к фазам `pre-clean`, `clean` и `post-clean`.
 
 Пример:
 
