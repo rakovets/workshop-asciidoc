@@ -33,7 +33,7 @@
 mvn clean dependency:copy-dependencies package
 ----
 
-В этом случае, сначала будет выполнена фаза `clean`, после этого будет выполнена задача `dependency: copy-dependencies`. После чего будет выполнена фаза `package`.
+В этом случае, сначала будет выполнена фаза `clean`, после этого будет выполнена задача `dependency:copy-dependencies`. После чего будет выполнена фаза `package`.
 
 == Жизенный цикл Clean
 
