@@ -16,4 +16,6 @@ include::maven/creating-documentation-for-project.adoc[leveloffset=1]
 
 include::maven/maven-plugins-guid.adoc[leveloffset=1]
 
+include::maven/project-creation.adoc[leveloffset=1]
+
 include::maven/snapshots.adoc[leveloffset=1]
