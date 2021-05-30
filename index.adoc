@@ -10,6 +10,8 @@ Wiki for Maven.
 
 include::maven/introduction.adoc[leveloffset=1]
 
+include::maven/build-profile.adoc[leveloffset=1]
+
 include::maven/plugins.adoc[leveloffset=1]
 
 include::maven/project-creation.adoc[leveloffset=1]
