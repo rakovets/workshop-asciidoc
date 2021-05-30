@@ -16,6 +16,8 @@ include::maven/plugins.adoc[leveloffset=1]
 
 include::maven/project-creation.adoc[leveloffset=1]
 
+include::maven/external-dependencies.adoc[leveloffset=1]
+
 include::maven/project-documented.adoc[leveloffset=1]
 
 include::maven/project-templates.adoc[leveloffset=1]
