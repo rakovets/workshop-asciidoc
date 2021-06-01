@@ -8,4 +8,4 @@
 
 Wiki for Maven.
 
-include::maven/creating-documentation-for-project.adoc[leveloffset=1]
+include::client-server-architecture/creating-documentation-for-project.adoc[leveloffset=1]
