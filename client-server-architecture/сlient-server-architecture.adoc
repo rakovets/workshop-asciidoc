@@ -1,12 +1,8 @@
 :imagesdir: ../assets/img/maven
 
 = Архитектура клиент-сервер
-:source-highlighter: prettify
 :sectnums:
 :toc:
-:toclevels: 2
-
-:toc!:
 
 == Взаимодействие серверов с клиентами
 
