@@ -2,10 +2,30 @@
 :source-highlighter: prettify
 :sectnums:
 :toc: left
-:toclevels: 1
+:toclevels: 2
 
 :toc!:
 
 Wiki for Maven.
 
 include::client-server-architecture/creating-documentation-for-project.adoc[leveloffset=1]
+
+include::maven/introduction.adoc[leveloffset=1]
+
+include::maven/build-profile.adoc[leveloffset=1]
+
+include::maven/plugins.adoc[leveloffset=1]
+
+include::maven/project-creation.adoc[leveloffset=1]
+
+include::maven/external-dependencies.adoc[leveloffset=1]
+
+include::maven/project-documents.adoc[leveloffset=1]
+
+include::maven/web-project.adoc[leveloffset=1]
+
+include::maven/project-templates.adoc[leveloffset=1]
+
+include::maven/snapshots.adoc[leveloffset=1]
+
+include::maven/build-life-cycle.adoc[leveloffset=1]
