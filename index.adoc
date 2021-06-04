@@ -8,6 +8,8 @@
 
 Wiki for Maven.
 
+include::client-server-architecture/creating-documentation-for-project.adoc[leveloffset=1]
+
 include::maven/introduction.adoc[leveloffset=1]
 
 include::maven/build-profile.adoc[leveloffset=1]
