@@ -1,4 +1,4 @@
-= Maven
+= Wiki for lab
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,9 +6,9 @@
 
 :toc!:
 
-Wiki for Maven.
+Wiki for lab.
 
-include::client-server-architecture/creating-documentation-for-project.adoc[leveloffset=1]
+include::application-architecture/client-server-architecture.adoc[leveloffset=1]
 
 include::maven/introduction.adoc[leveloffset=1]
 
