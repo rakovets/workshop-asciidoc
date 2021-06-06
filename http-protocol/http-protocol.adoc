@@ -1,5 +1,7 @@
 = Протокол HTTP
 :imagesdir: ../assets/img/http-protocol
+:sectnums:
+:toc:
 
 == Общая информация
 
