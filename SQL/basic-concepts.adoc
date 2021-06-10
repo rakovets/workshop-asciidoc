@@ -531,7 +531,7 @@ ORDER BY released
 
 [source,sql]
 ----
-SELECT * FROM albums WHERE genre IN (‘pop’,‘soul’);
+SELECT * FROM albums WHERE genre IN ('pop','soul');
 ----
 
 Если необходимо вывести все альбомы, которые были выпущены в промежутке между 1975 и 1985 годом, можно использовать следующую запись:
@@ -545,7 +545,7 @@ SELECT * FROM albums WHERE released BETWEEN 1975 AND 1985;
 
 [source,sql]
 ----
-SELECT * FROM albums WHERE album LIKE ‘%R%’;
+SELECT * FROM albums WHERE album LIKE '%R%';
 ----
 
 Знак % означает любую последовательность символов (0 символов тоже считается за последовательность).
@@ -553,7 +553,7 @@ SELECT * FROM albums WHERE album LIKE ‘%R%’;
 
 [source,sql]
 ----
-SELECT * FROM albums WHERE album LIKE ‘R%’;
+SELECT * FROM albums WHERE album LIKE 'R%';
 ----
 
 В SQL также есть инверсия.
