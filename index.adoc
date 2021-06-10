@@ -8,6 +8,10 @@
 
 Wiki for lab.
 
-include::application-architecture/client-server-architecture.adoc[leveloffset=1]
-include::http-protocol/http-protocol.adoc[leveloffset=2 ]
+:leveloffset: +1
 
+include::application-architecture/client-server-architecture.adoc[]
+
+include::http/http.adoc[]
+
+:leveloffset: -1
