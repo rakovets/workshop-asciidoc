@@ -8,4 +8,10 @@
 
 Wiki for lab.
 
-include::application-architecture/client-server-architecture.adoc[leveloffset=1]
+:leveloffset: +1
+
+include::application-architecture/client-server-architecture.adoc[]
+
+include::sql/basic-concepts.adoc[]
+
+:leveloffset: -1
