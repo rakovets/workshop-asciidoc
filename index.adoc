@@ -14,4 +14,8 @@ include::application-architecture/client-server-architecture.adoc[]
 
 include::http/http.adoc[]
 
+include::sql/basic-concepts.adoc[]
+
+include::sql/simple-sql-requests.adoc[]
+
 :leveloffset: -1
