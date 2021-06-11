@@ -12,6 +12,8 @@ Wiki for lab.
 
 include::application-architecture/client-server-architecture.adoc[]
 
+include::sql/basic-concepts.adoc[]
+
 include::http/http.adoc[]
 
 :leveloffset: -1
