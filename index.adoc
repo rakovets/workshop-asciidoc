@@ -1,5 +1,6 @@
 = Wiki for lab
-:source-highlighter: prettify
+:source-highlighter: highlight.js
+:highlightjs-languages: java, sql, sh, shell
 :sectnums:
 :toc: left
 :toclevels: 2
@@ -13,6 +14,11 @@ include::application-architecture/client-server-architecture.adoc[]
 
 include::http/http.adoc[]
 
-include::css/basics.adoc[]
+include::html/basics.adoc[]
 
-leveloffset: -1
+include::sql/basic-concepts.adoc[]
+
+include::sql/simple-sql-requests.adoc[]
+
+:leveloffset: -1
+
