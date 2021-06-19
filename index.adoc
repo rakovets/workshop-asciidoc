@@ -4,7 +4,6 @@
 :sectnums:
 :toc: left
 :toclevels: 2
-
 :toc!:
 
 Wiki for lab.
@@ -22,3 +21,4 @@ include::sql/basic-concepts.adoc[]
 include::sql/simple-sql-requests.adoc[]
 
 :leveloffset: -1
+
