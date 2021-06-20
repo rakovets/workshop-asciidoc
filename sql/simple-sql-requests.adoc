@@ -1548,7 +1548,7 @@ ADD CONSTRAINT FK_UsersInvoice
 FOREIGN KEY (user_id) REFERENCES Users(user_id);
 ----
 
-=== Удаление ограничения`FOREIGN KEY`
+=== Удаление ограничения `FOREIGN KEY`
 
 Чтобы удалить ограничение `FOREIGN KEY`, используйте следующий:
 
