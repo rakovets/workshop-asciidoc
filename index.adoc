@@ -17,11 +17,11 @@ include::http/http.adoc[]
 
 include::html/basics.adoc[]
 
+include::css/basics.adoc[]
+
 include::sql/basic-concepts.adoc[]
 
 include::sql/simple-sql-requests.adoc[]
-
-include::css/basics.adoc[]
 
 :leveloffset: -1
 
