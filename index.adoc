@@ -19,7 +19,9 @@ include::html/basics.adoc[]
 
 include::css/basics.adoc[]
 
-include::js/basics.adoc[]
+include::js/bom.adoc[]
+
+include::js2/basics.adoc[]
 
 include::sql/basic-concepts.adoc[]
 
