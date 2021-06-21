@@ -1,0 +1,413 @@
+= Работа с браузером и BOM
+:imagesdir: ../assets/img/js
+
+== Browser Object Model и объект window
+
+Большое значение в JavaScript имеет работа с веб-браузером и теми объектами, которые он предоставляет. Например, использование объектов браузера позволяет манипулировать элементами html, которые имеются на странице, или взаимодействовать с пользователем.
+
+Все объекты, через которые JavaScript взаимодействует с браузером, описываются таким понятием как *Browser Object Model* (*Объектная Модель Браузера*).
+
+Browser Object Model можно представить в виде следующей схемы:
+
+image::bom.png[Browser Object Model in JavaScript, align=center]
+
+В вершине находится главный объект — объект `window`, который представляет собой браузер. Этот объект в свою очередь включает ряд других объектов, в частности, объект `document`, который представляет отдельную веб-страницу, отображаемую в браузере.
+
+=== Объект window
+
+Объект `window` представляет собой окно веб-браузера, в котором размещаются веб-страницы. `window` является глобальным объектом, поэтому при доступе к его свойствам и методам необязательно использовать его имя. Например, `window` имеет метод `alert()`, который отображает окно сообщения. Но нам необязательно писать:
+
+[source, javascript]
+----
+window.alert("Привет мир!");
+----
+
+`window` можно не использовать:
+
+[source, javascript]
+----
+alert("Привет мир!");
+----
+
+Но так как данный объект глобальный, то это накладывает некоторые ограничения. Например:
+
+[source, javascript]
+----
+var alert = function(message) {
+    document.write("Сообщение: " + message);
+};
+window.alert("Привет мир!");
+----
+
+Все объявляемые в программе глобальные переменные или функции автоматически добавляются к объекту `window`. И поскольку название новой функции будет совпадать с названием метода `alert()`, то произойдет переопределение этого метода в объекте window новой функцией.
+
+И если мы объявим в программе какую-нибудь глобальную переменную, то она нам доступна как свойство в объекте `window`:
+
+[source, javascript]
+----
+var message = "hello";
+document.write(window.message);
+----
+
+== Управление окнами
+
+=== Диалоговые окна
+
+Для взаимодействия с пользователем в объекте `window` определен ряд методов, которые позволяют создавать диалоговые окна.
+
+Метод `alert()` выводит окно с сообщением:
+
+[source, javascript]
+----
+alert("hello world");
+----
+
+Метод `confirm()` отображает окно с сообщением, в котором пользователь должен подтвердить действие двух кнопок OK и Отмена. В зависимости от выбора пользователя метод возвращает true (если пользователь нажал OK) или false (если пользователь нажал кнопку Отмены):
+
+[source, javascript]
+----
+var result = confirm("Завершить выполнение программы?");
+if(result===true)
+    document.write("Работа программы завершена");
+else
+    document.write("Программа продолжает работать");
+----
+
+image::confirm.png[Функция confirm в JavaScript, align=center]
+
+
+И метод `prompt()` позволяет с помощью диалогового окна запрашивать у пользователя какие-либо данные. Данный метод возвращает введенное пользователем значение:
+
+[source, javascript]
+----
+var age = prompt("Введите свой возраст:");
+document.write("Вам " + age + " лет");
+----
+
+Если пользователь откажется вводить значение и нажмет на кнопку отмены, то метод возвратит значение *null*.
+
+image::prompt.png[Функция prompt в JavaScript, align=center]
+
+=== Открытие, закрытие и позиционирование окон
+
+Объект `window` также предоставляет ряд методов для управления окнами браузера. Так, метод `open()` открывает определенный ресурс в новом окне браузера:
+
+[source, javascript]
+----
+var popup = window.open('https://microsoft.com', 'Microsoft', 'width=400, height=400, resizable=yes');
+----
+
+Метод `open()` принимает ряд параметров: путь к ресурсу, описательное название для окна и в качестве третьего параметра набор стилевых значений окна. Метод возвращает ссылку на объект нового окна.
+
+Мы можем установить следующие стилевые характеристики:
+
+* *width*: ширина окна в пикселях. Например, width=640
+* *height*: высота окна в пикселях. Например, height=480
+* *left*: координата X относительно начала экрана в пикселях. Например, left=0
+* *top*: координата Y относительно начала экрана в пикселях. Например, top=0
+* *titlebar*: будет ли окно иметь строку с заголовком. Например, titlebar=no
+* *menubar*: будет ли окно иметь панель меню. Например, menubar=yes
+* *toolbar*: будет ли окно иметь панели инструментов. Например, toolbar=yes
+* *location*: будет ли окно иметь адресную строку. Например, location=no
+* *scrollbars*: допускается ли наличие полос прокрутки. Например, scrollbars=yes
+* *status*: наличие статусной строки. Например, status=yes
+* *resizable*: может ли окно изменять размеры. Например, resizable=no
+
+С помощью метода `close()` можно закрыть окно. Например, откроем новое окно и через 10 секунд закроем его:
+
+[source, javascript]
+----
+var popup = window.open('https://microsoft.com', 'Microsoft', 'width=400, height=400, resizable=yes');
+function closeWindow(){
+    popup.close();
+}
+setTimeout(closeWindow, 10000);
+----
+
+Метод `moveTo()` позволяет переместить окно на новую позицию:
+
+[source, javascript]
+----
+var popup = window.open('https://microsoft.com', 'Microsoft', 'width=400, height=400, resizable=yes');
+popup.moveTo(50,50);
+----
+
+В данном случае окно перемещается на позицию с координатами *x=50*, *y=50* относительно левого верхнего угла экрана.
+
+Метод `resizeTo()` позволяет изменить размеры окна:
+
+[source, javascript]
+----
+var popup = window.open('https://microsoft.com', 'Microsoft', 'width=400, height=400, resizable=yes');
+popup.resizeTo(500,350); // 500 - ширина и 350 - высота
+----
+
+== История браузера. Объект history
+
+Объект `history` предназначен для хранения истории посещений веб-страниц в браузере. Нам этот объект доступен через объект `window`.
+
+Все сведения о посещении пользователя хранятся в специальном стеке (history stack). С помощью свойства `length` можно узнать, как много веб-станиц хранится в стеке:
+
+[source, javascript]
+----
+document.write("В истории " + history.length + " станиц");
+----
+
+Для перемещения по страницам в истории в объекте history определены методы `back()` (перемещение к прошлой посмотренной странице) и `forward()` (перемещение к следующей просмотренной странице)
+
+[source, javascript]
+----
+history.back(); // перемещение назад
+----
+
+Также в объекте history определен специальный метод `go()`, который позволяет перемещаться вперед и назад по истории на определенное число страниц. Например, переместимся на 2 страницы назад:
+
+[source, javascript]
+----
+history.go(-2);
+----
+
+Соответственно если надо переместиться на несколько страниц вперед, то в метод передается положительное значение. Например, переместимся вперед на три страницы:
+
+[source, javascript]
+----
+history.go(3);
+----
+
+== Объект location
+
+Объект `location` содержит информацию о расположении текущей веб-страницы: URL, информацию о сервере, номер порта, протокол. С помощью свойств объекта мы можем получить эту информацию:
+
+* *href*: полная строка запроса к ресурсу
+* *pathname*: путь к ресурсу
+* *origin*: общая схема запроса
+* *protocol*: протокол
+* *port*: порт, используемый ресурсом
+* *host*: хост
+* *hostname*: название хоста
+* *hash*: если строка запроса содержит символ решетки (#), то данное свойство возвращает ту часть строки, которая идет после этого символа
+* *search*: если строка запроса содержит знак вопроса (?), например, то данное свойство возвращает ту часть строки, которая идет после знака вопроса
+
+Например, пусть есть следующая веб-страница _test.html_, которая лежит на локальном веб-сервере:
+
+[source, html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <script>
+        document.write("Строка запроса: " + location.href + "<br />");
+        document.write("Путь к ресурсу: " + location.pathname + "<br />");
+        document.write("Схема: " + location.origin + "<br />");
+        document.write("Протокол: " + location.protocol + "<br />");
+        document.write("Порт: " + location.port + "<br />");
+        document.write("Хост: " + location.host + "<br />");
+        document.write("Имя хоста: " + location.hostname + "<br />");
+        document.write("Хэш: " + location.hash + "<br />");
+        document.write("Поиск: " + location.search + "<br />");
+    </script>
+</body>
+</html>
+----
+
+image::location.png[Объект location в JavaScript, align=center]
+
+
+Также объект `location` предоставляет ряд методов, которые можно использовать для управления путем запроса:
+
+* *assign(url)*: загружает ресурс, который находится по пути url
+* *reload(forcedReload)*: перезагружает текущую веб-страницу. Параметр `forcedReload` указывает, надо ли использовать кэш браузера. Если параметр равен true, то кэш не используется
+* *replace(url)*: заменяет текущую веб-станицу другим ресурсом, который находится по пути url. В отличие от метода `assign`, который также загружает веб-станицу с другого ресурса, метод `replace` не сохраняет предыдущую веб-страницу в стеке истории переходов `history`, поэтому мы не сможем вызвать метод `history.back()` для перехода к ней.
+
+Для перенаправления на другой ресурс мы можем использовать как свойства, так и методы `location`:
+
+[source, javascript]
+----
+location = "http://google.com";
+// аналогично
+// location.href = "http://google.com";
+// location.assign("http://google.com");
+----
+
+Переход на другой локальный ресурс:
+
+[source, javascript]
+----
+location.replace("index.html");
+----
+
+== Объект navigator
+
+Объект `navigator` содержит информацию о браузере и операционной системе, в которой браузер запущен. Он определяет ряд свойств и методов, основным из которых является свойство `userAgent`, представляющее браузер пользователя:
+
+[source, javascript]
+----
+document.write(navigator.userAgent);
+----
+
+Данное свойство хранит полную стоку юзер-агента, например, `Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36`
+
+Чтобы вычленить из этой информации непосредственно браузер, можно попробовать найти в этой информации название браузера:
+
+[source, javascript]
+----
+var browser, uAgent = navigator.userAgent;
+
+if(uAgent.indexOf("Chrome") > -1) {
+    browser = "Google Chrome";
+} else if (uAgent.indexOf("Safari") > -1) {
+    browser = "Apple Safari";
+} else if (uAgent.indexOf("Opera") > -1) {
+    browser = "Opera";
+} else if (uAgent.indexOf("Firefox") > -1) {
+    browser = "Mozilla Firefox";
+} else if (uAgent.indexOf("MSIE") > -1) {
+    browser = "Microsoft Internet Explorer";
+}
+document.write(browser);
+----
+
+=== Объект geolocation
+
+Объект `navigator` хранит свойство `geolocation`, с помощью которого можно получить географическое положение пользователя. Для получения положения используется метод `getCurrentPosition()`. Этот метод принимает два параметра: функцию, которая срабатывает при удачном запуске, и функцию, которая срабатывает при ошибке запроса геоданных:
+
+[source, javascript]
+----
+function success(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var altitude = position.coords.altitude;
+    var speed = position.coords.speed;
+
+    document.write("Широта: " + latitude + "<br/>");
+    document.write("Долгота: " + longitude + "<br/>");
+    document.write("Высота: " + altitude + "<br/>");
+    document.write("Скорость перемещения: " + speed + "<br/>");
+};
+
+function error(obj) {
+    document.write("Ошибка при определении положения");
+};
+navigator.geolocation.getCurrentPosition(success, error);
+----
+
+В функцию, которая выполняется при удачном определении геоданных, передается позиция пользователя в виде параметра position. Передаваемый объект имеет вложенный объект `coords`, с помощью свойство которого можно получить непосредственные координаты пользователя:
+
+* latitude: географическая широта
+* longitude: географическая долгота
+* altitude: высота
+* speed: скорость, с которой перемещается пользователь (например, если он идет или перемещается на транспорте)
+
+При этом надо учитывать, что в браузерах действует политика безопасности, которая при обращении к методу `geolocation.getCurrentPosition()` отображает пользователю сообщение, в котором пользователь может подтвердить отправку географических координат. Если же пользователь откажется, то будет срабатывать функция `error()`.
+
+image::geolocation.png[Объект geolocation в JavaScript, align=center]
+
+== Таймеры
+
+Для выполнения действий через определенные промежутки времени в объекте `window` предусмотрены функции *таймеров*. Есть два типа таймеров: одни выполняются только один раз, а другие постоянно через промежуток времени.
+
+=== Функция setTimeout
+
+Для одноразового выполнения действий через промежуток времени предназначена функция `setTimeout()`. Она может принимать два параметра:
+
+[source, javascript]
+----
+var timerId = setTimeout(someFunction, period)
+----
+
+Параметр `period` указывает на промежуток, через который будет выполняться функция из параметра `someFunction`. А в качестве результата функция возвращает `id` таймера.
+
+[source, javascript]
+----
+function timerFunction() {
+    document.write("выполнение функции setTimeout");
+}
+setTimeout(timerFunction, 3000);
+----
+
+В данном случае через 3 секунды после загрузки страницы произойдет срабатывание функции `timerFunction`.
+
+Для остановки таймера применяется функция `clearTimeout()`.
+
+[source, javascript]
+----
+function timerFunction() {
+    document.write("выполнение функции setTimeout");
+}
+var timerId = setTimeout(timerFunction, 3000);
+clearTimeout(timerId);
+----
+
+=== Функция setInterval
+
+Функции `setInterval()` и `clearInterval()` работают аналогично функциям `setTimeout()` и `clearTimeout()` с той лишь разницей, что `setInterval()` постоянно выполняет определенную функцию через промежуток времени.
+
+Например, напишем небольшую программу для вывода текущего времени:
+
+[source, html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="time"></div>
+    <script>
+        function updateTime() {
+            document.getElementById("time").innerHTML = new Date().toTimeString();
+}
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
+----
+
+Здесь через каждую секунду (1000 миллисекунд) вызывается функция `updateTime()`, которая обновляет содержимое поля `<div id="time" >`, устанавливая в качестве его кода html текущее время.
+
+=== requestAnimationFrame()
+
+Метод `requestAnimationFrame()` действует аналогично `setInterval()` за тем исключением, что он больше заточен под анимацию, работу с графикой и имеет ряд оптимизаций, которые улучшают его производительность.
+
+[source, html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+    #rect {
+        margin: 100px;
+        width: 100px;
+        height: 100px;
+        background: #50c878;
+    }
+    </style>
+</head>
+<body>
+    <div id="rect"></div>
+    <script>
+        var square = document.getElementById("rect");
+        var angle = 0;
+        function rotate() {
+            angle = (angle + 2)%360;
+            square.style.transform = "rotate(" + angle + "deg)";
+            window.requestAnimationFrame(rotate);
+        }
+        var id = window.requestAnimationFrame(rotate);
+    </script>
+</body>
+</html>
+----
+
+В метод `window.requestAnimationFrame()` передается функция, которая будет вызываться определенное количество раз (обычно 60) в секунду. В данном случае в этот метод передается функция `rotate`, которая изменяет угол поворота блока на странице и затем обращается опять же к методу `window.requestAnimationFrame(rotate)`.
+
+В качестве возвращаемого результата метод `window.requestAnimationFrame()` возвращает уникальный `id`, который может потом использоваться для остановки анимации:
+
+[source, javascript]
+----
+window.cancelAnimationFrame(id);
+----
