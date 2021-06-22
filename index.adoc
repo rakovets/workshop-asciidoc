@@ -1,6 +1,5 @@
 = Wiki for lab
-:source-highlighter: highlight.js
-:highlightjs-languages: java, sql, sh, shell
+:source-highlighter: prettify
 :sectnums:
 :toc: left
 :toclevels: 2
