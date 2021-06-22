@@ -1,0 +1,189 @@
+= Агрегатные функции и группировка
+
+== Агрегатные функции
+
+=== Функции `MIN()` и `MAX()`
+
+Функция `MIN()` возвращает наименьшее значение выбранного столбца. Функция `MAX()` возвращает наибольшее значение выбранного столбца.
+
+*Синтаксис `MIN()`:*
+
+[source,sql]
+----
+SELECT MIN(column_name)
+FROM table_name
+WHERE condition;
+----
+
+*Пример `MIN()`:*
+
+[source,sql]
+----
+SELECT MIN(price) AS min_price
+FROM product;
+----
+
+*Синтаксис `MAX()`:*
+
+[source,sql]
+----
+SELECT MAX(column_name)
+FROM table_name
+WHERE condition;
+----
+
+*Пример `MAX()`*
+
+[source,sql]
+----
+SELECT MAX(price) AS max_price
+FROM product;
+----
+
+=== Функция `COUNT()`
+
+Функция `COUNT()` возвращает количество строк, соответствующих заданным критериям.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;
+----
+
+*Пример:*
+
+Следующий оператор SQL находит количество товаров.
+
+[source,sql]
+----
+SELECT COUNT(product_id)
+FROM product;
+----
+
+=== Функция `AVG()`
+
+Функция `AVG()` возвращает среднее значение числового столбца.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT AVG(column_name)
+FROM table_name
+WHERE condition;
+----
+
+*Например* найдем среднюю стоимость товара:
+
+[source,sql]
+----
+SELECT AVG(price)
+FROM product;
+----
+
+=== Функция `SUM()`
+
+Функция `SUM()` возвращает общую сумму числового столбца.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+----
+
+*Пример*, найдем сумму полей доставка `delivery` в таблице `invoice`:
+
+[source,sql]
+----
+SELECT SUM(delivery)
+FROM invoice;
+----
+
+== Группировка
+
+Оператор `GROUP BY` часто используется с агрегатными функциями (`COUNT`, `MAX`, `MIN`, `SUM`, `AVG`) для группировки результирующего набора одним или несколькими столбцами.
+
+=== Синтаксис `GROUP BY`
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
+----
+
+=== Пример SQL `GROUP BY`
+
+В следующем выражении указано количество пользователей в каждой стране:
+
+[source,sql]
+----
+SELECT COUNT(use_id), country
+FROM users
+GROUP BY country;
+----
+
+В следующем SQL-заявлении указано количество пользователей в каждой стране, отсортированных по высоким и низким:
+
+[source,sql]
+----
+SELECT COUNT(user_id), country
+FROM users
+GROUP BY country
+ORDER BY COUNT(user_id) DESC;
+----
+
+=== Оператор`GROUP BY` с `JOIN`
+
+В следующем выражении указано количество заказов, отправленных каждой службой доставки:
+
+[source,sql]
+----
+SELECT delivery.name, COUNT(invoice.delivery_id) AS orders FROM invoice
+LEFT JOIN delivery ON invoice.delivery_id = delivery.delivery_id
+GROUP BY name;
+----
+
+== Предложение `HAVING`
+
+Предложение `HAVING` используется в SQL, для работы с агрегатными функциями, так как `WHERE` не могло с ними использоваться.
+
+*Синтаксис:*`
+[source,sql]
+----
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+----
+
+*Пример*, в следующем SQL-заявлении указано количество пользователей в каждой стране. Включать только страны с более чем 7 клиентами:
+
+[source,sql]
+----
+SELECT COUNT(user_id), country
+FROM users
+GROUP BY country
+HAVING COUNT(user_id) > 7;
+----
+
+В следующем SQL-заявлении указано количество пользователей в каждой стране, отсортированные по высоким и низким.
+
+[source,sql]
+----
+SELECT COUNT(user_id), country
+FROM users
+GROUP BY country
+HAVING COUNT(user_id) > 7
+ORDER BY COUNT(user_id) DESC;
+----

@@ -13,19 +13,15 @@ Wiki for lab.
 
 include::application-architecture/client-server-architecture.adoc[]
 
-include::http/http.adoc[]
+include::web/http.adoc[]
 
-include::html/basics.adoc[]
+include::web/html.adoc[]
 
-include::css/basics.adoc[]
+include::web/css.adoc[]
 
-include::js/bom.adoc[]
+include::js/index.adoc[]
 
-include::js2/basics.adoc[]
-
-include::sql/basic-concepts.adoc[]
-
-include::sql/simple-sql-requests.adoc[]
+include::sql/index.adoc[]
 
 :leveloffset: -1
 

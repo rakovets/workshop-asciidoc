@@ -1,5 +1,5 @@
 = Основы HTML
-:imagesdir: ../assets/img/html
+:imagesdir: ../assets/img/web/html
 
 *HTML* (*HyperText Markup Language*) представляет *язык разметки гипертекста*, используемый преимущественно для создания документов в сети интернет.
 
