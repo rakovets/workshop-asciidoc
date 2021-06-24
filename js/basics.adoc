@@ -572,7 +572,7 @@ console.log(fullname); //Том256
 
 *И консоль браузера выведет:*
 
-image::operations-with-variables.png[архитектура http протокола, align=center]
+image::operations-with-variables.png[Результат операций с переменными, align=center]
 
 == Преобразование данных
 
@@ -672,11 +672,11 @@ console.log(num2); // 6
 
 После открытия страницы в браузере увидим приглашение к вводу суммы вклада:
 
-image::invitation-enter-deposit-amount.png[архитектура http протокола, align=center]
+image::invitation-enter-deposit-amount.png[приглашение к вводу суммы, align=center]
 
 Затем подобное сообщение отобразится и для ввода процента. И в конце программа получит данные, преобразует их в числа и выполнит подсчет:
 
-image::counting-results.png[архитектура http протокола, align=center]
+image::counting-results.png[результаты подсчета, align=center]
 
 == Массивы
 
