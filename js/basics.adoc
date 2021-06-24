@@ -1,4 +1,5 @@
 = Основы JavaScript
+:imagesdir: ../assets/img/js
 
 == Переменные и константы
 
