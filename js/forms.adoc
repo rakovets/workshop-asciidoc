@@ -1,0 +1,692 @@
+== Работа с формами
+=== Формы и их элементы
+
+Один из способов взаимодействия с пользователями представляют html-формы. Например, если нам надо получить от пользователя некоторую информацию, мы можем определить на веб-странице формы, которая будет содержать текстовые поля для ввода информации и кнопку для отправки. И после ввода данных мы можем обработать введенную информацию.
+
+Для создания формы используется элемент <form>:
+
+[source, javascript]
+----
+<form name="search">
+</form>
+----
+
+В JavaScript форма представлена объектом HtmlFormElement. И после создания формы мы можем к ней обратиться различными способами.
+
+Первый способ заключается в прямом обращении по имени формы:
+
+
+[source, javascript]
+----
+
+var searchForm = document.search;
+----
+
+Второй способ состоит в обращении к коллекции форм документа и поиске в ней нужной формы:
+
+[source, javascript]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search"></form>
+<form name="settings"></form>
+<script>
+var searchForm;
+for (var i = 0; i < document.forms.length; i++) {
+
+    if(document.forms[i].name==="search")
+        searchForm = document.forms[i];
+}
+document.write(searchForm.name);
+</script>
+</body>
+</html>
+----
+
+С помощью свойства name объекта формы мы можем получить значение атрибута name у соответствующего элемента формы в коде html.
+
+Еще один способ сочетает оба подхода:
+
+[source, javascript]
+----
+var searchForm = document.forms["search"];
+----
+
+И также можно применять стандартные способы для поиска элемента формы, например, по id, по тегу или по селектору. Например:
+
+[source, javascript]
+----
+var searchForm = document.getElementsByTagname("form")[0]
+----
+
+
+Форма имеет ряд свойств, из которых наиболее важными являются вышерассмотренное свойство name, а также свойство elements, которое содержит коллекцию элементов формы:
+
+
+[source, javascript]
+----
+<form name="search">
+<input type="text" name="key"></input>
+<input type="submit" name="send"></input>
+</form>
+<script>
+var searchForm = document.forms["search"];
+for(var i=0; i<searchForm.elements.length;i++)
+document.write(searchForm.elements[i].name + "<br/>");
+</script>
+----
+
+Среди методов формы надо отметить метод submit(), который отправляет данные формы на сервер, и метод reset(), который очищает поля формы:
+
+[source, javascript]
+----
+var searchForm = document.forms["search"];
+searchForm.submit();
+searchForm.reset();
+----
+
+
+=== Элементы форм
+
+Форма может содержать различные элементы ввода html: input, textarea, button, select и т.д. Но все они имеют ряд общих свойств и методов.
+
+Также, как и форма, элементы форм имеют свойство name, с помощью которого можно получить значение атрибута name:
+
+[source, javascript]
+----
+<form name="search">
+<input type="text" name="key" value="hello world"></input>
+<input type="submit" name="send"></input>
+</form>
+<script>
+var searchForm = document.forms["search"];
+// выведем имя всех элементов
+for(var i=0; i<searchForm.elements.length;i++)
+document.write(searchForm.elements[i].name + "<br/>");
+
+// получим по имени текстовое поле
+var keyBox = searchForm.elements["key"];
+document.write(keyBox.name); // key
+</script>
+----
+
+Другим важным свойством является свойство value, которое позволяет получить или изменить значение поля:
+
+[source, javascript]
+----
+var searchForm = document.forms["search"];
+var keyBox = searchForm.elements["key"];
+document.write(keyBox.value); // hello world
+// установка значения
+keyBox.value = "Привет мир";
+----
+
+С помощью свойства form можно получить родительский объект формы:
+
+[source, javascript]
+----
+var searchForm = document.forms["search"];
+var keyBox = searchForm.elements["key"];
+document.write(keyBox.form.name); // search
+----
+
+Данное свойство может быть полезно, например, при отправке формы, когда перед непосредственной отправкой формы необходимо провести валидацию всех полей формы.
+
+Свойство type позволяет получить тип поля ввода. Это либо название тега элемента (например, textarea), либо значение атрибута type у элементов input.
+
+Из методов можно выделить методы focus() (устанавливает фокус на элемент) и blur() (убирает фокус с элемента):
+
+[source, javascript]
+----
+var searchForm = document.forms["search"];
+var keyBox = searchForm.elements["key"];
+keyBox.focus();
+----
+
+
+=== Кнопки
+
+Для отправки введенных данных на форме используются кнопки. Для создания кнопки используется либо элемент button:
+
+[source, javascript]
+----
+<button name="send">Отправить</button>
+----
+
+Либо элемент input:
+
+[source, javascript]
+----
+<input type="submit" name="send" value="Отправить" />
+----
+
+С точки зрения функциональности в html эти элементы не совсем равноценны, но в данном случае они нас интересуют с точки зрения взаимодействия с кодом javascript.
+
+При нажатии на любой из этих двух вариантов кнопки происходит отправка формы по адресу, который указан у формы в атрибуте action, либо по адресу веб-страницы, если атрибут action не указан. Однако в коде javascript мы можем перехватить отправку, обрабатывая событие click
+
+[source, javascript]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+    <input type="text" name="key"></input>
+    <input type="submit" name="send" value="Отправить" />
+</form>
+<script>
+function sendForm(e){
+
+    // получаем значение поля key
+    var keyBox = document.search.key;
+    var val = keyBox.value;
+    if(val.length>5){
+        alert("Недопустимая длина строки");
+        e.preventDefault();
+    }
+    else
+        alert("Отправка разрешена");
+}
+
+var sendButton = document.search.send;
+sendButton.addEventListener("click", sendForm);
+</script>
+</body>
+</html>
+----
+
+При нажатии на кнопку происходит событие click, и для его обработки к кнопке прикрепляем обработчик sendForm. В этом обработчике проверяем введенный в текстовое поле текст. Если его длина больше 5 символов, то выводим сообщение о недостимой длине и прерываем обычный ход события с помощью вызова e.preventDefault(). В итоге форма не отправляется.
+
+Если же длина текста меньше шести символов, то также выводится сообщение, и затем форма отправляется.
+
+Также мы можем при необходимости при отправке изменить адрес, на который отправляются данные:
+
+[source, javascript]
+----
+function sendForm(e){
+
+    // получаем значение поля key
+    var keyBox = document.search.key;
+    var val = keyBox.value;
+    if(val.length>5){
+        alert("Недопустимая длина строки");
+        document.search.action="PostForm";
+    }
+    else
+        alert("Отправка разрешена");
+}
+----
+
+
+В данном случае, если длина текста больше пяти символов, то текст отправляется, только теперь он отправляется по адресу PostForm, поскольку задано свойство action:
+
+
+[source, javascript]
+----
+document.search.action="PostForm";
+----
+
+Для очистки формы предназначены следующие равноценные по функциональности кнопки:
+
+
+[source, javascript]
+----
+<button type="reset">Очистить</button>
+<input type="reset" value="Очистить" />
+----
+
+При нажатию на кнопки произойдет очистка форм. Но также функциональность по очистке полей формы можно реализовать с помощью метода reset():
+
+
+[source, javascript]
+----
+function sendForm(e){
+
+    // получаем значение поля key
+    var keyBox = document.search.key;
+    var val = keyBox.value;
+    if(val.length>5){
+        alert("Недопустимая длина строки");
+        document.search.reset();
+        e.preventDefault();
+    }
+    else
+        alert("Отправка разрешена");
+}
+----
+
+Кроме специальных кнопок отправки и очистки на форме также может использоваться обычная кнопка:
+
+[source, javascript]
+----
+<input type="button" name="send" value="Отправить" />
+----
+
+При нажатии на подобную кнопку отправки данных не происходит, хотя также генерируется событие click:
+
+
+[source, javascript]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+    <input type="text" name="key" placeholder="Введите ключ"></input>
+    <input type="button" name="print" value="Печать" />
+</form>
+<div id="printBlock"></div>
+<script>
+function printForm(e){
+
+    // получаем значение поля key
+    var keyBox = document.search.key;
+    var val = keyBox.value;
+    // получаем элемент printBlock
+    var printBlock = document.getElementById("printBlock");
+    // создаем новый параграф
+    var pElement = document.createElement("p");
+    // устанавливаем у него текст
+    pElement.textContent = val;
+    // добавляем параграф в printBlock
+    printBlock.appendChild(pElement);
+}
+
+var printButton = document.search.print;
+printButton.addEventListener("click", printForm);
+</script>
+</body>
+</html>
+----
+
+При нажатии на кнопку получаем введенный в текстовое поле текст, создаем новый элемент параграфа для этого текста и добавляем параграф в элемент printBlock.
+
+=== Текстовые поля
+
+Для ввода простейшей текстовой информации предназначены элементы <input type="text":
+
+[source, javascript]
+----
+<input type="text" name="kye" size="10" maxlength="15" value="hello world" />
+----
+
+Данный элемент поддерживает ряд событий, в частности:
+
+focus: происходит при получении фокуса
+
+blur: происходит при потере фокуса
+
+change: происходит при изменении значения поля
+
+select: происходит при выделении текста в текстовом поле
+
+keydown: происходит при нажатии клавиши клавиатуры
+
+keypress: происходит при нажатии клавиши клавиатуры для печатаемых символов
+
+keyup: происходит при отпускании ранее нажатой клавиши клавиатуры
+
+Применим ряд событий:
+
+
+[source, javascript]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+    <input type="text" name="key" placeholder="Введите ключ"></input>
+    <input type="button" name="print" value="Печать" />
+</form>
+<div id="printBlock"></div>
+<script>
+var keyBox = document.search.key;
+
+// обработчик изменения текста
+function onchange(e){
+    // получаем элемент printBlock
+    var printBlock = document.getElementById("printBlock");
+    // получаем новое значение
+    var val = e.target.value;
+    // установка значения
+    printBlock.textContent = val;
+}
+// обработка потери фокуса
+function onblur(e){
+
+    // получаем его значение и обрезаем все пробелы
+    var text = keyBox.value.trim();
+    if(text==="")
+        keyBox.style.borderColor = "red";
+    else
+        keyBox.style.borderColor = "green";
+}
+// получение фокуса
+function onfocus(e){
+
+    // установка цвета границ поля
+    keyBox.style.borderColor = "blue";
+}
+keyBox.addEventListener("change", onchange);
+keyBox.addEventListener("blur", onblur);
+keyBox.addEventListener("focus", onfocus);
+</script>
+</body>
+</html>
+----
+
+Здесь к текстовому полю прикрепляется три обработчика для событий blur, focus и change. Обработка события change позволяет сформировать что-то вроде привязки: при изменении текста весь текст отображается в блоке printBlock. Но надо учитывать, что событие change возникает не сразу после изменения текста, а после потери им фокуса.
+
+Обработка события потери фокуса blur позволяет провести валидацию введенного значения. Например, в данном случае если текст состоит из пробелов или не был введен, то окрашиваем границу поля в красный цвет.
+
+Кроме данного текстового поля есть еще специальные поля ввода. Так, поле <input type="password" предназначено для ввода пароля. По функциональности оно во многом аналогично обычному текстовому полю за тем исключением, что для вводимых символов используется маска:
+
+[source, javascript]
+----
+<input type="password" name="password" />
+----
+
+Если нам надо, чтобы на форме было некоторое значение, но чтобы оно было скрыто от пользователя, то для этого могут использоваться скрытые поля:
+
+[source, javascript]
+----
+<input type="hidden" name="id" value="345" />
+----
+
+Для скрытого поля обычно не используется обработка событий, но также, как и для других элементов, мы можем в javascript получить его значение или изменить его.
+
+=== Элемент textarea
+
+Для создания многострочных текстовых полей используется элемент textarea:
+
+[source, javascript]
+----
+<textarea rows="15" cols="40" name="textArea"></textarea>
+----
+
+Данные элемент генерирует все те же самые события, что и обычное текстовое поле:
+
+[source, javascript]
+----
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+<textarea rows="7" cols="40" name="message"></textarea>
+</form>
+<div id="printBlock"></div>
+<script>
+var messageBox = document.search.message;
+
+// обработчик ввода символа
+function onkeypress(e){
+// получаем элемент printBlock
+var printBlock = document.getElementById("printBlock");
+// получаем введенный символ
+var val = String.fromCharCode(e.keyCode);
+// добавление символа
+printBlock.textContent += val;
+}
+
+function onkeydown(e){
+if(e.keyCode===8){ // если нажат Backspace
+
+        // получаем элемент printBlock
+        var printBlock = document.getElementById("printBlock"),
+            length = printBlock.textContent.length;
+        // обрезаем строку по последнему символу
+        printBlock.textContent = printBlock.textContent.substring(0, length-1);
+    }
+}
+
+messageBox.addEventListener("keypress", onkeypress);
+messageBox.addEventListener("keydown", onkeydown);
+</script>
+</body>
+</html>
+----
+
+Здесь к текстовому полю прикрепляются обработчики для событий keypress и keydown. В обработчике keypress получаем введенный символ с помощью конвертации числового кода клавиши в строку:
+
+[source, javascript]
+----
+var val = String.fromCharCode(e.keyCode);
+----
+
+Затем символ добавляется к содержимому блока printBlock.
+
+Событие keypress возникает при нажатии на клавиши для печатаемых символов, то такие символы отображаются в текстовом поле. Однако есть и другие клавиши, которые оказывают влияние на текстовое поле, но они не дают отображаемого символа, поэтому не отслеживаются событием keypress. К таким клавишам относится клавиша Backspace, которая удаляет последний символ. И для ее отслеживания также обрабатываем событие keydown. В обработчике keydown удаляем из строки в блоке printBlock последний символ.
+
+
+== Флажки и переключатели
+
+Особую группу элементов ввода составляют флажки и переключатели.
+
+Флажки представляют поле, в которое можно поставить отметки и которое создается с помощью элемента <input type="checkbox". Отличительную особенность флажка составляет свойство checked, которое в отмеченном состоянии принимает значение true:
+
+[source, javascript]
+----
+<form name="myForm">
+<input type="checkbox" name="enabled" checked><span>Включить</span>
+</form>
+<div id="printBlock"></div>
+<script>
+var enabledBox = document.myForm.enabled;
+
+function onclick(e){
+var printBlock = document.getElementById("printBlock");
+var enabled = e.target.checked;
+printBlock.textContent = enabled;
+}
+
+enabledBox.addEventListener("click", onclick);
+</script>
+----
+
+Нажатие на флажок генерирует событие click. В данном случае при обработке данного события мы просто выводим информацию, отмечен ли данный флажок, в блок div.
+
+Переключатели представляют группы кнопок, из которых мы можем выбрать только одну. Переключатели создаются элементом <input type="radio".
+
+Выбор или нажатие на одну из них также представляет событие click:
+
+[source, javascript]
+----
+<form name="myForm">
+    <input type="radio" name="languages" checked="checked" value="Java" /><span>Java</span>
+    <input type="radio" name="languages" value="C#" /><span>C#</span>
+    <input type="radio" name="languages" value="C++" /><span>C++</span>
+</form>
+<div id="printBlock"></div>
+<script>
+function onclick(e){
+
+    var printBlock = document.getElementById("printBlock");
+    var language = e.target.value;
+    printBlock.textContent = "Вы выбрали: " + language;
+}
+for (var i = 0; i < myForm.languages.length; i++) {
+    myForm.languages[i].addEventListener("click", onclick);
+}
+</script>
+----
+
+При создании группы переключателей их атрибут name должен иметь одно и то же значение. В данном случае это - languages. То есть переключатели образуют группу languages.
+
+Поскольку переключателей может быть много, то при прикреплении к ним обработчика события нам надо пробежаться по всему массиву переключателей, который можно получить по имени группы:
+
+
+[source, javascript]
+----
+for (var i = 0; i < myForm.languages.length; i++) {
+    myForm.languages[i].addEventListener("click", onclick);
+}
+----
+
+Значение выбранного переключателя также можно получить через объект Event: e.target.value
+
+Каждый переключатель также, как и флажок, имеет свойство checked, которое возвращает значение true, если переключатель выбран. Например, отметим последний переключатель:
+
+[source, javascript]
+----
+myForm.languages[myForm.languages.length-1].checked = true;
+----
+
+=== Список select
+
+Для создания списка используется html-элемент select. Причем с его помощью можно создавать как выпадающие списки, так и обычные с ординарным или множественным выбором. Например, стандартный список:
+
+[source, javascript]
+----
+<select name="language" size="4">
+<option value="JS" selected="selected">JavaScript</option>
+<option value="Java">Java</option>
+<option value="C#">C#</option>
+<option value="C++">C++</option>
+</select>
+----
+
+Атрибут size позволяет установить, сколько элементов будут отображаться одномоментно в списке. Значение size="1" отображает только один элемент списка, а сам список становится выпадающим. Если установить у элемента select атрибут multiple, то в списке можно выбрать сразу несколько значений.
+
+Каждый элемент списка представлен html-элементом option, у которого есть отображаемая метка и есть значения в виде атрибута value.
+
+В JavaScript элементу select соответствует объект HTMLSelectElement, а элементу option - объект HtmlOptionElement или просто Option.
+
+Все элементы списка в javascript доступны через коллекцию options. А каждый объект HtmlOptionElement имеет свойства: index (индекс в коллекции options), text (отображаемый текст) и value (значение элемента). Например, получим первый элемент списка и выведем о нем через его свойства всю информацию:
+
+[source, javascript]
+----
+<form name="myForm">
+<select name="language" size="4">
+<option value="JS" selected="selected">JavaScript</option>
+<option value="Java">Java</option>
+<option value="CS">C#</option>
+<option value="CPP">C++</option>
+</select>
+</form>
+<script>
+var firstLanguage = myForm.language.options[0];
+document.write("Index: " + firstLanguage.index + "<br/>");
+document.write("Text: " + firstLanguage.text + "<br/>");
+document.write("Value: " + firstLanguage.value + "<br/>");
+</script>
+----
+
+В javascript мы можем не только получать элементы, но и динамически управлять списком. Например, применим добавление и удаление объектов списка:
+
+
+[source, javascript]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="myForm">
+    <select name="language" size="5">
+        <option value="JS" selected="selected">JavaScript</option>
+        <option value="Java">Java</option>
+        <option value="CS">C#</option>
+        <option value="CPP">C++</option>
+    </select>
+    <p><input type="text" name="textInput" placeholder="Введите текст" /></p>
+    <p><input type="text" name="valueInput" placeholder="Введите значение" /></p>
+    <p><input type="button" name="addButton" value="Добавить" /><input type="button" name="removeButton" value="Удалить" /></p>
+</form>
+
+<script>
+var addButton = myForm.addButton,
+    removeButton = myForm.removeButton,
+    languagesSelect = myForm.language;
+// обработчик добавления элемента
+function addOption(){
+    // получаем текст для элемента
+    var text = myForm.textInput.value;
+    // получаем значение для элемента
+    var value = myForm.valueInput.value;
+    // создаем новый элемента
+    var newOption = new Option(text, value);
+    languagesSelect.options[languagesSelect.options.length]=newOption;
+}
+// обработчик удаления элемент
+function removeOption(){
+
+    var selectedIndex = languagesSelect.options.selectedIndex;
+    // удаляем элемент
+    languagesSelect.options[selectedIndex] = null;
+}
+
+addButton.addEventListener("click", addOption);
+removeButton.addEventListener("click", removeOption);
+</script>
+</body>
+</html>
+----
+
+Для добавления на форме предназначены два текстовых поля (для текстовой метки и значения элемента option) и кнопка. Для удаления выделенного элемента предназначена еще одна кнопка.
+
+За добавление в коде javascript отвечает функция addOption, в которой получаем введенные в текстовые поля значения, создаем новый объект Option и добавляем его в массив options объекта списка.
+
+За удаление отвечает функция removeOption, в которой просто получаем индекс выделенного элемента с помощью свойства selectedIndex и в коллекции options приравниваем по этому индексу значение null.
+
+Для добавления/удаления также в качестве альтернативы можно использовать методы элемента select:
+
+[source, javascript]
+----
+// вместо вызова
+// languagesSelect.options[languagesSelect.options.length]=newOption;
+// использовать для добавления вызов метода add
+languagesSelect.add(newOption);
+// вместо вызова
+// languagesSelect.options[selectedIndex] = null;
+// использовать для удаления метод remove
+languagesSelect.remove(selectedIndex);
+----
+
+=== События элемента select
+
+Элемент select поддерживает три события: blur (потеря фокуса), focus (получение фокуса) и change (изменение выделенного элемента в списке). Рассмотрим применение события select:
+
+[source, javascript]
+----
+<form name="myForm">
+<select name="language" size="5">
+<option value="JS" selected="selected">JavaScript</option>
+<option value="Java">Java</option>
+<option value="CS">C#</option>
+<option value="CPP">C++</option>
+</select>
+</form>
+<div id="selection"></div>
+<script>
+var languagesSelect = myForm.language;
+
+function changeOption(){
+
+    var selection = document.getElementById("selection");
+    var selectedOption = languagesSelect.options[languagesSelect.selectedIndex];
+    selection.textContent = "Вы выбрали: " + selectedOption.text;
+}
+
+languagesSelect.addEventListener("change", changeOption);
+</script>
+----
+
+
+
+
+
