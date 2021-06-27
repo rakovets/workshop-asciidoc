@@ -3,27 +3,26 @@
 
 == Введение в обработку событий
 
-Для взаимодействия с пользователем в `JavaScript` определен механизм `событий`. Например, когда пользователь нажимает кнопку, то возникает *событие нажатия кнопки*. В коде `JavaScript` мы можем определить возникновение события и как-то его обработать.
+Для взаимодействия с пользователем в *JavaScript* определен *механизм событий*. Например, когда пользователь нажимает кнопку, то возникает *событие нажатия кнопки*. В коде *JavaScript* мы можем определить возникновение события и как-то его обработать.
 
-*В `JavaScript` есть следующие типы событий:*
+В *JavaScript* есть следующие *типы событий*:
 
-* События мыши (перемещение курсора, нажатие мыши и т.д.)
-* События клавиатуры (нажатие или отпускание клавиши клавиатуры)
-* События жизненного цикла элементов (например, событие загрузки веб-станицы)
-* События элементов форм (нажатие кнопки на форме, выбор элемента в выпадающем списке и т.д.)
-* События, возникающие при изменении элементов DOM
-* События, возникающие при касании на сенсорных экранах
-* События, возникающие при возникновении ошибок
+* *События мыши* (перемещение курсора, нажатие мыши и т.д.)
+* *События клавиатуры* (нажатие или отпускание клавиши клавиатуры)
+* *События жизненного цикла элементов* (например, событие загрузки веб-станицы)
+* *События элементов форм* (нажатие кнопки на форме, выбор элемента в выпадающем списке и т.д.)
+* *События, возникающие при изменении элементов DOM*
+* *События, возникающие при касании на сенсорных экранах*
+* *События, возникающие при возникновении ошибок*
 
-Рассмотрим простейшую обработку событий. *Например*, на веб-странице у нас есть следующий элемент `div`:
+Рассмотрим простейшую обработку событий. Например, на веб-странице у нас есть следующий элемент `div`:
 
 [source, javascript]
 ----
-
 <div id="rect" onclick="alert('Нажато')" style="width:50px; height:50px; background-color:blue;"></div>
 ----
 
-Здесь определен обычный блок `div`, который имеет атрибут `onclick`, который задает обработчик события нажатия на блок `div`. То есть, чтобы обработать какое-либо событие, нам надо определить для него *обработчик*. *Обработчик* представляет собой код на языке `JavaScript`. В данном случае обработчик выглядит довольно просто:
+Здесь определен обычный блок `div`, который имеет атрибут `onclick`, который задает обработчик события нажатия на блок `div`. То есть, чтобы обработать какое-либо событие, нам надо определить для него *обработчик*. *Обработчик* представляет собой код на языке *JavaScript*. В данном случае обработчик выглядит довольно просто:
 
 [source, javascript]
 ----
@@ -40,34 +39,35 @@ image::example-event.png[Пример события, align=center]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <div id="rect" onclick="displayMessage()" style="width:50px;height:50px;background-color:blue;"></div>
-      <script>
-         function displayMessage() {
-           alert('Нажато');
-         }
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="rect" onclick="displayMessage()" style="width:50px;height:50px;background-color:blue;">
+    </div>
+    <script>
+        function displayMessage() {
+            alert('Нажато');
+        }
+    </script>
+</body>
 </html>
 ----
 
-Теперь обработчиком события будет выступать функция `displayMessage`.
+Теперь обработчиком события будет выступать функция `displayMessage()`.
 
 === Передача параметров в обработчик события
 
-В обработчике можно передавать *параметры*. Например, можно передать *текущий объект*, на котором возникает событие:
+В обработчике можно передавать параметры. Например, можно передать текущий объект, на котором возникает событие:
 
 [source, javascript]
 ----
-<a href="page1.html" onclick="return handler(this)">Станица 1</a>
+<a href="page1.html" onclick="return handler(this)">Страница 1</a>
 <script>
-function handler(obj){
-    alert(obj.href);
-    return false;
-}
+    function handler(obj) {
+        alert(obj.href);
+        return false;
+    }
 </script>
 ----
 
@@ -80,38 +80,37 @@ function handler(obj){
 
 [source, javascript]
 ----
-<a href="page1.html" onclick="handler(this)">Станица 1</a>
+<a href="page1.html" onclick="handler(this)">Страница 1</a>
 <script>
-function handler(obj){
-    alert(obj.href);
-}
+    function handler(obj) {
+        alert(obj.href);
+    }
 </script>
 ----
 
-Кроме непосредственно элемента-источника события в обработчик можно передавать объект `event`. Этот объект не определяется разработчиком, это просто аргумент функции обработчика, который хранит всю информацию о событии. *Например:*
+Кроме непосредственно элемента-источника события в обработчик можно передавать объект `event`. Этот объект не определяется разработчиком, это просто аргумент функции обработчика, который хранит всю информацию о событии. Например:
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <style>
-    #rect {
-      width: 50px;
-      height: 50px;
-      background-color: blue;
-    }
-  </style>
+    <meta charset="utf-8" />
+    <style>
+        #rect {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
 </head>
-
 <body>
-  <div id="rect" onclick="handler(event)"></div>
-  <script>
-    function handler(e) {
-      alert(e.type); // получаем тип события
-    }
-  </script>
+    <div id="rect" onclick="handler(event)"></div>
+    <script>
+        function handler(e) {
+            alert(e.type); // получаем тип события
+        }
+    </script>
 </body>
 </html>
 ----
@@ -120,7 +119,7 @@ function handler(obj){
 
 == Встроенные обработчики
 
-В прошлой теме были *рассмотрены встроенные* обработчики, которые определяются в коде элемента с помощью атрибутов:
+Пример *встроенного обработчика*, который определяется в коде элемента с помощью атрибутов:
 
 [source, javascript]
 ----
@@ -129,48 +128,51 @@ function handler(obj){
 
 Хотя этот подход прекрасно работает, но *он имеет кучу недостатков*:
 
-* Код `html` смешивается с кодом `JavaScript`, в связи с чем становится труднее разрабатывать, отлаживать и поддерживать приложение.
-* Обработчики событий можно задать только для уже созданных на веб-странице элементов. Динамически создаваемые элементы в этом случае лишаются возможности обработки событий.
+* Код *HTML* смешивается с кодом *JavaScript*, в связи с чем становится труднее разрабатывать, отлаживать и поддерживать приложение.
+* *Обработчики событий* можно задать только для уже созданных на веб-странице элементов. Динамически создаваемые элементы в этом случае лишаются возможности обработки событий.
 * К элементу для одного события может быть прикреплен только один обработчик.
 * Нельзя удалить обработчик без изменения кода
 
 === Свойства обработчиков событий
 
-Проблемы, которые возникают при использовании встроенных обработчиков, были призваны решить *свойства обработчиков*. Подобно тому, как у `html`-элементов есть атрибуты для обработчиков, так и в коде `javascript` у элементов `DOM` можно получить свойства обработчиков, которые соответствуют атрибутам:
+Проблемы, которые возникают при использовании встроенных обработчиков, были призваны решить *свойства обработчиков*. Подобно тому, как у *HTML*-элементов есть атрибуты для обработчиков, так и в коде *JavaScript* у элементов *DOM* можно получить свойства обработчиков, которые соответствуют атрибутам:
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         #rect {
-         width: 50px;
-         height: 50px;
-         background-color: blue;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="rect"></div>
-      <script>
-         function handler(e) {
-           alert(e.type);
-         }
-         document.getElementById("rect").onclick = handler;
-      </script>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        #rect {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="rect">
+    </div>
+    <script>
+        function handler(e) {
+            alert(e.type);
+        }
+        document.getElementById("rect").onclick = handler;
+    </script>
+</body>
+</html>
 ----
 
-В итоге достаточно взять свойство `onclick` и присвоить ему функцию, используемую в качестве обработчика. За счет этого код `html` отделяется от кода `javascript`.
+В итоге достаточно взять свойство `onclick` и присвоить ему функцию, используемую в качестве обработчика. За счет этого код *HTML* отделяется от кода *JavaScript*.
 
-Стоит также отметить, что в обработчик события браузер автоматически передает объект `Event`, хранящий всю информацию о событии. Поэтому также можно получить этот объект в функции обработчика в качестве параметра.
+Стоит также отметить, что в *обработчик события* браузер автоматически передает объект `Event`, хранящий всю информацию о событии. Поэтому также можно получить этот объект в функции обработчика в качестве параметра.
 
 === Слушатели событий
 
 Несмотря на то, что свойства обработчиков решают ряд проблем, которые связаны с использованием атрибутов, в то же время это также не оптимальный подход. Еще один способ установки обработчиков событий представляет использование *слушателей*.
 
-Для работы со слушателями событий в `JavaScript` есть объект `EventTarget`, который определяет методы `addEventListener()` для добавления слушателя и `removeEventListener()` для удаления слушателя. И поскольку `html`-элементы `DOM` тоже являются объектами `EventTarget`, то они также имеют эти методы. Фактически слушатели представляют те же функции обработчиков.
+Для работы со слушателями событий в *JavaScript* есть объект `EventTarget`, который определяет методы `addEventListener()` для добавления слушателя и `removeEventListener()` для удаления слушателя. И поскольку *HTML*-элементы *DOM* тоже являются объектами `EventTarget`, то они также имеют эти методы. Фактически *слушатели* представляют те же *функции обработчиков*.
 
 Метод `addEventListener()` принимает два параметра: название события без префикса `on` и функцию обработчика этого события. *Например*:
 
@@ -178,25 +180,26 @@ function handler(obj){
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         #rect {
-         width: 50px;
-         height: 50px;
-         background-color: blue;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="rect"></div>
-      <script>
-         var rect = document.getElementById("rect");
-         rect.addEventListener("click", function(e) {
-           alert(e.type);
-         });
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        #rect {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="rect">
+    </div>
+    <script>
+        var rect = document.getElementById("rect");
+        rect.addEventListener("click", function(e) {
+            alert(e.type);
+        });
+    </script>
+</body>
 </html>
 ----
 
@@ -204,7 +207,7 @@ function handler(obj){
 
 [source, javascript]
 ----
-function handler(e){
+function handler(e) {
     alert(e.type);
 }
 var rect = document.getElementById("rect");
@@ -225,14 +228,14 @@ rect.removeEventListener("click", handler);
 var clicks = 0;
 
 function handlerOne(e) {
-  alert(e.type);
+    alert(e.type);
 }
 
 function handlerTwo(e) {
-  clicks++;
-  var newNode = document.createElement("p");
-  newNode.textContent = "произошло нажатие " + clicks;
-  document.body.appendChild(newNode);
+    clicks++;
+    var newNode = document.createElement("p");
+    newNode.textContent = "произошло нажатие " + clicks;
+    document.body.appendChild(newNode);
 }
 
 var rect = document.getElementById("rect");
@@ -242,18 +245,18 @@ rect.addEventListener("click", handlerOne);
 rect.addEventListener("click", handlerTwo);
 ----
 
-== Объект Event
+== Объект `Event`
 
 При обработке события браузер автоматически передает в функцию обработчика в качестве параметра объект `Event`, который инкапсулирует всю информацию о событии. И с помощью его свойств можно получить эту информацию:
 
-* `bubbles:` возвращает `true`, если событие является восходящим. Например, если событие возникло на вложенном элементе, то оно может быть обработано на родительском элементе.
-* `cancelable:` возвращает `true`, если можно отменить стандартную обработку события.
-* `currentTarget:` определяет элемент, к которому прикреплен обработчик события.
-* `defaultPrevented:` возвращает `true`, если был вызван у объекта `Event` метод `preventDefault()`.
-* `eventPhase:` определяет стадию обработки события.
-* `target:` указывает на элемент, на котором было вызвано событие.
-* `timeStamp:` хранит время возникновения события.
-* `type:` указывает на имя события.
+* `bubbles`: возвращает `true`, если событие является восходящим. Например, если событие возникло на вложенном элементе, то оно может быть обработано на родительском элементе.
+* `cancelable`: возвращает `true`, если можно отменить стандартную обработку события.
+* `currentTarget`: определяет элемент, к которому прикреплен обработчик события.
+* `defaultPrevented`: возвращает `true`, если был вызван у объекта `Event` метод `preventDefault()`.
+* `eventPhase`: определяет стадию обработки события.
+* `target`: указывает на элемент, на котором было вызвано событие.
+* `timeStamp`: хранит время возникновения события.
+* `type`: указывает на имя события.
 
 *Например:*
 
@@ -261,35 +264,36 @@ rect.addEventListener("click", handlerTwo);
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         #rect {
-         width: 50px;
-         height: 50px;
-         background-color: blue;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="rect"></div>
-      <script>
-         function handler(event) {
-           console.log("Тип события: " + event.type);
-           console.log(event.target);
-         }
-         var rect = document.getElementById("rect");
-         rect.addEventListener("click", handler);
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        #rect {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="rect">
+    </div>
+    <script>
+        function handler(event) {
+            console.log("Тип события: " + event.type);
+            console.log(event.target);
+        }
+        var rect = document.getElementById("rect");
+        rect.addEventListener("click", handler);
+    </script>
+</body>
 </html>
 ----
 
-Причем в данном случае свойство `target` представляет собой элемент, поэтому что можно манипулировать им, как и любыми другими узлами и элементами `DOM`. Например, изменим фоновый цвет:
+Причем в данном случае свойство `target` представляет собой элемент, поэтому что можно манипулировать им, как и любыми другими узлами и элементами *DOM*. Например, изменим фоновый цвет:
 
 [source, javascript]
 ----
-function handler(e){
+function handler(e) {
     e.target.style.backgroundColor = "red";
 }
 ----
@@ -298,23 +302,23 @@ function handler(e){
 
 С помощью метода `preventDefault()` объекта `Event` что можно *остановить* дальнейшее выполнение события. В ряде случаев этот метод не играет большой роли. Однако может быть полезен, например, при нажатии на ссылку можно с помощью дополнительной обработки определить, надо ли переходить по ссылке или надо запретить переход. Или другой пример: пользователь отправляет данные формы, но в ходе обработки в обработчике события определили, что поля формы заполнены неправильно, и в этом случае также можно запретить отправку.
 
-*Например*, запретим переход по ссылке после 12 часов:
+Например, запретим переход по ссылке после 12 часов:
 
 [source, javascript]
 ----
 <a href="http://google.com" id="link">Поиск</a>
 <script>
-   function linkHandler(e) {
-     var date = new Date();
-     var hour = date.getHours();
-     console.log(hour);
-     if (hour > 12) {
-       e.preventDefault();
-       document.write("После 12 переход запрещен");
-     }
-   }
-   var link = document.getElementById("link");
-   link.addEventListener("click", linkHandler);
+    function linkHandler(e) {
+        var date = new Date();
+        var hour = date.getHours();
+        console.log(hour);
+        if (hour > 12) {
+            e.preventDefault();
+            document.write("После 12 переход запрещен");
+        }
+    }
+    var link = document.getElementById("link");
+    link.addEventListener("click", linkHandler);
 </script>
 ----
 
@@ -322,52 +326,54 @@ function handler(e){
 
 Когда нажимают на какой-либо элемент на станице и генерируется событие нажатия, то это событие может *распространяться* от элемента к элементу. Например, если нажать на блок `div`, то также нажимаем и на элемент `body`, в котором блок `div` находится. То есть происходит *распространение* события.
 
-*Есть несколько форм распространения событий:*
+*Есть несколько форм распространения событий*:
 
-* *Восходящие:* событие распространяется вверх по дереву `DOM` от дочерних узлов к родительским.
-* *Нисходящие:* событие распространяется вниз по дереву `DOM` от родительских узлов к дочерним, пока не достигнет того элемента, на котором это событие и возникло.
+* *Восходящие:* событие распространяется вверх по дереву *DOM* от дочерних узлов к родительским.
+* *Нисходящие:* событие распространяется вниз по дереву *DOM* от родительских узлов к дочерним, пока не достигнет того элемента, на котором это событие и возникло.
 
 === Восходящие события
 
-Рассмотрим *восходящие* события, которые распространяются в верх по дереву `DOM`. Допустим, у нас есть следующая веб-страница:
+Рассмотрим *восходящие* события, которые распространяются в верх по дереву *DOM*. Допустим, у нас есть следующая веб-страница:
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         #blueRect {
-         width: 100px;
-         height: 100px;
-         background-color: blue;
-         }
-         #redRect {
-         width: 50px;
-         height: 50px;
-         background-color: red;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="blueRect">
-         <div id="redRect"></div>
-      </div>
-      <script>
-         var redRect = document.getElementById("redRect");
-         redRect.addEventListener("click", function() {
-           console.log("Событие на redRect");
-         });
-         var blueRect = document.getElementById("blueRect");
-         blueRect.addEventListener("click", function() {
-           console.log("Событие на blueRect");
-         });
-         document.body.addEventListener("click", function() {
-           console.log("Событие на body");
-         });
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        #blueRect {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+
+        #redRect {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="blueRect">
+        <div id="redRect">
+        </div>
+    </div>
+    <script>
+        var redRect = document.getElementById("redRect");
+        redRect.addEventListener("click", function() {
+            console.log("Событие на redRect");
+        });
+        var blueRect = document.getElementById("blueRect");
+        blueRect.addEventListener("click", function() {
+            console.log("Событие на blueRect");
+        });
+        document.body.addEventListener("click", function() {
+            console.log("Событие на body");
+        });
+    </script>
+</body>
 </html>
 ----
 
@@ -392,18 +398,15 @@ redRect.addEventListener("click", function(e){
 
 События также могут быть *нисходящими*. Для их использования в метод `addEventListener()` в качестве третьего необязательного параметра передается логическое значение `true` или `false`, которое указывает, будет ли событие *нисходящим*. По умолчанию все события восходящие.
 
-Возьмем ту же веб-станицу, только изменим ее код `javascript`:
+Возьмем ту же веб-станицу, только изменим ее код *JavaScript*:
 
 [source, javascript]
 ----
 var redRect = document.getElementById("redRect");
-redRect.addEventListener("click", function() {
-  console.log("Событие на redRect");}, true);
+redRect.addEventListener("click", function() {console.log("Событие на redRect");}, true);
 var blueRect = document.getElementById("blueRect");
-blueRect.addEventListener("click", function() {
-  console.log("Событие на blueRect");}, true);
-document.body.addEventListener("click", function() {
-  console.log("Событие на body");}, true);
+blueRect.addEventListener("click", function() {console.log("Событие на blueRect");}, true);
+document.body.addEventListener("click", function() {console.log("Событие на body");}, true);
 ----
 
 Теперь события будут распространяться в обратном порядке:
@@ -414,43 +417,44 @@ image::reverse-upcoming-events.png[Восходящее событие в обр
 
 Одну из наиболее часто используемых событий составляют *события мыши*:
 
-* `click:` возникает при нажатии указателем мыши на элемент
-* `mousedown:` возникает при нахождении указателя мыши на элементе, когда кнопка мыши находится в нажатом состоянии
-* `mouseup:` возникает при нахождении указателя мыши на элементе во время отпускания кнопки мыши
-* `mouseover:` возникает при вхождении указателя мыши в границы элемента
-* `mousemove:` возникает при прохождении указателя мыши над элементом
-* `mouseout:` возникает, когда указатель мыши выходит за пределы элемента
+* `click`: возникает при нажатии указателем мыши на элемент
+* `mousedown`: возникает при нахождении указателя мыши на элементе, когда кнопка мыши находится в нажатом состоянии
+* `mouseup`: возникает при нахождении указателя мыши на элементе во время отпускания кнопки мыши
+* `mouseover`: возникает при вхождении указателя мыши в границы элемента
+* `mousemove`: возникает при прохождении указателя мыши над элементом
+* `mouseout`: возникает, когда указатель мыши выходит за пределы элемента
 
-*Например*, обработаем события `mouseover` и `mouseout`:
+Например, обработаем события `mouseover` и `mouseout`:
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         #blueRect {
-         width: 100px;
-         height: 100px;
-         background-color: blue;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="blueRect"></div>
-      <script>
-         function setColor(e) {
-           if (e.type === "mouseover")
-             e.target.style.backgroundColor = "red";
-           else if (e.type === "mouseout")
-             e.target.style.backgroundColor = "blue";
-         }
-         var blueRect = document.getElementById("blueRect");
-         blueRect.addEventListener("mouseover", setColor);
-         blueRect.addEventListener("mouseout", setColor);
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        #blueRect {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="blueRect"></div>
+    <script>
+        function setColor(e) {
+            if (e.type === "mouseover") {
+                e.target.style.backgroundColor = "red";
+            } else if (e.type === "mouseout") {
+                e.target.style.backgroundColor = "blue";
+            }
+        }
+        var blueRect = document.getElementById("blueRect");
+        blueRect.addEventListener("mouseover", setColor);
+        blueRect.addEventListener("mouseout", setColor);
+    </script>
+</body>
 </html>
 ----
 
@@ -458,16 +462,16 @@ image::reverse-upcoming-events.png[Восходящее событие в обр
 
 Объект `Event` является общим для всех событий. Однако для разных типов событий существуют также свои объекты событий, которые добавляют ряд своих свойств. Так, для работы с событиями указателя мыши определен объект `MouseEvent`, который добавляет следующие свойства:
 
-* `altKey:` возвращает `true`, если была нажата клавиша `Alt` во время генерации события.
-* `button:` указывает, какая кнопка мыши была нажата.
-* `clientX:` определяет координату `Х` окна браузера, на которой находился указатель мыши во время генерации события.
-* `clientY:` определяет координату `Y` окна браузера, на которой находился указатель мыши во время генерации события.
-* `ctrlKey:` возвращает `true`, если была нажата клавиша `Ctrl` во время генерации события.
-* `metaKey:` возвращает `true`, если была нажата во время генерации события метаклавиша клавиатуры.
-* `relatedTarget:` определяет вторичный источник возникновения события.
-* `screenX:` определяет координату `Х` относительно верхнего левого угла экрана монитора, на которой находился указатель мыши во время генерации события.
-* `screenY:` определяет координату `Y` относительно верхнего левого угла экрана монитора, на которой находился указатель мыши во время генерации события.
-* `shiftKey:` возвращает `true`, если была нажата клавиша `Shift` во время генерации события.
+* `altKey`: возвращает `true`, если была нажата клавиша _Alt_ во время генерации события.
+* `button`: указывает, какая кнопка мыши была нажата.
+* `clientX`: определяет координату `Х` окна браузера, на которой находился указатель мыши во время генерации события.
+* `clientY`: определяет координату `Y` окна браузера, на которой находился указатель мыши во время генерации события.
+* `ctrlKey`: возвращает `true`, если была нажата клавиша _Ctrl_ во время генерации события.
+* `metaKey`: возвращает `true`, если была нажата во время генерации события метаклавиша клавиатуры.
+* `relatedTarget`: определяет вторичный источник возникновения события.
+* `screenX`: определяет координату `Х` относительно верхнего левого угла экрана монитора, на которой находился указатель мыши во время генерации события.
+* `screenY`: определяет координату `Y` относительно верхнего левого угла экрана монитора, на которой находился указатель мыши во время генерации события.
+* `shiftKey`: возвращает `true`, если была нажата клавиша _Shift_ во время генерации события.
 
 *Определим координаты клика:*
 
@@ -475,29 +479,30 @@ image::reverse-upcoming-events.png[Восходящее событие в обр
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         #blueRect {
-         width: 100px;
-         height: 100px;
-         background-color: blue;
-         }
-      </style>
-   </head>
-   <body>
-      <div id="blueRect"></div>
-      <script>
-         function handleClick(e) {
-           console.log("screenX: " + e.screenX);
-           console.log("screenY: " + e.screenY);
-           console.log("clientX: " + e.clientX);
-           console.log("clientY: " + e.clientY);
-         }
-         var blueRect = document.getElementById("blueRect");
-         blueRect.addEventListener("click", handleClick);
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        #blueRect {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="blueRect">
+    </div>
+    <script>
+        function handleClick(e) {
+            console.log("screenX: " + e.screenX);
+            console.log("screenY: " + e.screenY);
+            console.log("clientX: " + e.clientX);
+            console.log("clientY: " + e.clientY);
+        }
+        var blueRect = document.getElementById("blueRect");
+        blueRect.addEventListener("click", handleClick);
+    </script>
+</body>
 </html>
 ----
 
@@ -505,74 +510,77 @@ image::reverse-upcoming-events.png[Восходящее событие в обр
 
 Другим распространенным типом событий являются *события клавиатуры*.
 
-* `keydown:` возникает при нажатии клавиши клавиатуры и длится, пока нажата клавиша.
-* `keyup:` возникает при отпускании клавиши клавиатуры.
-* `keypress:` возникает при нажатии клавиши клавиатуры, но после события `keydown` и до события `keyup`. Надо учитывать, что данное событие генерируется только для тех клавиш, которые формируют вывод в виде символов, например, при печати символов. Нажатия на остальные клавиши, например, на `Alt`, не учитываются.
+* `keydown`: возникает при нажатии клавиши клавиатуры и длится, пока нажата клавиша.
+* `keyup`: возникает при отпускании клавиши клавиатуры.
+* `keypress`: возникает при нажатии клавиши клавиатуры, но после события `keydown` и до события `keyup`. Надо учитывать, что данное событие генерируется только для тех клавиш, которые формируют вывод в виде символов, например, при печати символов. Нажатия на остальные клавиши, например, на _Alt_, не учитываются.
 
 Для работы с *событиями клавиатуры* определен объект `KeyboardEvent`, который добавляет к свойствам объекта `Event` ряд специфичных для клавиатуры свойств:
 
-* `altKey:` возвращает `true`, если была нажата клавиша `Alt` во время генерации события.
-* `key:` возвращает символ нажатой клавиши, например, при нажатии на клавишу T это свойство будет содержать `T`. А если нажата клавиша `Я`, то это свойство будет содержать `Я`.
-* `code:` возвращает строковое представление нажатой клавиши физической клавиатуры `QWERTY`, например, при нажатии на клавишу `T` это свойство будет содержать `KeyT`, а при нажатии на клавишу `;` (точка запятой), то свойство возвратит `Semicolon`.
+* `altKey`: возвращает `true`, если была нажата клавиша _Alt_ во время генерации события.
+* `key`: возвращает символ нажатой клавиши, например, при нажатии на клавишу _T_ это свойство будет содержать `T`. А если нажата клавиша _Я_, то это свойство будет содержать `Я`.
+* `code`: возвращает строковое представление нажатой клавиши физической клавиатуры _QWERTY_, например, при нажатии на клавишу _T_ это свойство будет содержать `KeyT`, а при нажатии на клавишу _;_ (точка запятой), то свойство возвратит `Semicolon`.
 
-При использовании этого свойства следует учитывать ряд момент. Прежде всего используется клавиатура `QWERTY`. То есть переключая раскладку, к примеру, на русскоязычную и нажмем на клавишу `Я`, то значением будет `KeyZ` - на клавиатуре `QWERTY` клавиша `Z` представляет ту же клавишу, что и на русскоязычной раскладке `Я`.
+При использовании этого свойства следует учитывать ряд момент. Прежде всего используется клавиатура _QWERTY_. То есть переключая раскладку, к примеру, на русскоязычную и нажмем на клавишу _Я_, то значением будет `KeyZ` - на клавиатуре `QWERTY` клавиша _Z_ представляет ту же клавишу, что и на русскоязычной раскладке _Я_.
 
 Другой момент - учитывается именно физическая клавиатура. Если нажата клавиша на виртуальной клавиатуре, то возвращаемое значение будет устанавливаться браузером исходя из того, какой клавише на физической клавиатуре соответствовало нажатие.
 
-* `ctrlKey:` возвращает `true`, если была нажата клавиша `Ctrl` во время генерации события.
-* `metaKey:` возвращает `true`, если была нажата во время генерации события метаклавиша клавиатуры.
-* `shiftKey:` возвращает `true`, если была нажата клавиша `Shift` во время генерации события.
+* `ctrlKey`: возвращает `true`, если была нажата клавиша _Ctrl_ во время генерации события.
+* `metaKey`: возвращает `true`, если была нажата во время генерации события метаклавиша клавиатуры.
+* `shiftKey`: возвращает `true`, если была нажата клавиша _Shift_ во время генерации события.
 
-*Например*, можно с помощью клавиш клавиатуры перемещать элемент на веб-странице:
+Например, можно с помощью клавиш клавиатуры перемещать элемент на веб-странице:
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <style>
-         html,
-         body {
-         margin: 0;
-         overflow: hidden;
-         }
-         #blueRect {
-         width: 100px;
-         height: 100px;
-         background-color: blue;
-      </style>
-   </head>
-   <body>
-      <div id="blueRect"></div>
-      <script>
-         function moveRect(e) {
-           var blueRect = document.getElementById("blueRect");
-           // получаем стиль для blueRect
-           var cs = window.getComputedStyle(blueRect);
-           var left = parseInt(cs.marginLeft);
-           var top = parseInt(cs.marginTop);
-           switch (e.key) {
-             case "ArrowLeft": // если нажата клавиша влево
-               if (left > 0)
-                 blueRect.style.marginLeft = left - 10 + "px";
-               break;
-             case "ArrowTop": // если нажата клавиша вверх
-               if (top > 0)
-                 blueRect.style.marginTop = top - 10 + "px";
-               break;
-             case "ArrowRight": // если нажата клавиша вправо
-               if (left < document.documentElement.clientWidth - 100)
-                 blueRect.style.marginLeft = left + 10 + "px";
-               break;
-             case "ArrowDown": // если нажата клавиша вниз
-               if (top < document.documentElement.clientHeight - 100)
-                 blueRect.style.marginTop = top + 10 + "px";
-               break;
-           }
-           addEventListener("keydown", moveRect);
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #blueRect {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="blueRect"></div>
+    <script>
+        function moveRect(e) {
+            var blueRect = document.getElementById("blueRect");
+            // получаем стиль для blueRect
+            var cs = window.getComputedStyle(blueRect);
+            var left = parseInt(cs.marginLeft);
+            var top = parseInt(cs.marginTop);
+            switch (e.key) {
+                case "ArrowLeft": // если нажата клавиша влево
+                    if (left > 0)
+                        blueRect.style.marginLeft = left - 10 + "px";
+                    break;
+                case "ArrowTop": // если нажата клавиша вверх
+                    if (top > 0)
+                        blueRect.style.marginTop = top - 10 + "px";
+                    break;
+                case "ArrowRight": // если нажата клавиша вправо
+                    if (left < document.documentElement.clientWidth - 100)
+                        blueRect.style.marginLeft = left + 10 + "px";
+                    break;
+                case "ArrowDown": // если нажата клавиша вниз
+                    if (top < document.documentElement.clientHeight - 100)
+                        blueRect.style.marginTop = top + 10 + "px";
+                    break;
+            }
+        }
+        addEventListener("keydown", moveRect);
+    </script>
+</body>
 </html>
 ----
 
@@ -580,4 +588,4 @@ image::reverse-upcoming-events.png[Восходящее событие в обр
 
 С помощью свойства `e.key` получаем нажатую клавишу. Список кодов клавиш клавиатуры можно посмотреть на странице `https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values.`
 
-Здесь нас интересуют четыре клавиши: *вверх, вниз, влево, вправо*. Им соответственно будут соотвтствовать названия `ArrowTop`, `"ArrowDown"`, `ArrowLeft` и `ArrowRight`. Если одна из них нажата, производим действия: увеличение или уменьшение отступа элемента от верхней или левой границы. Ну и чтобы элемент не выходил за границы окна, проверяем предельные значения с помощью `document.documentElement.clientWidth` (ширина корневого элемента) и `document.documentElement.clientHeight`.
+Здесь нас интересуют четыре клавиши: _вверх_, _вниз_, _влево_, _вправо_. Им соответственно будут соответствовать названия `ArrowTop`, `"ArrowDown"`, `ArrowLeft` и `ArrowRight`. Если одна из них нажата, производим действия: увеличение или уменьшение отступа элемента от верхней или левой границы. Ну и чтобы элемент не выходил за границы окна, проверяем предельные значения с помощью `document.documentElement.clientWidth` (ширина корневого элемента) и `document.documentElement.clientHeight`.

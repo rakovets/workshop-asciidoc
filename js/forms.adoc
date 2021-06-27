@@ -3,7 +3,7 @@
 
 == Формы и их элементы
 
-Один из способов взаимодействия с пользователями представляют `html-формы`. Например, если необходимо получить от пользователя некоторую информацию, можно определить на веб-странице формы, которая будет содержать текстовые поля для ввода информации и кнопку для отправки. И после ввода данных можно обработать введенную информацию.
+Один из способов взаимодействия с пользователями представляют *HTML-формы*. Например, если необходимо получить от пользователя некоторую информацию, можно определить на веб-странице формы, которая будет содержать текстовые поля для ввода информации и кнопку для отправки. И после ввода данных можно обработать введенную информацию.
 
 Для создания формы используется элемент `<form>`:
 
@@ -13,7 +13,7 @@
 </form>
 ----
 
-В `JavaScript` форма представлена объектом `HtmlFormElement`. И после создания формы можно к ней обратиться различными способами.
+В *JavaScript* форма представлена объектом `HtmlFormElement`. И после создания формы можно к ней обратиться различными способами.
 
 *Первый способ* заключается в прямом обращении по имени формы:
 
@@ -28,26 +28,25 @@ var searchForm = document.search;
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <form name="search"></form>
-      <form name="settings"></form>
-      <script>
-         var searchForm;
-         for (var i = 0; i < document.forms.length; i++) {
-
-             if(document.forms[i].name==="search")
-                 searchForm = document.forms[i];
-         }
-         document.write(searchForm.name);
-      </script>
-   </body>
+    <head>
+       <meta charset="utf-8" />
+    </head>
+    <body>
+       <form name="search"></form>
+       <form name="settings"></form>
+       <script>
+          var searchForm;
+          for (var i = 0; i < document.forms.length; i++) {
+              if(document.forms[i].name==="search")
+                  searchForm = document.forms[i];
+          }
+          document.write(searchForm.name);
+       </script>
+    </body>
 </html>
 ----
 
-С помощью свойства `name` объекта формы можно получить значение атрибута `name` у соответствующего элемента формы в коде `html`.
+С помощью свойства `name` объекта формы можно получить значение атрибута `name` у соответствующего элемента формы в коде *HTML*.
 
 Еще один способ сочетает оба подхода:
 
@@ -68,13 +67,13 @@ var searchForm = document.getElementsByTagname("form")[0]
 [source, javascript]
 ----
 <form name="search">
-   <input type="text" name="key"></input>
-   <input type="submit" name="send"></input>
+    <input type="text" name="key"></input>
+    <input type="submit" name="send"></input>
 </form>
 <script>
-   var searchForm = document.forms["search"];
-   for(var i=0; i<searchForm.elements.length;i++)
-   document.write(searchForm.elements[i].name + "<br/>");
+    var searchForm = document.forms["search"];
+    for(var i=0; i<searchForm.elements.length;i++)
+    document.write(searchForm.elements[i].name + "<br/>");
 </script>
 ----
 
@@ -91,25 +90,25 @@ searchForm.reset();
 
 === Элементы форм
 
-Форма может содержать различные элементы ввода `html: input, textarea, button, select` и т.д. Но все они имеют ряд общих свойств и методов.
+Форма может содержать различные элементы ввода *HTML*: `input`, `textarea`, `button`, `select` и т.д. Но все они имеют ряд общих свойств и методов.
 
 Так же, как и форма, элементы форм имеют свойство `name`, с помощью которого можно получить значение атрибута `name`:
 
 [source, javascript]
 ----
 <form name="search">
-   <input type="text" name="key" value="hello world"></input>
-   <input type="submit" name="send"></input>
+    <input type="text" name="key" value="hello world"></input>
+    <input type="submit" name="send"></input>
 </form>
 <script>
-   var searchForm = document.forms["search"];
-   // выведем имя всех элементов
-   for(var i=0; i<searchForm.elements.length;i++)
-   document.write(searchForm.elements[i].name + "<br/>");
+    var searchForm = document.forms["search"];
+    // выведем имя всех элементов
+    for(var i=0; i<searchForm.elements.length;i++)
+    document.write(searchForm.elements[i].name + "<br/>");
 
-   // получим по имени текстовое поле
-   var keyBox = searchForm.elements["key"];
-   document.write(keyBox.name); // key
+    // получим по имени текстовое поле
+    var keyBox = searchForm.elements["key"];
+    document.write(keyBox.name); // key
 </script>
 ----
 
@@ -162,44 +161,43 @@ keyBox.focus();
 <input type="submit" name="send" value="Отправить" />
 ----
 
-С точки зрения функциональности в `html` эти элементы не совсем равноценны, но в данном случае они нас интересуют с точки зрения взаимодействия с кодом `javascript`.
+С точки зрения функциональности в *HTML* эти элементы не совсем равноценны, но в данном случае они нас интересуют с точки зрения взаимодействия с кодом *JavaScript*.
 
-При нажатии на любой из этих двух вариантов кнопки происходит отправка формы по адресу, который указан у формы в атрибуте `action`, либо по адресу веб-страницы, если атрибут `action` не указан. Однако в коде `javascript` можно перехватить отправку, обрабатывая событие `click`.
+При нажатии на любой из этих двух вариантов кнопки происходит отправка формы по адресу, который указан у формы в атрибуте `action`, либо по адресу веб-страницы, если атрибут `action` не указан. Однако в коде *JavaScript* можно перехватить отправку, обрабатывая событие `click`.
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <form name="search">
-         <input type="text" name="key"></input>
-         <input type="submit" name="send" value="Отправить" />
-      </form>
-      <script>
-         function sendForm(e){
-
+    <head>
+       <meta charset="utf-8" />
+    </head>
+    <body>
+       <form name="search">
+          <input type="text" name="key"></input>
+          <input type="submit" name="send" value="Отправить" />
+       </form>
+       <script>
+          function sendForm(e) {
              // получаем значение поля key
              var keyBox = document.search.key;
              var val = keyBox.value;
-             if(val.length>5){
-                 alert("Недопустимая длина строки");
-                 e.preventDefault();
+             if (val.length > 5) {
+                alert("Недопустимая длина строки");
+                e.preventDefault();
+             } else {
+                alert("Отправка разрешена");
              }
-             else
-                 alert("Отправка разрешена");
-         }
+          }
 
-         var sendButton = document.search.send;
-         sendButton.addEventListener("click", sendForm);
-      </script>
-   </body>
+          var sendButton = document.search.send;
+          sendButton.addEventListener("click", sendForm);
+       </script>
+    </body>
 </html>
 ----
 
-При нажатии на кнопку происходит событие `click`, и для его обработки к кнопке прикрепляем обработчик `sendForm`. В этом обработчике проверяем введенный в текстовое поле текст. Если его длина больше `5` символов, то выводим сообщение о недостимой длине и прерываем обычный ход события с помощью вызова `e.preventDefault()`. В итоге форма не отправляется.
+При нажатии на кнопку происходит событие `click`, и для его обработки к кнопке прикрепляем обработчик `sendForm`. В этом обработчике проверяем введенный в текстовое поле текст. Если его длина больше `5` символов, то выводим сообщение о недопустимой длине и прерываем обычный ход события с помощью вызова `e.preventDefault()`. В итоге форма не отправляется.
 
 Если же длина текста меньше шести символов, то также выводится сообщение, и затем форма отправляется.
 
@@ -237,7 +235,7 @@ document.search.action="PostForm";
 <input type="reset" value="Очистить" />
 ----
 
-При нажатию на кнопки произойдет очистка форм. Но также функциональность по очистке полей формы можно реализовать с помощью метода `reset()`:
+При нажатии на кнопки произойдет очистка форм. Но также функциональность по очистке полей формы можно реализовать с помощью метода `reset()`:
 
 [source, javascript]
 ----
@@ -245,13 +243,13 @@ function sendForm(e){
     // получаем значение поля key
     var keyBox = document.search.key;
     var val = keyBox.value;
-    if(val.length>5){
+    if (val.length > 5) {
         alert("Недопустимая длина строки");
         document.search.reset();
         e.preventDefault();
-    }
-    else
+    } else {
         alert("Отправка разрешена");
+    }
 }
 ----
 
@@ -268,35 +266,34 @@ function sendForm(e){
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <form name="search">
-         <input type="text" name="key" placeholder="Введите ключ"></input>
-         <input type="button" name="print" value="Печать" />
-      </form>
-      <div id="printBlock"></div>
-      <script>
-         function printForm(e){
-
-             // получаем значение поля key
-             var keyBox = document.search.key;
-             var val = keyBox.value;
-             // получаем элемент printBlock
-             var printBlock = document.getElementById("printBlock");
-             // создаем новый параграф
-             var pElement = document.createElement("p");
-             // устанавливаем у него текст
-             pElement.textContent = val;
-             // добавляем параграф в printBlock
-             printBlock.appendChild(pElement);
-         }
-
-         var printButton = document.search.print;
-         printButton.addEventListener("click", printForm);
-      </script>
-   </body>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <form name="search">
+        <input type="text" name="key" placeholder="Введите ключ"></input>
+        <input type="button" name="print" value="Печать" />
+    </form>   
+    <div id="printBlock"></div>
+    <script>
+        function printForm(e) {
+            // получаем значение поля key
+            var keyBox = document.search.key;
+            var val = keyBox.value;
+            // получаем элемент printBlock
+            var printBlock = document.getElementById("printBlock");
+            // создаем новый параграф
+            var pElement = document.createElement("p");
+            // устанавливаем у него текст
+            pElement.textContent = val;
+            // добавляем параграф в printBlock
+            printBlock.appendChild(pElement);
+        }
+        
+        var printButton = document.search.print;
+        printButton.addEventListener("click", printForm);
+    </script>
+</body>
 </html>
 ----
 
@@ -306,7 +303,7 @@ image::paragraph.png[Пример параграфа, align=center]
 
 == Текстовые поля
 
-Для ввода простейшей текстовой информации предназначены элементы `<input type="text":`
+Для ввода простейшей текстовой информации предназначены элементы `<input type="text"`:
 
 [source, javascript]
 ----
@@ -315,13 +312,13 @@ image::paragraph.png[Пример параграфа, align=center]
 
 Данный элемент поддерживает ряд событий, в частности:
 
-* `focus:` происходит при получении фокуса.
-* `blur:` происходит при потере фокуса.
-* `change:` происходит при изменении значения поля.
-* `select:` происходит при выделении текста в текстовом поле.
-* `keydown:` происходит при нажатии клавиши клавиатуры.
-* `keypress:` происходит при нажатии клавиши клавиатуры для печатаемых символов.
-* `keyup:` происходит при отпускании ранее нажатой клавиши клавиатуры.
+* `focus`: происходит при получении фокуса.
+* `blur`: происходит при потере фокуса.
+* `change`: происходит при изменении значения поля.
+* `select`: происходит при выделении текста в текстовом поле.
+* `keydown`: происходит при нажатии клавиши клавиатуры.
+* `keypress`: происходит при нажатии клавиши клавиатуры для печатаемых символов.
+* `keyup`: происходит при отпускании ранее нажатой клавиши клавиатуры.
 
 *Применим ряд событий:*
 
@@ -329,48 +326,46 @@ image::paragraph.png[Пример параграфа, align=center]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <form name="search">
-         <input type="text" name="key" placeholder="Введите ключ"></input>
-         <input type="button" name="print" value="Печать" />
-      </form>
-      <div id="printBlock"></div>
-      <script>
-         var keyBox = document.search.key;
+<head>
+   <meta charset="utf-8" />
+</head>
+<body>
+   <form name="search">
+      <input type="text" name="key" placeholder="Введите ключ"></input>
+      <input type="button" name="print" value="Печать" />
+   </form>
+   <div id="printBlock"></div>
+   <script>
+      var keyBox = document.search.key;
 
-         // обработчик изменения текста
-         function onchange(e){
-             // получаем элемент printBlock
-             var printBlock = document.getElementById("printBlock");
-             // получаем новое значение
-             var val = e.target.value;
-             // установка значения
-             printBlock.textContent = val;
-         }
-         // обработка потери фокуса
-         function onblur(e){
-
-             // получаем его значение и обрезаем все пробелы
-             var text = keyBox.value.trim();
-             if(text==="")
-                 keyBox.style.borderColor = "red";
-             else
-                 keyBox.style.borderColor = "green";
-         }
-         // получение фокуса
-         function onfocus(e){
-
-             // установка цвета границ поля
-             keyBox.style.borderColor = "blue";
-         }
-         keyBox.addEventListener("change", onchange);
-         keyBox.addEventListener("blur", onblur);
-         keyBox.addEventListener("focus", onfocus);
-      </script>
-   </body>
+      // обработчик изменения текста
+      function onchange(e) {
+          // получаем элемент printBlock
+          var printBlock = document.getElementById("printBlock");
+          // получаем новое значение
+          var val = e.target.value;
+          // установка значения
+          printBlock.textContent = val;
+      }
+      // обработка потери фокуса
+      function onblur(e) {
+          // получаем его значение и обрезаем все пробелы
+          var text = keyBox.value.trim();
+          if (text === "")
+              keyBox.style.borderColor = "red";
+          else
+              keyBox.style.borderColor = "green";
+      }
+      // получение фокуса
+      function onfocus(e) {
+          // установка цвета границ поля
+          keyBox.style.borderColor = "blue";
+      }
+      keyBox.addEventListener("change", onchange);
+      keyBox.addEventListener("blur", onblur);
+      keyBox.addEventListener("focus", onfocus);
+   </script>
+</body>
 </html>
 ----
 
@@ -411,42 +406,41 @@ image::text-field.png[Поле ввода, align=center]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <form name="search">
-         <textarea rows="7" cols="40" name="message"></textarea>
-      </form>
-      <div id="printBlock"></div>
-      <script>
-         var messageBox = document.search.message;
+<head>
+   <meta charset="utf-8" />
+</head>
+<body>
+    <form name="search">
+        <textarea rows="7" cols="40" name="message"></textarea>
+    </form>
+    <div id="printBlock"></div>
+    <script>
+        var messageBox = document.search.message;
 
-         // обработчик ввода символа
-         function onkeypress(e){
-         // получаем элемент printBlock
-         var printBlock = document.getElementById("printBlock");
-         // получаем введенный символ
-         var val = String.fromCharCode(e.keyCode);
-         // добавление символа
-         printBlock.textContent += val;
-         }
+        // обработчик ввода символа
+        function onkeypress(e) {
+            // получаем элемент printBlock
+            var printBlock = document.getElementById("printBlock");
+            // получаем введенный символ
+            var val = String.fromCharCode(e.keyCode);
+            // добавление символа
+            printBlock.textContent += val;
+        }
 
-         function onkeydown(e){
-         if(e.keyCode===8){ // если нажат Backspace
+        function onkeydown(e) {
+            if (e.keyCode === 8) { // если нажат Backspace
+                // получаем элемент printBlock
+                var printBlock = document.getElementById("printBlock"),
+                length = printBlock.textContent.length;
+                // обрезаем строку по последнему символу
+                printBlock.textContent = printBlock.textContent.substring(0, length-1);
+            }
+        }
 
-                 // получаем элемент printBlock
-                 var printBlock = document.getElementById("printBlock"),
-                     length = printBlock.textContent.length;
-                 // обрезаем строку по последнему символу
-                 printBlock.textContent = printBlock.textContent.substring(0, length-1);
-             }
-         }
-
-         messageBox.addEventListener("keypress", onkeypress);
-         messageBox.addEventListener("keydown", onkeydown);
-      </script>
-   </body>
+        messageBox.addEventListener("keypress", onkeypress);
+        messageBox.addEventListener("keydown", onkeydown);
+   </script>
+</body>
 </html>
 ----
 
@@ -472,19 +466,19 @@ image::block-of-text.png[Блок для ввода, align=center]
 [source, javascript]
 ----
 <form name="myForm">
-   <input type="checkbox" name="enabled" checked><span>Включить</span>
+    <input type="checkbox" name="enabled" checked><span>Включить</span>
 </form>
 <div id="printBlock"></div>
 <script>
-   var enabledBox = document.myForm.enabled;
+    var enabledBox = document.myForm.enabled;
 
-   function onclick(e){
-   var printBlock = document.getElementById("printBlock");
-   var enabled = e.target.checked;
-   printBlock.textContent = enabled;
-   }
+    function onclick(e){
+        var printBlock = document.getElementById("printBlock");
+        var enabled = e.target.checked;
+        printBlock.textContent = enabled;
+    }
 
-   enabledBox.addEventListener("click", onclick);
+    enabledBox.addEventListener("click", onclick);
 </script>
 ----
 
@@ -494,26 +488,25 @@ image::flag.png[Флажок, align=center]
 
 *Переключатели* представляют группы кнопок, из которых можно выбрать только одну. Переключатели создаются элементом `<input type="radio"`.
 
-Выбор или нажатие на одну из них также представляет событие `click:`
+Выбор или нажатие на одну из них также представляет событие `click`:
 
 [source, javascript]
 ----
 <form name="myForm">
-   <input type="radio" name="languages" checked="checked" value="Java" /><span>Java</span>
-   <input type="radio" name="languages" value="C#" /><span>C#</span>
-   <input type="radio" name="languages" value="C++" /><span>C++</span>
+    <input type="radio" name="languages" checked="checked" value="Java" /><span>Java</span>
+    <input type="radio" name="languages" value="C#" /><span>C#</span>
+    <input type="radio" name="languages" value="C++" /><span>C++</span>
 </form>
 <div id="printBlock"></div>
 <script>
-   function onclick(e){
-
-       var printBlock = document.getElementById("printBlock");
-       var language = e.target.value;
-       printBlock.textContent = "Вы выбрали: " + language;
-   }
-   for (var i = 0; i < myForm.languages.length; i++) {
-       myForm.languages[i].addEventListener("click", onclick);
-   }
+    function onclick(e) {
+        var printBlock = document.getElementById("printBlock");
+        var language = e.target.value;
+        printBlock.textContent = "Вы выбрали: " + language;
+    }
+    for (var i = 0; i < myForm.languages.length; i++) {
+        myForm.languages[i].addEventListener("click", onclick);
+    }
 </script>
 ----
 
@@ -528,7 +521,7 @@ for (var i = 0; i < myForm.languages.length; i++) {
 }
 ----
 
-Значение выбранного переключателя также можно получить через объект `Event: e.target.value`
+Значение выбранного переключателя также можно получить через объект `Event`: `e.target.value`
 
 image::switch.png[Флажок, align=center]
 
@@ -546,96 +539,98 @@ myForm.languages[myForm.languages.length-1].checked = true;
 [source, javascript]
 ----
 <select name="language" size="4">
-<option value="JS" selected="selected">JavaScript</option>
-<option value="Java">Java</option>
-<option value="C#">C#</option>
-<option value="C++">C++</option>
+    <option value="JS" selected="selected">JavaScript</option>
+    <option value="Java">Java</option>
+    <option value="C#">C#</option>
+    <option value="C++">C++</option>
 </select>
 ----
 
 Атрибут `size` позволяет установить, сколько элементов будут отображаться одномоментно в списке. Значение `size="1"` отображает только один элемент списка, а сам список становится выпадающим. Если установить у элемента `select` атрибут `multiple`, то в списке можно выбрать сразу несколько значений.
 
-Каждый элемент списка представлен `html-элементом option`, у которого есть отображаемая метка и есть значения в виде атрибута `value`.
+Каждый элемент списка представлен *HTML*-элементом `option`, у которого есть отображаемая метка и есть значения в виде атрибута `value`.
 
-В `JavaScript` элементу `select` соответствует объект `HTMLSelectElement`, а элементу `option` - объект `HtmlOptionElement` или просто `Option`.
+В *JavaScript* элементу `select` соответствует объект `HTMLSelectElement`, а элементу `option` - объект `HtmlOptionElement` или просто `Option`.
 
-Все элементы списка в `javascript` доступны через коллекцию `options`. А каждый объект `HtmlOptionElement` имеет свойства: `index`, `text` (отображаемый текст) и `value` (значение элемента). *Например*, получим первый элемент списка и выведем о нем через его свойства всю информацию:
+Все элементы списка в *JavaScript* доступны через коллекцию `options`. А каждый объект `HtmlOptionElement` имеет свойства: `index`, `text` (отображаемый текст) и `value` (значение элемента). *Например*, получим первый элемент списка и выведем о нем через его свойства всю информацию:
 
 image::select-list.png[Поля выбора, align=center]
 
 [source, javascript]
 ----
 <form name="myForm">
-   <select name="language" size="4">
-      <option value="JS" selected="selected">JavaScript</option>
-      <option value="Java">Java</option>
-      <option value="CS">C#</option>
-      <option value="CPP">C++</option>
-   </select>
+    <select name="language" size="4">
+       <option value="JS" selected="selected">JavaScript</option>
+       <option value="Java">Java</option>
+       <option value="CS">C#</option>
+       <option value="CPP">C++</option>
+    </select>
 </form>
 <script>
-   var firstLanguage = myForm.language.options[0];
-   document.write("Index: " + firstLanguage.index + "<br/>");
-   document.write("Text: " + firstLanguage.text + "<br/>");
-   document.write("Value: " + firstLanguage.value + "<br/>");
+    var firstLanguage = myForm.language.options[0];
+    document.write("Index: " + firstLanguage.index + "<br/>");
+    document.write("Text: " + firstLanguage.text + "<br/>");
+    document.write("Value: " + firstLanguage.value + "<br/>");
 </script>
 ----
 
-В `javascript` можно не только получать элементы, но и динамически управлять списком. *Например*, применим добавление и удаление объектов списка:
+В *JavaScript* можно не только получать элементы, но и динамически управлять списком. *Например*, применим добавление и удаление объектов списка:
 
 [source, javascript]
 ----
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8" />
-   </head>
-   <body>
-      <form name="myForm">
-         <select name="language" size="5">
-            <option value="JS" selected="selected">JavaScript</option>
-            <option value="Java">Java</option>
-            <option value="CS">C#</option>
-            <option value="CPP">C++</option>
-         </select>
-         <p><input type="text" name="textInput" placeholder="Введите текст" /></p>
-         <p><input type="text" name="valueInput" placeholder="Введите значение" /></p>
-         <p><input type="button" name="addButton" value="Добавить" /><input type="button" name="removeButton" value="Удалить" /></p>
-      </form>
-      <script>
-         var addButton = myForm.addButton,
-             removeButton = myForm.removeButton,
-             languagesSelect = myForm.language;
-         // обработчик добавления элемента
-         function addOption(){
-             // получаем текст для элемента
-             var text = myForm.textInput.value;
-             // получаем значение для элемента
-             var value = myForm.valueInput.value;
-             // создаем новый элемента
-             var newOption = new Option(text, value);
-             languagesSelect.options[languagesSelect.options.length]=newOption;
-         }
-         // обработчик удаления элемент
-         function removeOption(){
+<head>
+   <meta charset="utf-8" />
+</head>
+<body>
+    <form name="myForm">
+            <select name="language" size="5">
+                <option value="JS" selected="selected">JavaScript</option>
+                <option value="Java">Java</option>
+                <option value="CS">C#</option>
+                <option value="CPP">C++</option>
+            </select>
+            <p><input type="text" name="textInput" placeholder="Введите текст" /></p>
+            <p><input type="text" name="valueInput" placeholder="Введите значение" /></p>
+            <p>
+                <input type="button" name="addButton" value="Добавить" />
+                <input type="button" name="removeButton" value="Удалить" />
+            </p>
+    </form>
+    <script>
+        var addButton = myForm.addButton,
+        removeButton = myForm.removeButton,
+        languagesSelect = myForm.language;
+        // обработчик добавления элемента
+        function addOption() {
+            // получаем текст для элемента
+            var text = myForm.textInput.value;
+            // получаем значение для элемента
+            var value = myForm.valueInput.value;
+            // создаем новый элемента
+            var newOption = new Option(text, value);
+            languagesSelect.options[languagesSelect.options.length]=newOption;
+        }
+        // обработчик удаления элемент
+        function removeOption() {
+            var selectedIndex = languagesSelect.options.selectedIndex;
+            // удаляем элемент
+            languagesSelect.options[selectedIndex] = null;
+        }
 
-             var selectedIndex = languagesSelect.options.selectedIndex;
-             // удаляем элемент
-             languagesSelect.options[selectedIndex] = null;
-         }
-
-         addButton.addEventListener("click", addOption);
-         removeButton.addEventListener("click", removeOption);
-      </script>
-   </body>
+        addButton.addEventListener("click", addOption);
+        removeButton.addEventListener("click", removeOption);
+    </script>
+</body>
 </html>
 ----
 
 Для добавления на форме предназначены два текстовых поля (для текстовой метки и значения элемента `option`) и кнопка. Для удаления выделенного элемента предназначена еще одна кнопка.
 
-За добавление в коде `javascript` отвечает функция `addOption`, в которой получаем введенные в текстовые поля значения, создаем новый объект `Option` и добавляем его в массив `options` объекта списка.
+За добавление в коде *JavaScript* отвечает функция `addOption()`, в которой получаем введенные в текстовые поля значения, создаем новый объект `Option` и добавляем его в массив `options` объекта списка.
 
-За удаление отвечает функция `removeOption`, в которой просто получаем индекс выделенного элемента с помощью свойства `selectedIndex` и в коллекции `options` приравниваем по этому индексу значение `null`.
+За удаление отвечает функция `removeOption()`, в которой просто получаем индекс выделенного элемента с помощью свойства `selectedIndex` и в коллекции `options` приравниваем по этому индексу значение `null`.
 
 image::select-list-project.png[Поля выбора, align=center]
 
@@ -655,29 +650,34 @@ languagesSelect.remove(selectedIndex);
 
 === События элемента select
 
-Элемент `select` поддерживает *три события:* `blur` (потеря фокуса), `focus` (получение фокуса) и `change` (изменение выделенного элемента в списке). Рассмотрим применение события `select`:
+Элемент `select` поддерживает *три события*:
+
+* `blur` *потеря фокуса*
+* `focus` *получение фокуса*
+* `change` *изменение выделенного элемента в списке*.
+
+Рассмотрим применение события `select`:
 
 [source, javascript]
 ----
 <form name="myForm">
-   <select name="language" size="5">
-      <option value="JS" selected="selected">JavaScript</option>
-      <option value="Java">Java</option>
-      <option value="CS">C#</option>
-      <option value="CPP">C++</option>
-   </select>
+    <select name="language" size="5">
+        <option value="JS" selected="selected">JavaScript</option>
+        <option value="Java">Java</option>
+        <option value="CS">C#</option>
+        <option value="CPP">C++</option>
+    </select>
 </form>
 <div id="selection"></div>
 <script>
-   var languagesSelect = myForm.language;
+    var languagesSelect = myForm.language;
 
-   function changeOption(){
+    function changeOption() {
+        var selection = document.getElementById("selection");
+        var selectedOption = languagesSelect.options[languagesSelect.selectedIndex];
+        selection.textContent = "Вы выбрали: " + selectedOption.text;
+    }
 
-       var selection = document.getElementById("selection");
-       var selectedOption = languagesSelect.options[languagesSelect.selectedIndex];
-       selection.textContent = "Вы выбрали: " + selectedOption.text;
-   }
-
-   languagesSelect.addEventListener("change", changeOption);
+    languagesSelect.addEventListener("change", changeOption);
 </script>
 ----
