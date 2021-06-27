@@ -22,5 +22,7 @@ include::sql/simple-sql-requests.adoc[]
 
 include::css/basics.adoc[]
 
+include::js/index.adoc[]
+
 :leveloffset: -1
 
