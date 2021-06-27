@@ -10,5 +10,11 @@ include::functional-programming.adoc[]
 
 include::bom.adoc[]
 
+include::data-storage.adoc[]
+
+include::collections-and-iterators.adoc[]
+
+include::ajax.adoc[]
+
 :leveloffset: -1
 
