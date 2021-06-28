@@ -10,5 +10,9 @@ include::functional-programming.adoc[]
 
 include::bom.adoc[]
 
+include::events.adoc[]
+
+include::forms.adoc[]
+
 :leveloffset: -1
 
