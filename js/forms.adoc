@@ -24,7 +24,7 @@ var searchForm = document.search;
 
 *Второй способ* состоит в обращении к коллекции форм документа и поиске в ней нужной формы:
 
-[source, javascript]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -48,38 +48,38 @@ var searchForm = document.search;
 
 С помощью свойства `name` объекта формы можно получить значение атрибута `name` у соответствующего элемента формы в коде *HTML*.
 
-Еще один способ сочетает оба подхода:
+*Еще один способ* сочетает оба подхода:
 
 [source, javascript]
 ----
 var searchForm = document.forms["search"];
 ----
 
-И также можно применять стандартные способы для поиска элемента формы, например, по `id`, по тегу или по селектору. *Например:*
+И также можно применять стандартные способы для поиска элемента формы, например, по идентификатору, по тегу или по селектору.
 
 [source, javascript]
 ----
 var searchForm = document.getElementsByTagname("form")[0]
 ----
 
-Форма имеет ряд свойств, из которых наиболее важными являются вышерассмотренное свойство `name`, а также свойство `elements`, которое содержит коллекцию элементов формы:
+Форма имеет ряд свойств, из которых наиболее важными являются, рассмотренное выше, свойство `name`. Так же имеется свойство `elements`, которое содержит коллекцию элементов формы.
 
-[source, javascript]
+[source, html]
 ----
 <form name="search">
-    <input type="text" name="key"></input>
-    <input type="submit" name="send"></input>
+    <input type="text" name="key"/>
+    <input type="submit" name="send"/>
 </form>
 <script>
     var searchForm = document.forms["search"];
     for(var i=0; i<searchForm.elements.length;i++)
-    document.write(searchForm.elements[i].name + "<br/>");
+    document.write(searchForm.elements[i].name + "<br>");
 </script>
 ----
 
 image::example-form.png[Пример формы, align=center]
 
-Среди методов формы надо отметить метод `submit()`, который отправляет данные формы на сервер, и метод `reset()`, который очищает поля формы:
+Среди методов формы надо отметить метод `submit()`, который отправляет данные формы на сервер. Так же есть метод `reset()`, который очищает поля формы.
 
 [source, javascript]
 ----
@@ -94,17 +94,17 @@ searchForm.reset();
 
 Так же, как и форма, элементы форм имеют свойство `name`, с помощью которого можно получить значение атрибута `name`:
 
-[source, javascript]
+[source, html]
 ----
 <form name="search">
-    <input type="text" name="key" value="hello world"></input>
-    <input type="submit" name="send"></input>
+    <input type="text" name="key" value="hello world"/>
+    <input type="submit" name="send"/>
 </form>
 <script>
     var searchForm = document.forms["search"];
     // выведем имя всех элементов
     for(var i=0; i<searchForm.elements.length;i++)
-    document.write(searchForm.elements[i].name + "<br/>");
+    document.write(searchForm.elements[i].name + "<br>");
 
     // получим по имени текстовое поле
     var keyBox = searchForm.elements["key"];
@@ -136,7 +136,10 @@ document.write(keyBox.form.name); // search
 
 Свойство `type` позволяет получить тип поля ввода. Это либо название тега элемента, либо значение атрибута `type` у элементов `input`.
 
-Из методов можно выделить методы `focus()` (устанавливает фокус на элемент) и `blur()` (убирает фокус с элемента):
+Из методов можно выделить методы:
+
+* `focus()`: устанавливает фокус на элемент
+* `blur()`: убирает фокус с элемента
 
 [source, javascript]
 ----
@@ -149,23 +152,23 @@ keyBox.focus();
 
 Для отправки введенных данных на форме используются *кнопки*. Для создания *кнопки* используется либо элемент `button`:
 
-[source, javascript]
+[source, html]
 ----
 <button name="send">Отправить</button>
 ----
 
 Либо элемент `input`:
 
-[source, javascript]
+[source, html]
 ----
-<input type="submit" name="send" value="Отправить" />
+<input type="submit" name="send" value="Отправить"/>
 ----
 
 С точки зрения функциональности в *HTML* эти элементы не совсем равноценны, но в данном случае они нас интересуют с точки зрения взаимодействия с кодом *JavaScript*.
 
 При нажатии на любой из этих двух вариантов кнопки происходит отправка формы по адресу, который указан у формы в атрибуте `action`, либо по адресу веб-страницы, если атрибут `action` не указан. Однако в коде *JavaScript* можно перехватить отправку, обрабатывая событие `click`.
 
-[source, javascript]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -174,7 +177,7 @@ keyBox.focus();
     </head>
     <body>
        <form name="search">
-          <input type="text" name="key"></input>
+          <input type="text" name="key"/>
           <input type="submit" name="send" value="Отправить" />
        </form>
        <script>
@@ -207,16 +210,16 @@ image::button.png[Пример формы, align=center]
 
 [source, javascript]
 ----
-function sendForm(e){
+function sendForm(e) {
     // получаем значение поля key
     var keyBox = document.search.key;
     var val = keyBox.value;
-    if(val.length>5){
+    if (val.length > 5) {
         alert("Недопустимая длина строки");
         document.search.action="PostForm";
-    }
-    else
+    } else {
         alert("Отправка разрешена");
+    }
 }
 ----
 
@@ -229,17 +232,17 @@ document.search.action="PostForm";
 
 Для очистки формы предназначены следующие равноценные по функциональности кнопки:
 
-[source, javascript]
+[source, html]
 ----
 <button type="reset">Очистить</button>
-<input type="reset" value="Очистить" />
+<input type="reset" value="Очистить"/>
 ----
 
 При нажатии на кнопки произойдет очистка форм. Но также функциональность по очистке полей формы можно реализовать с помощью метода `reset()`:
 
 [source, javascript]
 ----
-function sendForm(e){
+function sendForm(e) {
     // получаем значение поля key
     var keyBox = document.search.key;
     var val = keyBox.value;
@@ -255,14 +258,14 @@ function sendForm(e){
 
 Кроме специальных кнопок отправки и очистки на форме также может использоваться обычная кнопка:
 
-[source, javascript]
+[source, html]
 ----
-<input type="button" name="send" value="Отправить" />
+<input type="button" name="send" value="Отправить"/>
 ----
 
 При нажатии на подобную кнопку отправки данных не происходит, хотя также генерируется событие `click`:
 
-[source, javascript]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -271,8 +274,8 @@ function sendForm(e){
 </head>
 <body>
     <form name="search">
-        <input type="text" name="key" placeholder="Введите ключ"></input>
-        <input type="button" name="print" value="Печать" />
+        <input type="text" name="key" placeholder="Введите ключ"/>
+        <input type="button" name="print" value="Печать"/>
     </form>   
     <div id="printBlock"></div>
     <script>
@@ -305,9 +308,9 @@ image::paragraph.png[Пример параграфа, align=center]
 
 Для ввода простейшей текстовой информации предназначены элементы `<input type="text"`:
 
-[source, javascript]
+[source, html]
 ----
-<input type="text" name="kye" size="10" maxlength="15" value="hello world" />
+<input type="text" name="kye" size="10" maxlength="15" value="hello world"/>
 ----
 
 Данный элемент поддерживает ряд событий, в частности:
@@ -320,9 +323,7 @@ image::paragraph.png[Пример параграфа, align=center]
 * `keypress`: происходит при нажатии клавиши клавиатуры для печатаемых символов.
 * `keyup`: происходит при отпускании ранее нажатой клавиши клавиатуры.
 
-*Применим ряд событий:*
-
-[source, javascript]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -331,8 +332,8 @@ image::paragraph.png[Пример параграфа, align=center]
 </head>
 <body>
    <form name="search">
-      <input type="text" name="key" placeholder="Введите ключ"></input>
-      <input type="button" name="print" value="Печать" />
+      <input type="text" name="key" placeholder="Введите ключ"/>
+      <input type="button" name="print" value="Печать"/>
    </form>
    <div id="printBlock"></div>
    <script>
@@ -377,32 +378,32 @@ image::text-field.png[Поле ввода, align=center]
 
 Кроме данного текстового поля есть еще специальные поля ввода. Так, поле `<input type="password"` предназначено для ввода пароля. По функциональности оно во многом аналогично обычному текстовому полю за тем исключением, что для вводимых символов используется *маска*:
 
-[source, javascript]
+[source, html]
 ----
 <input type="password" name="password" />
 ----
 
 Если необходимо чтобы на форме было некоторое значение, но чтобы оно было скрыто от пользователя, то для этого могут использоваться *скрытые поля*:
 
-[source, javascript]
+[source, html]
 ----
 <input type="hidden" name="id" value="345" />
 ----
 
-Для скрытого поля обычно не используется обработка событий, но также, как и для других элементов, можно в javascript получить его значение или изменить его.
+Для скрытого поля обычно не используется обработка событий, но так же, как и для других элементов, можно в *JavaScript* получить его значение или изменить его.
 
 === Элемент `textarea`
 
 Для создания многострочных текстовых полей используется элемент `textarea`:
 
-[source, javascript]
+[source, html]
 ----
 <textarea rows="15" cols="40" name="textArea"></textarea>
 ----
 
 Данные элемент генерирует все те же самые события, что и обычное текстовое поле:
 
-[source, javascript]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -453,7 +454,7 @@ var val = String.fromCharCode(e.keyCode);
 
 Затем символ добавляется к содержимому блока `printBlock`.
 
-Событие `keypress` возникает при нажатии на клавиши для печатаемых символов, то такие символы отображаются в текстовом поле. Однако есть и другие клавиши, которые оказывают влияние на текстовое поле, но они не дают отображаемого символа, поэтому не отслеживаются событием `keypress`. К таким клавишам относится клавиша `Backspace`, которая удаляет последний символ. И для ее отслеживания также обрабатываем событие `keydown`. В обработчике `keydown` удаляем из строки в блоке `printBlock` последний символ.
+Событие `keypress` возникает при нажатии на клавиши для печатаемых символов, то такие символы отображаются в текстовом поле. Однако есть и другие клавиши, которые оказывают влияние на текстовое поле, но они не дают отображаемого символа, поэтому не отслеживаются событием `keypress`. К таким клавишам относится клавиша _Backspace_, которая удаляет последний символ. И для ее отслеживания также обрабатываем событие `keydown`. В обработчике `keydown` удаляем из строки в блоке `printBlock` последний символ.
 
 image::block-of-text.png[Блок для ввода, align=center]
 
@@ -461,18 +462,20 @@ image::block-of-text.png[Блок для ввода, align=center]
 
 Особую группу элементов ввода составляют *флажки* и *переключатели*.
 
-*Флажки* представляют поле, в которое можно поставить отметки и которое создается с помощью элемента `<input type="checkbox"`. Отличительную особенность флажка составляет свойство `checked`, которое в отмеченном состоянии принимает значение `true`:
+=== Флажки
 
-[source, javascript]
+*Флажки* представляют поле, создаваемое с помощью элемента `<input type="checkbox"` и в которое можно поставить отметки. Отличительную особенность флажка составляет свойство `checked`, которое в отмеченном состоянии принимает значение `true`:
+
+[source,html]
 ----
-<form name="myForm">
-    <input type="checkbox" name="enabled" checked><span>Включить</span>
+<form name="myForm" xmlns="http://www.w3.org/1999/html">
+    <input type="checkbox" name="enabled" checked><span>Включить</span></input>
 </form>
 <div id="printBlock"></div>
 <script>
     var enabledBox = document.myForm.enabled;
 
-    function onclick(e){
+    function onclick(e) {
         var printBlock = document.getElementById("printBlock");
         var enabled = e.target.checked;
         printBlock.textContent = enabled;
@@ -486,11 +489,13 @@ image::block-of-text.png[Блок для ввода, align=center]
 
 image::flag.png[Флажок, align=center]
 
+=== Переключатели
+
 *Переключатели* представляют группы кнопок, из которых можно выбрать только одну. Переключатели создаются элементом `<input type="radio"`.
 
 Выбор или нажатие на одну из них также представляет событие `click`:
 
-[source, javascript]
+[source, html]
 ----
 <form name="myForm">
     <input type="radio" name="languages" checked="checked" value="Java" /><span>Java</span>
@@ -532,11 +537,12 @@ image::switch.png[Флажок, align=center]
 myForm.languages[myForm.languages.length-1].checked = true;
 ----
 
-== Список select
+== Список
 
-Для создания *списка* используется `html-элемент select`. Причем с его помощью можно создавать как *выпадающие списки*, так и *обычные с ординарным или множественным выбором*. *Например, стандартный список:*
+Для создания *списка* используется HTML-элемент `select`. Причем с его помощью можно создавать как *выпадающие списки*, так и *обычные с одинарным или множественным выбором*.
 
-[source, javascript]
+.Стандартный список
+[source, html]
 ----
 <select name="language" size="4">
     <option value="JS" selected="selected">JavaScript</option>
@@ -556,7 +562,7 @@ myForm.languages[myForm.languages.length-1].checked = true;
 
 image::select-list.png[Поля выбора, align=center]
 
-[source, javascript]
+[source, html]
 ----
 <form name="myForm">
     <select name="language" size="4">
@@ -568,15 +574,16 @@ image::select-list.png[Поля выбора, align=center]
 </form>
 <script>
     var firstLanguage = myForm.language.options[0];
-    document.write("Index: " + firstLanguage.index + "<br/>");
-    document.write("Text: " + firstLanguage.text + "<br/>");
-    document.write("Value: " + firstLanguage.value + "<br/>");
+    document.write("Index: " + firstLanguage.index + "<br>");
+    document.write("Text: " + firstLanguage.text + "<br>");
+    document.write("Value: " + firstLanguage.value + "<br>");
 </script>
 ----
 
-В *JavaScript* можно не только получать элементы, но и динамически управлять списком. *Например*, применим добавление и удаление объектов списка:
+В *JavaScript* можно не только получать элементы, но и динамически управлять списком.
 
-[source, javascript]
+.Добавление и удаление объектов списка
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -585,18 +592,18 @@ image::select-list.png[Поля выбора, align=center]
 </head>
 <body>
     <form name="myForm">
-            <select name="language" size="5">
-                <option value="JS" selected="selected">JavaScript</option>
-                <option value="Java">Java</option>
-                <option value="CS">C#</option>
-                <option value="CPP">C++</option>
-            </select>
-            <p><input type="text" name="textInput" placeholder="Введите текст" /></p>
-            <p><input type="text" name="valueInput" placeholder="Введите значение" /></p>
-            <p>
-                <input type="button" name="addButton" value="Добавить" />
-                <input type="button" name="removeButton" value="Удалить" />
-            </p>
+        <select name="language" size="5">
+            <option value="JS" selected="selected">JavaScript</option>
+            <option value="Java">Java</option>
+            <option value="CS">C#</option>
+            <option value="CPP">C++</option>
+        </select>
+        <p><input type="text" name="textInput" placeholder="Введите текст"/></p>
+        <p><input type="text" name="valueInput" placeholder="Введите значение"/></p>
+        <p>
+            <input type="button" name="addButton" value="Добавить" />
+            <input type="button" name="removeButton" value="Удалить" />
+        </p>
     </form>
     <script>
         var addButton = myForm.addButton,
@@ -648,7 +655,7 @@ languagesSelect.add(newOption);
 languagesSelect.remove(selectedIndex);
 ----
 
-=== События элемента select
+=== События элемента `select`
 
 Элемент `select` поддерживает *три события*:
 
@@ -658,7 +665,7 @@ languagesSelect.remove(selectedIndex);
 
 Рассмотрим применение события `select`:
 
-[source, javascript]
+[source, html]
 ----
 <form name="myForm">
     <select name="language" size="5">
