@@ -1,5 +1,5 @@
 = Протокол HTTP
-:imagesdir: ../assets/img/http
+:imagesdir: ../assets/img/web/http
 
 == Общая информация
 

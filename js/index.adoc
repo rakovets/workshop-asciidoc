@@ -1,6 +1,20 @@
-= SQL
+
+= Основы JavaScript
 
 :leveloffset: +1
+
+include::intro.adoc[]
+
+include::basics.adoc[]
+
+include::functional-programming.adoc[]
+
+include::bom.adoc[]
+
+include::events.adoc[]
+
+include::forms.adoc[]
+
 
 include::oop.adoc[]
 
@@ -9,3 +23,4 @@ include::embedded-objects.adoc[]
 include::strings.adoc[]
 
 :leveloffset: -1
+

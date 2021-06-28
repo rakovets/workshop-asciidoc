@@ -1,0 +1,388 @@
+= Многотабличные базы данных
+
+== Ключи
+
+*Ключ* — это колонка или колонки, не имеющие в строках дублирующих значений.
+
+*Ключи бывают:*
+
+* *Первичные*
+* *Внешние*
+* *Составные*
+
+=== Первичный ключ
+
+Столбец, который в базе данных должен быть уникальным помечают первичным ключом. *Первичный ключ или primary key* означает, что в таблице значение колонки *primary key* не может повторяться. Таким образом данный ключ позволяет однозначно идентифицировать запись в таблице не боясь при этом, что значение столбца повториться.
+
+Допустим есть таблица студентов с полями: `ФИО`, `год рождения`. Поскольку может возникнуть ситуация когда `ФИО` и `год рождения` совпадут сразу у нескольких студентов, верным решением будет внести в таблицу первичный ключ:
+
+|===
+|Первичный ключ|ФИО|Год рождения
+|1|Иванов Иван|2001
+|2|Егоров Егор|2002
+|3|Николаенко Николай|2001
+|===
+
+=== Внешний ключ
+
+*Внешние ключи* еще называют *ссылочным*, они необходимы для связывания таблиц между собой.
+
+.Товары
+|===
+|Артикул|ID тип товара|Цена
+|151687|1|104
+|151605|1|42
+|151690|2|77
+|151601|2|90
+|===
+
+.Тип товара
+|===
+|ID|Тип товара
+|1|Джемпер
+|2|Футболка
+|===
+
+В таблице `Тип товара` внешним ключом будет поле `ID тип товара` в таблице `Товары`. Благодаря такой зависимости образуется связь между двумя таблицами.
+
+=== Составной ключ
+
+Бывают ситуации, когда при вставке в таблицу нужно проверять запись на уникальность сразу по нескольким полям.
+
+*Составной ключ* — это несколько первичных ключей в таблице. Таким образом, создав составной ключ, уникальность записи будет проверяться по полям, которые объединенные в этот ключ.
+
+|===
+|Город|№ школы|Директор|Адрес|Телефон
+|Гомель|1|Иванов Иван|Лесная, 2|2-22-99
+|Минск|1|Егоров Егор|Солнечная, 4|4-44-44
+|Минск|2|Николаенко Николай|Радужная, 1|5-55-55
+|===
+
+Составной ключ может состоять и более чем из двух полей. В таблице поля `Город` и `№ школы` вместе образуют составной ключ. В такой таблице у разных записей не могут совпасть одновременно два поля `Город` и `№ школы`, а номера школ совпасть могут.
+
+== Подзапросы
+
+=== Оператор `EXISTS`
+
+Оператор `EXISTS` используется для проверки существования любой записи в подзапросе. Если подзапрос возвращает одну или несколько записей, то возвращается `true`.
+
+==== Синтаксис `EXISTS`
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);
+----
+
+==== Примеры использования `EXISTS`
+
+Следующий оператор возвращает `TRUE` и перечисляет доставки с ценой товара менее `1000`:
+
+[source,sql]
+----
+SELECT name
+FROM delivery
+WHERE EXISTS (SELECT name FROM product WHERE delivery_id = delivery.delivery_id AND price < 1000);
+----
+
+Следующий оператор SQL возвращает `TRUE` и перечисляет доставки с ценой товара `5000`.
+
+[source,sql]
+----
+SELECT name
+FROM delivery
+WHERE EXISTS (SELECT name FROM product WHERE delivery_id = delivery.delivery_id AND price = 5000);
+----
+
+=== Операторы `ANY` и `ALL`
+
+Операторы `ANY` и `ALL` используются с предложением `WHERE` или `HAVING`. Оператор `ANY` возвращает `true`, если какое-либо из значений подзапроса соответствует условию. Оператор `ALL` возвращает `true`, если все значения подзапроса удовлетворяют условию.
+
+==== Синтаксис `ANY`
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ANY
+(SELECT column_name FROM table_name WHERE condition);
+----
+
+==== Пример `ANY`
+
+Оператор `ANY` возвращает `TRUE`, если какое-либо из значений подзапроса соответствует условию. Следующий оператор возвращает `TRUE` и перечисляет имена товаров, если он находит ЛЮБЫЕ записи в таблице `info`, с количеством = `15`:
+
+[source,sql]
+----
+SELECT name
+FROM product
+WHERE product_id = ANY (SELECT product_id FROM info WHERE counts = 15)
+----
+
+Следующий оператор возвращает `TRUE` и перечисляет имена товаров, если он находит ЛЮБЫЕ записи в таблице `info`, с количеством > `15`:
+
+[source,sql]
+----
+SELECT name
+FROM product
+WHERE product_id = ANY (SELECT product_id FROM info WHERE counts > 15);
+----
+
+==== Синтаксис `ALL`
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ALL
+(SELECT column_name FROM table_name WHERE condition);
+----
+
+==== Пример `ALL`
+
+Оператор `ALL` возвращает `TRUE`, если все значения подзапроса удовлетворяют условию.
+
+Следующий оператор возвращает `TRUE` и перечисляет имена товаров, если ВСЕ записи в таблице `info` имеют количество = `7`:
+
+[source,sql]
+----
+SELECT name
+FROM product
+WHERE product_id = ALL (SELECT product_id FROM info WHERE couns =7);
+----
+
+== Соединение
+
+Оператор `UNION` используется для объединения результирующего набора из двух или более операторов `SELECT`. Каждый оператор `SELECT` в `UNION` должен иметь одинаковое количество столбцов. Столбцы также должны иметь похожие типы данных и в каждой инструкции `SELECT` быть в том же порядке.
+
+=== Синтаксис `UNION`
+
+[source,sql]
+----
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+----
+
+=== Пример `UNION`
+
+Следующий оператор выбирает все разные города (только отдельные значения) от `users` и `delivery`:
+
+[source,sql]
+----
+SELECT city FROM users
+UNION
+SELECT city FROM delivery
+ORDER BY city;
+----
+
+=== Синтаксис `UNION ALL`
+
+Оператор `UNION` по умолчанию выбирает только разные значения. Чтобы разрешить повторяющиеся значения, используйте `UNION ALL`:
+
+[source,sql]
+----
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+----
+
+=== Пример `UNION ALL`
+
+Следующий оператор выбирает все города (дублирующиеся значения также) из `users` и `delivery`:
+
+[source,sql]
+----
+SELECT city FROM users
+UNION ALL
+SELECT city FROM delivery
+ORDER BY city;
+----
+
+=== Оператор `UNION` с `WHERE`
+
+Следующий оператор выбирает все разные испанские города (только отдельные значения) от `users` и `delivery`:
+
+[source,sql]
+----
+SELECT city, country FROM users
+WHERE country='Spain'
+UNION
+SELECT city, country FROM delivery
+WHERE country='Spain'
+ORDER BY city;
+----
+
+=== Оператор `UNION ALL` с `WHERE`
+
+Следующий оператор выбирает все испанские города (повторяющиеся значения) также из `users` и `delivery`:
+
+[source,sql]
+----
+SELECT city, country FROM users
+WHERE country='Spain'
+UNION ALL
+SELECT city, country FROM delivery
+WHERE country = 'Spain'
+ORDER BY city;
+----
+
+== Объединения
+
+Предложение `JOIN` используется для объединения строк из двух или более таблиц на основе соответствующего столбца между ними.
+
+Существует несколько типов `JOIN` в *SQL*:
+
+* `(INNER) JOIN` - возвращает записи, имеющие соответствующие значения в обеих таблицах
+* `LEFT (OUTER) JOIN` - возвращает все записи из левой таблицы и соответствующие записи из правой таблицы
+* `RIGHT (OUTER) JOIN` - вернуть все записи из правой таблицы и сопоставленные записи из левой таблицы
+* `FULL (OUTER) JOIN` - возвращает все записи, когда есть совпадение в левой или правой таблице
+
+=== `INNER JOIN`
+
+Ключевое слово `INNER JOIN` выбирает записи, имеющие соответствующие значения в обеих таблицах
+
+*Синтаксиc:*
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2 ON table1.column_name = table2.column_name;
+----
+
+*Пример:*
+
+.Таблица users
+[options="header"]
+|===
+|user_id|name|fullname
+|1|Ник|Никольский
+|2|Майк|Майкович
+|===
+
+.Таблица invoice
+[options="header"]
+|===
+|invoice_id|user_id|product_id
+|1|1|7
+|2|2|12
+|===
+
+Столбец `user_id` в таблице `invoice` ссылается на `user_id` в таблице `invoice` между которыми осуществляется взаимосвязь. Для выбора записей, имеющие соответствующие значения в обеих таблицах используется следующий запрос:
+
+[source,sql]
+----
+SELECT invoice.invoice_id, users.name
+FROM Orders
+INNER JOIN users ON invoice.user_id = users.user_id;
+----
+
+==== `JOIN Three` таблиц
+
+Следующий оператор выбирает все счета с информацией о пользователях и отправителях:
+
+*Пример:*
+
+[source,sql]
+----
+SELECT invoice.invoice, users.name, addresser.name
+FROM ((invoice
+INNER JOIN users ON invoice.user_id = users.user_id)
+INNER JOIN addresser ON invoice.addresser_id = addresser.addresser_id);
+----
+
+=== `LEFT JOIN`
+
+Ключевое слово `LEFT JOIN` возвращает все записи из левой таблицы и сопоставленные записи из правой таблицы. Результат равен `NULL` с правой стороны, если нет совпадения.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2 ON table1.column_name = table2.column_name;
+----
+
+*Пример*, следующий оператор выберет всех пользователей и любые заказы, которые они могут иметь:
+
+[source,sql]
+----
+SELECT users.name, invoice.invoice_id
+FROM users
+LEFT JOIN invoice ON users.user_id = invoice.user_id
+ORDER BY users.name;
+----
+
+===  `RIGHT JOIN`
+
+Ключевое слово `RIGHT JOIN` возвращает все записи из правой таблицы и сопоставленные записи из левой таблицы. Результат равен `NULL` с левой стороны, когда нет совпадения.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2 ON table1.column_name = table2.column_name;
+----
+
+*Пример*, следующий оператор вернет всех пользователей и любые заказы, которые они могли бы разместить.
+
+[source,sql]
+----
+SELECT invoice.invoice_id, users.name, users.fullname
+FROM invoice
+RIGHT JOIN users ON invoice.user_id = users.user_id
+ORDER BY invoice.invoice_id;
+----
+
+=== `FULL OUTER JOIN`
+
+Ключевое слово `FULL OUTER JOIN` возвращает все записи, когда есть совпадение в обеих таблицах таблицы или справа.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2 ON table1.column_name = table2.column_name;
+----
+
+*Пример*, следующий оператор выбирает всех пользователей и все заказы:
+
+[source,sql]
+----
+SELECT users.name, invoice.invoice_id
+FROM users
+FULL OUTER JOIN invoice ON users.user_id = invoice.user_id
+ORDER BY users.name;
+----
+
+=== Регулярное соединение `Self JOIN`
+
+`Self JOIN` - это регулярное соединение, но таблица соединяется сама с собой.
+
+*Синтаксис:*
+
+[source,sql]
+----
+SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;
+----
+
+*Пример*, следующий оператор соответствует пользователям из одного города:
+
+[source,sql]
+----
+SELECT A.name AS name1, B.name AS name2, A.city
+FROM users A, users B
+WHERE A.user_id <> B.user_id
+AND A.city = B.city
+ORDER BY A.city;
+----
