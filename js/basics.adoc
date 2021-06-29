@@ -1,9 +1,7 @@
-= Основы JavaScript
+= Основы синтаксиса
 :imagesdir: ../assets/img/js
 
-== Основы синтаксиса
-
-=== Инструкции
+== Инструкции
 
 Код *JavaScript* состоит из инструкций, каждая из которых завершается точкой запятой:
 
@@ -30,7 +28,7 @@ var a = 5 + 8;
 alert(a);
 ----
 
-=== Комментарии
+== Комментарии
 
 В коде *JavaScript* могут использоваться *комментарии*, они не обрабатываются интерпретатором *JavaScript* и никак не учитываются в работе программы. *Комментарии* предназначен для ориентации по коду, чтобы указать, что делает тот или иной код.
 
@@ -57,7 +55,7 @@ var a = 5 + 8;
 alert(a);
 ----
 
-== Переменные и константы
+== Переменные
 
 Для хранения данных в программе используются *переменные*, они предназначены для хранения каких-нибудь временных данных или таких данных, которые в процессе работы могут менять свое значение.
 
@@ -101,7 +99,10 @@ var for;
 
 *Список зарезервированных слов* в JavaScript:
 
-`abstract, boolean, break, byte, case, catch, char, class, const, continue, debugger, default, delete, do, double, else, enum, export, extends, false, final, finally, float, for, function, goto, if, implements, import, in, instanceof, int, inteface, long, native, new, null, package, private, protected, public, return, short, static, super, switch, synchronized, this, throw, throws, transient, true, try, typeof, var, volatile, void, while, with`
+[source, javascript]
+----
+abstract, boolean, break, byte, case, catch, char, class, const, continue, debugger, default, delete, do, double, else, enum, export, extends, false, final, finally, float, for, function, goto, if, implements, import, in, instanceof, int, inteface, long, native, new, null, package, private, protected, public, return, short, static, super, switch, synchronized, this, throw, throws, transient, true, try, typeof, var, volatile, void, while, with
+----
 
 При названии переменных надо учитывать, что *JavaScript* является *регистрозависимым языком*, то есть в следующем коде объявлены две разные переменные:
 
@@ -140,7 +141,7 @@ price = 54;
 console.log(price);
 ----
 
-=== Константы
+== Константы
 
 С помощью ключевого слова `const` можно определить *константу*, которая, как и переменная, хранит значение, однако это значение не может быть изменено.
 
