@@ -22,5 +22,7 @@ include::js/index.adoc[]
 
 include::sql/index.adoc[]
 
+include::js/index.adoc[]
+
 :leveloffset: -1
 
