@@ -1,0 +1,212 @@
+= Хранение данных
+:imagesdir: ../assets/img/js
+
+== Куки
+
+Одну из возможностей сохранения данных в *JavaScript* представляет использование *куки*. Для работы с куками в объекте `document` предназначено свойство `cookie`.
+
+Для установки куков достаточно свойству `document.cookie` присвоить строку с куками:
+
+[source, html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <script>
+        document.cookie = "login=tom32;";
+    </script>
+</body>
+</html>
+----
+
+В данном случае устанавливается кука, которая называется `login` и которая имеет значение `tom32`. И в большинстве браузеров мы можем посмотреть ее, узнать всю информацию о ней и в дальнейшем ее можно использовать в приложении:
+
+image::cookie.png[Установка куки в JavaScript, align=center]
+
+Строка куки принимает до шести различных параметров:
+
+* *имя куки*
+* *значение*
+* *срок окончания действия* (`expires`)
+* *путь* (`path`)
+* *домен* (`domain`)
+* `secure`
+
+Выше использовались только два параметра: *имя куки* и *значение*. То есть в случае со строкой `"login=tom32;"` куки имеет имя `login` и значение `tom32`.
+
+Но, подобная куки имеет очень ограниченный срок жизни: если явным образом не установить срок действия, то кука будет удалена с закрытием браузера. Подобная ситуация, возможно, идеальна для тех случаев, когда необходимо удалять всю информацию после завершения работы с веб-приложением и закрытия браузера. Однако данное поведение не всегда подходит.
+
+И в этом случае нам надо установить параметр `expires`, то есть срок действия куков:
+
+[source, javascript]
+----
+document.cookie = "login=tom32;expires=Mon, 31 Aug 2021 00:00:00 GMT;";
+----
+
+То есть срок действия куки `login` истекает в понедельник 31 августа 2021 года в 00:00. Формат параметра `expires` очень важен. Однако его можно сгенерировать программно. Для этого мы можем использовать метод `toUTCString()` объекта `Date`:
+
+[source, javascript]
+----
+var expire = new Date();
+expire.setHours(expire.getHours() + 4);
+document.cookie = "login=tom32;expires=" + expire.toUTCString() + ";";
+----
+
+В данном случае срок действия куки будет составлять 4 часа.
+
+Если вдруг нам надо установить куки для какого-то определенного пути на сайте, то мы можем использовать параметр `path`. Например, мы хотим установить куки только для пути `www.mysite.com/home`:
+
+[source, javascript]
+----
+document.cookie = "login=tom32;expires=Mon, 31 Aug 2015 00:00:00 GMT;path=/home;";
+----
+
+В этом случае для других путей на сайте, например, `www.mysite.com/shop`, эти куки будут недоступны.
+
+Если на нашем сайте есть несколько доменов, и мы хотим установить куки непосредственно для определенного домена, тогда можно использовать параметр `domain`. Например, у нас на сайте есть поддомен `blog.mysite.com`:
+
+[source, javascript]
+----
+document.cookie = "login=tom32;expires=Mon, 31 Aug 2015 00:00:00 GMT;path=/;domain=blog.mysite.com;";
+----
+
+Параметр `path=/` указывает, что куки будут доступны для всех директорий и путей поддомена `blog.mysite.com`.
+
+Последний параметр - `secure` задает использование *SSL* (*SecureSockets Layer*) и подходит для сайтов, использующих протокол *https`. Если значение этого параметра равно `true`, то куки будут использоваться только при установке защищенного соединения *ssl*. По умолчанию данный параметр равен `false`.
+
+[source, javascript]
+----
+document.cookie = "login=tom32;expires=Mon, 31 Aug 2015 00:00:00 GMT;path=/;domain=blog.mysite.com;secure=true;";
+----
+
+=== Получение куки
+
+Для простейшего извлечения куки из браузера достаточно обратиться к свойству `document.cookie`:
+
+[source, javascript]
+----
+var expire = new Date();
+expire.setHours(expire.getHours() + 4);
+document.cookie = "city=Berlin;expires="+expire.toUTCString()+";";
+document.cookie = "country=Germany;expires="+expire.toUTCString()+";";
+document.cookie = "login=tom32;";
+document.write(document.cookie);
+----
+
+Здесь были установлены три куки, и браузер выведет нам все эти куки:
+
+image::getcookie.png[Получить куки в JavaScript, align=center]
+
+Извлеченные куки не включают параметры `expires`, `path`, `domain` и `secure`. Кроме того, сами куки разделяются точкой с запятой, поэтому нужно еще провести некоторые преобразования, чтобы получить их имя и значение:
+
+[source, javascript]
+----
+var cookies = document.cookie.split(";");
+for (var i = 0; i < cookies.length; i++) {
+    var parts = cookies[i].split("=");
+    name = parts[0];
+    value = parts[1];
+    document.write("Имя куки: " + name + "<br/>");
+    document.write("Значение: " + value + "<br/><br/>");
+}
+----
+
+== Web Storage
+
+Хотя куки позволяют сохранять информацию, они имеют ряд ограничений. Например, браузер имеет ограничения на размер куков — каждая кука не может превышать 4 кб. Куки имеют срок действия, после которого удаляются. Куки являются неотъемлемой чертой протокола *HTTP* и при каждом запросе к серверу передаются вместе с запросом на сервер. Однако для работы с куками на стороне клиента в коде *JavaScript* не имеет значения передача куков на сервер. Кроме того, для извлечения сохраненных куков надо написать некоторую порцию кода.
+
+Поэтому в *HTML5* была внедрена новая концепция для хранения данных - *web storage*. *Web storage* состоит из двух компонентов:
+
+* *session storage*
+* *local storage*
+
+*Session storage* представляет временное хранилище информации, которая удаляется после закрытия браузера.
+
+*Local storage* представляет хранилище для данных на постоянной основе. Данные из *local storage* автоматически не удаляются и не имеют срока действия. Эти данные не передаются на сервер в запросе *HTTP*. Кроме того, объем *local storage* составляет в *Chrome* и *Firefox* 5 Мб для домена, а в *IE* - 10 Мб.
+
+Все данные в *web storage* представляют набор пар ключ-значение. То есть каждый объект имеет уникальное имя-ключ и определенное значение.
+
+Для работы с *local storage* в *JavaScript* используется объект `localStorage`, а для работы с *session storage* - объект `sessionStorage`.
+
+Для сохранения данных надо передать в метод `setItem()` объекта `localStorage`:
+
+[source, javascript]
+----
+localStorage.setItem("login", "tom32@gmail.com");
+----
+
+В этот метод передаются два значения: ключ и значение сохраняемого объекта.
+
+Если в `localStorage` уже есть объект с ключом `login`, то его значение заменяется новым.
+
+Для получения сохраненных данных надо вызвать метод `getItem()`:
+
+[source, javascript]
+----
+var login = localStorage.getItem("login"); // tom32@gmail.com
+----
+
+В этот метод передается ключ объекта.
+
+Чтобы удалить объект, применяется метод `removeItem()`, который принимает ключ удаляемого объекта:
+
+[source, javascript]
+----
+localStorage.removeItem("login");
+----
+
+И для полного удаления всех объектов из `localStorage` можно использовать метод `clear()`:
+
+[source, javascript]
+----
+localStorage.clear();
+----
+
+С сохранением простых объектов все просто, однако при этом надо учитывать, что данные в `localStorage` сохраняются в виде строки:
+
+[source, javascript]
+----
+localStorage.setItem("age", 23);
+var age = localStorage.getItem("age");
+age = parseInt(age) + 10;
+document.write(age); // 33
+----
+
+Если в данном случае не преобразовать значение к числу с помощью `parseInt()`, то age будет действовать как строка.
+
+Трудности могут возникнуть с сохранением сложных объектов:
+
+[source, javascript]
+----
+var user = {
+    name: "Tom",
+    age: 23,
+    married: false
+};
+localStorage.setItem("user", user);
+var savedUser = localStorage.getItem("user");
+document.write(savedUser); // [object Object]
+document.write(savedUser.name); // undefined - savedUser - строка, а не объект
+----
+
+В этом случае нам надо использовать сериализацию в формат *JSON*:
+
+[source, javascript]
+----
+var user = {
+    name: "Tom",
+    age: 23,
+    married: false
+};
+
+localStorage.setItem("user", JSON.stringify(user));
+var savedUser = JSON.parse(localStorage.getItem("user"));
+document.write(savedUser.name + " " + savedUser.age +" " + savedUser.married); // Tom 23 false
+----
+
+И в завершении надо сказать, что в некоторых браузерах с помощью специальных инструментов мы можем увидеть сохраненные объекты в *local storage*. Например, в *Google Chrome*:
+
+image::localstorage.png[Local Storage в JavaScript, align=center]
