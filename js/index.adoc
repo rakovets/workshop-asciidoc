@@ -14,5 +14,10 @@ include::events.adoc[]
 
 include::forms.adoc[]
 
-:leveloffset: -1
+include::data-storage.adoc[]
 
+include::collections-and-iterators.adoc[]
+
+include::ajax.adoc[]
+
+:leveloffset: -1
