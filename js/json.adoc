@@ -1,0 +1,99 @@
+= JSON
+
+*JSON* (*JavaScript Object Notation*) представляет легковесный формат хранения данных. *JSON* описывает *структуру* и *организацию* данных *JavaScript*. *Простота JSON* привела к тому, что в настоящий момент он является наиболее популярным форматом передачи данных в среде *web*, вытеснив другой некогда популярный формат *xml*.
+
+*Объекты* *JSON* очень похожи на *объекты* *JavaScript*, тем более что *JSON* является *подмножеством* *JavaScript*. В то же время важно их различать: *JavaScript* является языком программирования, а *JSON* является *форматом данных*.
+
+*JSON* поддерживает *три* типа данных: *примитивные значения*, *объекты* и *массивы*. *Примитивные значения* представляют стандартные *строки*, *числа*, значение *null*, логические значения *true* и *false*.
+
+*Объекты* представляют *набор* простейших данных, *других объектов* и *массивов*. Типичный объект JSON:
+
+[source, json]
+----
+{
+"name": "Tom",
+"married": true,
+"age": 30
+}
+----
+
+В *javascript* этому объекту соответствовал бы следующий:
+
+[source, js]
+----
+var user = {
+    name: "Tom",
+    married: true,
+    age: 30
+}
+----
+
+Несмотря на общее сходство, в то же время есть и различия: в *JSON* названия свойств заключаются *в кавычки*, как обычные строки. Кроме того, *объекты JSON* *не могут* хранить *функции*, *переменные*, как *объекты javascript*.
+
+Объекты могут быть сложными:
+
+[source, json]
+----
+{
+    "name": "Tom",
+    "married": true,
+    "age": 30,
+    "company": {
+        "name": "Microsoft",
+        "address": "USA, Redmond"
+    }
+}
+----
+
+*Массивы* в *JSON* похожи на массивы *javascript* и также могут хранить простейшие данные или объекты:
+
+[source, json]
+----
+["Tom", true, 30]
+----
+
+Массив объектов:
+
+[source, json]
+----
+[{
+    "name": "Tom",
+    "married": true,
+    "age": 30
+},{
+    "name": "Alice",
+    "married": false,
+    "age": 23
+}]
+----
+
+== Сериализация в JSON и десериализация
+
+Для сериализации *объекта javascript* в *json* применяется функция `JSON.stringify()`:
+
+[source, js]
+----
+var user = {
+    name: "Tom",
+    married: true,
+    age: 30
+};
+var serializedUser = JSON.stringify(user);
+document.write(serializedUser); // {"name":"Tom","married":true,"age":30}
+----
+
+Для обратной операции - *десериализации* или *парсинга* *json-объекта* в *javascript* применяется *метод* `JSON.parse()`:
+
+[source, js]
+----
+var user = {
+    name: "Tom",
+    married: true,
+    age: 30
+};
+// сериализация
+var serializedUser = JSON.stringify(user);
+// десериализация
+var tomUser = JSON.parse(serializedUser);
+document.write(tomUser.name); // Tom
+----
