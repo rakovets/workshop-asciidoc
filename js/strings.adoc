@@ -129,7 +129,7 @@ var myExp = new RegExp("hello");
 var initialText = "hello world!";
 var exp = /hello/;
 var result = exp.test(initialText);
-document.write(result + "<br/>"); // true
+document.write(result + "<br>"); // true
 
 initialText = "beautifull wheather";
 result = exp.test(initialText);
@@ -190,7 +190,7 @@ var initialText = "Сегодня была прекрасная погода";
 var exp = /\s/;
 var result = initialText.split(exp);
 result.forEach(function(value, index, array) {
-    document.write(value + "<br/>");
+    document.write(value + "<br>");
 })
 ----
 
@@ -204,7 +204,7 @@ var initialText = "Он пришел домой и сделал домашнюю
 var exp = /дом[а-я]*/gi;
 var result = initialText.match(exp);
 result.forEach(function(value, index, array) {
-    document.write(value + "<br/>");
+    document.write(value + "<br>");
 })
 ----
 
