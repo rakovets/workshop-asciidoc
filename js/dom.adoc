@@ -142,6 +142,67 @@ for(var i=0; i<images.length;i++){
 
 * `nodeValue`: возвращает или устанавливает значение узла в виде простого текста
 
+Перебор всех дочерних узлов элемента:
+
+[source, js]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="article">
+        <h3>Заголовок статьи</h3>
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+<script>
+var articleDiv = document.querySelector("div.article");
+var nodes = articleDiv.childNodes;
+for(var i=0; i<nodes.length;i++){
+
+    var type = "";
+    if(nodes[i].nodeType===1)
+        type="элемент";
+    else if(nodes[i].nodeType===2)
+        type="атрибут";
+    else if(nodes[i].nodeType===3)
+        type="текст";
+
+    console.log(nodes[i].nodeName + ": " + type);
+}
+</script>
+</body>
+</html>
+----
+
+С помощью *метода* `document.querySelector("div.article")` выбираем элемент `div` с классом `article` и пробегаемся по его дочерним узлам. И в цикле выводим имя узла и его тип с помощью свойств `nodeName` и `nodeType`.
+
+Но несмотря на то, что в *блоке* `div` на странице только три узла: `h3` и 2 параграфа, но консоль отобразит нам `семь узлов`.
+
+image::childnodes.png[Дочерние узлы]
+
+Дело в том, что пробелы между узлами также считаются за отдельные текстовые узлы.
+
+Используя *свойства* `nextSibling` и `previousSibling` можно также пройтись по узлам в прямом или обратном порядке. Например, для прохода по элементам на той же станице можно использовать следующий код *javascript*:
+
+[source, js]
+----
+var articleDiv = document.querySelector("div.article");
+
+// получаем первый дочерний элемент
+var node = articleDiv.firstChild;
+console.log(node.nodeName);
+// обращаемся к следующему узлу, пока он определен
+while((node=node.nextSibling)!==null){
+
+    console.log(node.nodeName);
+}
+----
+
+Тут все аналогично, только в цикле мы обращаемся к *следующему узлу*, который находится на *одном уровне* с текущим.
+
 === Создание, добавление  элементов веб-станицы
 Для создания элементов *объект* `document` имеет следующие методы:
 
@@ -201,15 +262,67 @@ elem.textContent = "Привет мир";
 
 В этом случае текстовый узел будет создан неявно при установке текста.
 
+Теперь рассмотрим, как аналогичный элемент добавить в начало коллекции дочерних узлов блока `div`:
+
+[source, js]
+----
+var articleDiv = document.querySelector("div.article");
+// создаем элемент
+var elem = document.createElement("h2");
+// создаем для него текст
+var elemText = document.createTextNode("Привет мир");
+// добавляем текст в элемент в качестве дочернего элемента
+elem.appendChild(elemText);
+// получаем первый элемент, перед которым будет идти добавление
+var firstElem = articleDiv.firstChild.nextSibling;
+// добавляем элемент в блок div перед первым узлом
+articleDiv.insertBefore(elem, firstElem);
+----
+
+Если необходимо вставить новый узел на второе, третье или любое другое место, то нам надо найти узел, перед которым надо вставлять, с помощью комбинаций свойств `firstChild/lastChild` и `nextSibling/previousSibling`.
+
 === Копирование элементов
 Иногда элементы бывают довольно сложными по составу, и гораздо проще их скопировать, чем с помощью отдельных вызовов создавать из содержимое. Для копирования уже имеющихся узлов у *объекта* `Node` можно использовать метод `cloneNode()`.
 В *метод* `cloneNode()` в качестве параметра передается *логическое значение*: если передается `true`, то элемент будет копироваться *со всеми дочерними узлами*; если передается `false` - то копируется *без дочерних узлов*.
 
+[source, js]
+----
+var articleDiv = document.querySelector("div.article");
+// клонируем элемент articleDiv
+var newArticleDiv = articleDiv.cloneNode(true);
+// добавляем в конец элемента body
+document.body.appendChild(newArticleDiv);
+----
+
 === Удаление элемента
 Для удаления элемента вызывается метод `removeChild(removalNode)` *объекта* `Node`. Этот метод удаляет один из дочерних узлов.
 
+[source, js]
+----
+var articleDiv = document.querySelector("div.article");
+// находим узел, который будем удалять - первый параграф
+var removableNode = document.querySelectorAll("div.article p")[0];
+// удаляем узел
+articleDiv.removeChild(removableNode);
+----
+
 === Замена элемента
 Для замены элемента применяется метод `replaceChild(newNode, oldNode)` *объекта* `Node`.
+
+[source, js]
+----
+var articleDiv = document.querySelector("div.article");
+// находим узел, который будем заменять - первый параграф
+var oldNode = document.querySelectorAll("div.article p")[0];
+// создаем элемент
+var newNode = document.createElement("h2");
+// создаем для него текст
+var elemText = document.createTextNode("Привет мир");
+// добавляем текст в элемент в качестве дочернего элемента
+newNode.appendChild(elemText);
+// заменяем старый узел новым
+articleDiv.replaceChild(newNode, oldNode);
+----
 
 == Объект Element
 
@@ -352,6 +465,16 @@ console.log("clientWidth: " + rect.clientWidth);
 Для определения позиции элемента наиболее эффективным способом является *метод* `getBoundingClientRect()`.
 
 Этот метод возвращает *объект* со свойствами `top`, `bottom`, `left`, `right`, которые указывают на *смещение элемента* относительно *верхнего левого угла* браузера.
+
+[source, js]
+----
+var rect = document.getElementById("rect");
+var clientRect  = rect.getBoundingClientRect();
+console.log("top: " + clientRect.top);
+console.log("bottom: " + clientRect.bottom);
+console.log("left: " + clientRect.left);
+console.log("right: " + clientRect.right);
+----
 
 === Изменение стиля элементов
 Для работы со *стилевыми свойствами элементов* в *JavaScript* применяются, главным образом, два подхода:
