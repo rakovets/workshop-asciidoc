@@ -44,6 +44,8 @@ image::domtree.png[дерево html страницы]
 * `Entity`: необработанная сущность *DTD*
 * `Notation`: нотация, объявленная в *DTD*
 
+Несмотря на такое большое количество типов узлов, как правило, работают только с некоторыми из них.
+
 == Объект document
 
 Для работы со структурой *DOM* в *JavaScript* предназначен *объект `document`*, который определен в глобальном *объекте `window`*. *Объект `document`* предоставляет ряд свойств и методов для управления элементами страницы.
@@ -58,7 +60,172 @@ image::domtree.png[дерево html страницы]
 * `querySelector(value)`: выбирает первый элемент, который соответствует *css-селектору* `value`
 * `querySelectorAll(value)`: выбирает все элементы, которые соответствуют *css-селектору* `value`
 
-== Свойства объекта document
+Например, найдем элемент по `id`:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <h3 id="header">Block Header</h3>
+        <p>Text</p>
+    </div>
+    <script>
+        var headerElement = document.getElementById("header");
+        document.write("Текст заголовка: " + headerElement.innerText);
+    </script>
+</body>
+</html>
+----
+
+С помощью вызова `document.getElementById("header")` находим элемент, у которого `id="header"`. А с помощью свойства `innerText` можно получить текст найденного элемента.
+
+Поиск по определенному тегу:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <h3>Заголовок</h3>
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        var pElements = document.getElementsByTagName("p");
+
+        for (var i = 0; i < pElements.length; i++) {
+            document.write("Текст параграфа: " + pElements[i].innerText + "<br/>");
+        }
+    </script>
+</body>
+</html>
+----
+
+С помощью вызова `document.getElementsByTagName("p")` находим все элементы параграфов. Этот вызов возвращает массив найденных элементов. Поэтому, чтобы получить отдельные элементы массива, необходимо пробежаться по ним в цикле.
+
+Если нам надо получить только первый элемент, то можно к первому элементу найденной коллекции объектов:
+
+[source,javascript]
+----
+var pElement = document.getElementsByTagName("p")[0];
+document.write("Текст параграфа: " + pElement.innerText);
+----
+
+Получение элемента по классу:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="article">
+        <h3>Заголовок статьи</h3>
+        <p class="text">Первый абзац</p>
+        <p class="text">Второй абзац</p>
+    </div>
+    <script>
+        var articleDiv = document.getElementsByClassName("article")[0];
+        console.log(articleDiv);
+        var textElems = document.getElementsByClassName("text");
+        for (var i = 0; i < textElems.length; i++) {
+            console.log(textElems[i]);
+        }
+    </script>
+</body>
+</html>
+----
+
+Выбор по селектору CSS:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="annotation">
+        <p>Аннотация статьи</p>
+    </div>
+    <div class="text">
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        var elem = document.querySelector(".annotation p");
+        document.write("Текст селектора: " + elem.innerText);
+    </script>
+</body>
+</html>
+----
+
+Выражение `document.querySelector(".annotation p")` находит элемент, который соответствует селектору `.annotation p`. Если на странице несколько элементов, соответствующих селектору, то метод выберет первый из них. В итоге браузер выведет:
+
+----
+Аннотация статьи
+
+Первый абзац
+
+Второй абзац
+
+Текст селектора: Аннотация статьи
+----
+
+Чтобы получить все элементы по селектору, можно подобным образом использовать метод `document.querySelectorAll()`, который возвращает массив найденных элементов:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="annotation">
+        <p>Аннотация статьи</p>
+    </div>
+    <div class="text">
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        var elems = document.querySelectorAll(".text p");
+
+        for (var i = 0; i < elems.length; i++) {
+            document.write("Текст селектора " + i + ": " + elems[i].innerText + "<br/>");
+        }
+    </script>
+</body>
+</html>
+----
+
+----
+Вывод браузера:
+
+Аннотация статьи
+
+Первый абзац
+
+Второй абзац
+
+Текст селектора 0: Первый абзац
+Текст селектора 1: Второй абзац
+----
+
+== Свойства объекта `document`
 
 Кроме ранее рассмотренных методов *объект* `document` позволяет обратиться к определенным *элементам веб-страницы* через *свойства*:
 
@@ -99,7 +266,34 @@ image::domtree.png[дерево html страницы]
 </html>
 ----
 
-Подобно тому, как в коде `html` можно установить *атрибуты* у элемента `img`, так и в коде *javascript* можно через свойства `src` и `alt` *получить и установить* значения этих атрибутов.
+Подобно тому, как в коде *HTML* можно установить атрибуты у элемента `img`, так и в коде *JavaScript* можно через свойства `src` и `alt` получить и установить значения этих атрибутов.
+
+Рассмотрим получение всех ссылок на странице:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <a href="article1.html">Статья 1</a>
+    <a href="article2.html">Статья 2</a>
+    <a href="article3.html">Статья 3</a>
+    <script>
+        var links = document.links;
+
+        for (var i = 0; i < links.length; i++) {
+            document.write("<br/>" + links[i].innerText);
+            document.write("<br/>" + links[i].href);
+        }
+    </script>
+</body>
+</html>
+----
+
+Опять же, так как у ссылки определен атрибут `href`, то при переборе ссылок можно получить его значение
 
 == Объект `Node`
 

@@ -9,7 +9,7 @@
 
 *Browser Object Model* можно представить в виде следующей схемы:
 
-image::bom.png[Browser Object Model in JavaScript, align=center]
+image::window-objects.svg[Browser Object Model in JavaScript, align=center]
 
 В вершине находится главный объект — объект `window`, который представляет собой браузер. Этот объект в свою очередь включает ряд других объектов, в частности, объект `document`, который представляет отдельную веб-страницу, отображаемую в браузере.
 
