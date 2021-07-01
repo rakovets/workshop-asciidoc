@@ -1,4 +1,3 @@
-
 = Основы JavaScript
 
 :leveloffset: +1
@@ -9,18 +8,22 @@ include::basics.adoc[]
 
 include::functional-programming.adoc[]
 
-include::bom.adoc[]
-
-include::events.adoc[]
-
-include::forms.adoc[]
-
-
 include::oop.adoc[]
 
 include::embedded-objects.adoc[]
 
 include::strings.adoc[]
 
-:leveloffset: -1
+include::bom.adoc[]
 
+include::events.adoc[]
+
+include::forms.adoc[]
+
+include::data-storage.adoc[]
+
+include::collections-and-iterators.adoc[]
+
+include::ajax.adoc[]
+
+:leveloffset: -1

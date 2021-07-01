@@ -28,3 +28,109 @@ Workshop for theme 'AsciiDoc'
 12. Делаем слияние `feature` ветки в `develop`:
 * если возник конфликт слияние, то решаем его.
 13. Проверяем результат: https://workshop-asciidoc-gh.dmitryrakovets.com
+
+== Mistakes
+
+* Отсутствие отступа в одну строчку от заголовка:
+
+** Bad
+
+----
+=== Стилизация CSS
+Стилизация элемента через *CSS* производится также, как и стилизация любого другого элемента.
+----
+
+** Good
+
+----
+=== Стилизация CSS
+
+Стилизация элемента через *CSS* производится также, как и стилизация любого другого элемента.
+----
+
+* Избыточный отступ между элементами списка:
+
+** Bad
+
+----
+* `connectedCallback`: вызывается каждый раз, когда кастомный элемент html добавляется в DOM.
+
+* `disconnectedCallback`: вызывается каждый раз, когда кастомный элемент html удаляется из DOM.
+----
+
+** Good
+
+----
+* `connectedCallback`: вызывается каждый раз, когда кастомный элемент html добавляется в DOM.
+* `disconnectedCallback`: вызывается каждый раз, когда кастомный элемент html удаляется из DOM.
+----
+
+* Выделение посторонних символов:
+
+** Bad
+
+    *Деление:*
+
+** Good
+
+    *Деление*:
+
+* Некорректное выделение:
+
+** Bad
+
+    `NaN (Not a Number)` // Not a Number - термин, NaN - исходный код
+    `spread-оператор` // это термин, а не исходный код
+
+** Good
+
+    `NaN` (*Not a Number*)
+    *spread-оператор*
+
+* Результат программы указывать в самой программе:
+
+** Bad
+
+    var income = 100;
+    var strIncome = "100";
+    var result = income == strIncome;
+    console.log(result); //true
+
+** Good
+
+    var income = 100;
+    var strIncome = "100";
+    var result = income == strIncome;
+    console.log(result);
+
+    true
+
+* Не экранировать символы, которые являются служебными для данного фреймворка
+
+** Bad
+
+    <=
+
+** Good
+
+    \<=
+
+* Несоблюдение Code Convention для исходного кода
+
+** Bad
+
+    var income = 100;
+    var age = 19;
+    if(income<150 && age>18){
+    var message = "доход больше 50";
+            alert(message);
+    }
+
+** Good
+
+    var income = 100;
+    var age = 19;
+    if (income < 150 && age > 18) {
+        var message = "доход больше 50";
+        alert(message);
+    }
