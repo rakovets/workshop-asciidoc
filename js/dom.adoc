@@ -32,27 +32,16 @@ image::domtree.png[дерево html страницы]
 Существует следующие виды узлов:
 
 * *Element*: html-элемент
-
 * *Attr*: атрибут html-элемента
-
 * *Document*: корневой узел html-документа
-
 * *DocumentType*: DTD или тип схемы XML-документа
-
 * *DocumentFragment*: место для временного хранения частей документа
-
 * *EntityReference*: ссылка на сущность XML-документа
-
 * *ProcessingInstruction*: инструкция обработки веб-страницы
-
 * *Comment*: элемент комментария
-
 * *Text*: текст элемента
-
 * *CDATASection*: секция CDATA в документе XML
-
 * *Entity*: необработанная сущность DTD
-
 * *Notation*: нотация, объявленная в DTD
 
 == Объект document
@@ -63,13 +52,9 @@ image::domtree.png[дерево html страницы]
 Для поиска элементов на странице применяются следующие методы:
 
 * `getElementById(value)`: выбирает элемент, у которого атрибут `id` равен `value`
-
 * `getElementsByTagName(value)`: выбирает все элементы, у которых *тег* равен `value`
-
 * `getElementsByClassName(value)`: выбирает все элементы, которые имеют *класс* `value`
-
 * `querySelector(value)`: выбирает первый элемент, который соответствует *css-селектору* `value`
-
 * `querySelectorAll(value)`: выбирает все элементы, которые соответствуют *css-селектору* `value`
 
 Например, найдем элемент по `id`:
@@ -242,15 +227,10 @@ document.write("Текст параграфа: " + pElement.innerText);
 Кроме ранее рассмотренных методов *объект* `document` позволяет обратиться к определенным *элементам веб-страницы* через *свойства*:
 
 * `documentElement`: предоставляет доступ к корневому элементу `<html>`
-
 * `body`: предоставляет доступ к элементу `<body>` на веб-странице
-
 * `images`: содержит коллекцию всех объектов изображений (элементов `img`)
-
 * `links`: содержит коллекцию ссылок - элементов `<a>` и `<area>`, у которых определен атрибут `href`
-
 * `anchors`: предоставляет доступ к коллекции элементов `<a>`, у которых определен атрибут `name`
-
 * `forms`: содержит коллекцию всех *форм* на веб-странице
 
 Эти свойства не предоставляют доступ ко всем элементам, однако позволяют получить наиболее часто используемые элементы на веб-странице.
@@ -317,23 +297,14 @@ document.write("Текст параграфа: " + pElement.innerText);
 Каждый отдельный узел, будь то *HTML-элемент*, его *атрибут* или *текст*, в структуре *DOM* представлен *объектом* `Node`. Этот объект предоставляет ряд свойств, с помощью которых мы можем получить информацию о данном узле:
 
 * `childNodes`: содержит коллекцию дочерних узлов
-
 * `firstChild`: возвращает первый дочерний узел текущего узла
-
 * `lastChild`: возвращает последний дочерний узел текущего узла
-
 * `previousSibling`: возвращает предыдущий элемент, который находится на одном уровне с текущим
-
 * `nextSibling`: возвращает следующий элемент, который находится на одном уровне с текущим
-
 * `ownerDocument`: возвращает корневой узел документа
-
 * `parentNode`: возвращает элемент, который содержит текущий узел
-
 * `nodeName`: возвращает имя узла
-
 * `nodeType`: возвращает тип узла в виде числа. 1 - элемент, 2 - атрибут, 3 - текст
-
 * `nodeValue`: возвращает или устанавливает значение узла в виде простого текста
 
 == Создание, добавление элементов веб-станицы
@@ -341,7 +312,6 @@ document.write("Текст параграфа: " + pElement.innerText);
 Для создания элементов *объект* `document` имеет следующие методы:
 
 * `createElement(elementName)`: создает *элемент* `html`, *тег* которого передается в качестве *параметра*. Возвращает созданный элемент
-
 * `createTextNode(text)`: создает и возвращает *текстовый узел*. В качестве параметра передается текст узла.
 
 [source, js]
@@ -355,33 +325,32 @@ var elemText = document.createTextNode("Привет мир");
 Для добавления элементов мы можем использовать один из методов *объекта* `Node`:
 
 * `appendChild(newNode)`: добавляет новый узел `newNode` в *конец коллекции дочерних узлов*
-
 * `insertBefore(newNode, referenceNode)`: добавляет новый узел `newNode` перед узлом `referenceNode`
 
-[source, js]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
+<   meta charset="utf-8" />
 </head>
 <body>
-<div class="article">
-<h3>Заголовок статьи</h3>
-<p>Первый абзац</p>
-<p>Второй абзац</p>
-</div>
-<script>
-var articleDiv = document.querySelector("div.article");
-// создаем элемент
-var elem = document.createElement("h2");
-// создаем для него текст
-var elemText = document.createTextNode("Привет мир");
-// добавляем текст в элемент в качестве дочернего элемента
-elem.appendChild(elemText);
-// добавляем элемент в блок div
-articleDiv.appendChild(elem);
-</script>
+    <div class="article">
+        <h3>Заголовок статьи</h3>
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        var articleDiv = document.querySelector("div.article");
+        // создаем элемент
+        var elem = document.createElement("h2");
+        // создаем для него текст
+        var elemText = document.createTextNode("Привет мир");
+        // добавляем текст в элемент в качестве дочернего элемента
+        elem.appendChild(elemText);
+        // добавляем элемент в блок div
+        articleDiv.appendChild(elem);
+    </script>
 </body>
 </html>
 ----
@@ -415,7 +384,7 @@ elem.textContent = "Привет мир";
 
 Одним из ключевых свойств *объекта* `Element` является *свойство* `tagName`, которое возвращает *тег элемента*. Например, получим все элементы, которые есть на странице:
 
-[source, js]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -423,32 +392,29 @@ elem.textContent = "Привет мир";
     <meta charset="utf-8" />
 </head>
 <body>
-<div class="article">
-<h3>Заголовок статьи</h3>
-<p>Первый абзац</p>
-<p>Второй абзац</p>
-</div>
-<script>
-function getChildren(elem){
-
-    for(var i in elem.childNodes){
-
-        if(elem.childNodes[i].nodeType===1){
-
-            console.log(elem.childNodes[i].tagName);
-            getChildren(elem.childNodes[i]);
+    <div class="article">
+        <h3>Заголовок статьи</h3>
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        function getChildren(elem) {
+            for(var i in elem.childNodes) {
+                if(elem.childNodes[i].nodeType===1) {
+                    console.log(elem.childNodes[i].tagName);
+                    getChildren(elem.childNodes[i]);
+                }
+            }
         }
-    }
-}
-var root = document.documentElement;
-console.log(root.tagName);
-getChildren(root);
-</script>
+        var root = document.documentElement;
+        console.log(root.tagName);
+        getChildren(root);
+    </script>
 </body>
 </html>
 ----
 
-=== Свойства innerText и innerHTML
+=== Свойства `innerText` и `innerHTML`
 
 Для получения или установки *текстового содержимого* элемента можно использовать свойство `innerText`, а для получения или установки *кода html* - *свойство* `innerHTML`.
 
@@ -474,14 +440,12 @@ articleDiv.innerHTML ="<h2>Hello World!!!</h2><p>bla bla bla</p>";
 Среди методов *объекта* `Element` можно отметить *методы управления атрибутами*:
 
 * `getAttribute(attr)`: возвращает значение атрибута `attr`
-
 * `setAttribute(attr, value)`: устанавливает для атрибута `attr` значение `value`. Если атрибута нет, то он добавляется
-
 * `removeAttribute(attr)`: удаляет атрибут `attr` и его значение
 
 Работа с атрибутами:
 
-[source, js]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
@@ -489,23 +453,23 @@ articleDiv.innerHTML ="<h2>Hello World!!!</h2><p>bla bla bla</p>";
     <meta charset="utf-8" />
 </head>
 <body>
-<div class="article" style="color:red;">
-<h3>Заголовок статьи</h3>
-<p>Первый абзац</p>
-<p>Второй абзац</p>
-</div>
-<script>
-var articleDiv = document.querySelector("div.article");
-// получаем атрибут style
-var styleValue = articleDiv.getAttribute("style");
-console.log("До изменения атрибута: " + styleValue);
-// удаляем атрибут
-articleDiv.removeAttribute("style");
-// добавляем заново атрибут style
-articleDiv.setAttribute("style", "color:blue;");
-styleValue = articleDiv.getAttribute("style");
-console.log("После изменения атрибута: " + styleValue);
-</script>
+    <div class="article" style="color:red;">
+        <h3>Заголовок статьи</h3>
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        var articleDiv = document.querySelector("div.article");
+        // получаем атрибут style
+        var styleValue = articleDiv.getAttribute("style");
+        console.log("До изменения атрибута: " + styleValue);
+        // удаляем атрибут
+        articleDiv.removeAttribute("style");
+        // добавляем заново атрибут style
+        articleDiv.setAttribute("style", "color:blue;");
+        styleValue = articleDiv.getAttribute("style");
+        console.log("После изменения атрибута: " + styleValue);
+    </script>
 </body>
 </html>
 ----
@@ -518,30 +482,30 @@ console.log("После изменения атрибута: " + styleValue);
 
 Свойства `clientWidth` и `clientHeight` также определяют *ширину и высоту элемента в пикселях*, но уже *без учета границы*.
 
-[source, js]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<style>
-#rect {
-width: 100px;
-height: 100px;
-background: #50c878;
-border: 3px solid silver;
-}
-</style>
+    <meta charset="utf-8" />
+    <style>
+        #rect {
+            width: 100px;
+            height: 100px;
+            background: #50c878;
+            border: 3px solid silver;
+        }
+    </style>
 </head>
 <body>
-<div id="rect"></div>
-<script>
-var rect = document.getElementById("rect");
-console.log("offsetHeight: " + rect.offsetHeight);
-console.log("offsetWidth: " + rect.offsetWidth);
-console.log("clientHeight: " + rect.clientHeight);
-console.log("clientWidth: " + rect.clientWidth);
-</script>
+    <div id="rect"></div>
+    <script>
+        var rect = document.getElementById("rect");
+        console.log("offsetHeight: " + rect.offsetHeight);
+        console.log("offsetWidth: " + rect.offsetWidth);
+        console.log("clientHeight: " + rect.clientHeight);
+        console.log("clientWidth: " + rect.clientWidth);
+    </script>
 </body>
 </html>
 ----
@@ -555,7 +519,6 @@ console.log("clientWidth: " + rect.clientWidth);
 Для работы со *стилевыми свойствами элементов* в *JavaScript* применяются, главным образом, два подхода:
 
 * Изменение *свойства* `style`
-
 * Изменение значения *атрибута* `class`
 
 ==== Свойство `style`
@@ -583,35 +546,35 @@ root.style.fontFamily = "Verdana";
 
 С помощью свойства `className` можно установить *атрибут* `class` элемента html:
 
-[source, js]
+[source, html]
 ----
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <style>
-    .blueStyle{
+    .blueStyle {
         color:blue;
         font-family:Verdana;
     }
-    .article{
+    .article {
         font-size:20px;
     }
     </style>
 </head>
 <body>
-<div class="article">
-<h3>Заголовок статьи</h3>
-<p>Первый абзац</p>
-<p>Второй абзац</p>
-</div>
-<script>
-var articleDiv = document.querySelector("div.article");
-// установка нового класса
-articleDiv.className = "blueStyle";
-// получаем название класса
-document.write(articleDiv.className);
-</script>
+    <div class="article">
+        <h3>Заголовок статьи</h3>
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    <script>
+        var articleDiv = document.querySelector("div.article");
+        // установка нового класса
+        articleDiv.className = "blueStyle";
+        // получаем название класса
+        document.write(articleDiv.className);
+    </script>
 </body>
 </html>
 ----
@@ -627,9 +590,7 @@ document.write(articleDiv.className);
 Выше было рассмотрено, как добавлять классы к элементу, однако для управления множеством классов гораздо удобнее использовать *свойство* `classList`. Это свойство представляет объект, реализующий следующие методы:
 
 * `add(className)`: добавляет класс className
-
 * `remove(className)`: удаляет класс className
-
 * `toggle(className)`: переключает у элемента класс на className. Если класса нет, то он добавляется, если есть, то удаляется
 
 [source, js]
@@ -654,7 +615,6 @@ articleDiv.classList.toggle("article");
 [source, js]
 ----
 class HelloMetanit extends HTMLElement {
-
 }
 ----
 
@@ -668,7 +628,6 @@ customElements.define(name, constructor, options);
 Она принимает три параметра:
 
 * `name`: имя кастомного элемента html, который будет представлять класс *JavaScript*. Важно: имя должно содержать *дефис*.
-
 * `constructor`: *конструктор* (по сути класс JavaScript), который представляет кастомный элемент html.
 * `options`: необязательный параметр - объект, который *настраивает* кастомный HTML-элемент.
 
@@ -694,11 +653,8 @@ class HelloMetanit extends HTMLElement {
 *Кастомный элемент html* имеет свой *жизненный цикл*, который описывается следующими методами:
 
 * `connectedCallback`: вызывается каждый раз, когда кастомный элемент html добавляется в DOM.
-
 * `disconnectedCallback`: вызывается каждый раз, когда кастомный элемент html удаляется из DOM.
-
 * `adoptedCallback`: вызывается каждый раз, когда кастомный элемент html перемещается в новый элемент.
-
 * `attributeChangedCallback`: вызывается при каждом изменении (добавлении, изменении значения или удаления) атрибута кастомного элемента html.
 
 === Добавление атрибутов
@@ -715,4 +671,4 @@ if (this.hasAttribute("hellocolor")) {
 
 === Стилизация CSS
 
-Стилизация элемента через *CSS* производится также, как и стилизация любого другого элемента.
+Стилизация элемента через *CSS* производится так же, как и стилизация любого другого элемента.
