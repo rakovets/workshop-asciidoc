@@ -1,0 +1,19 @@
+image: asciidoctor/docker-asciidoctor
+
+clone:
+  depth: full
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: 'Build and deploy to Heroku'
+          script:
+            - asciidoctor -D . --backend=html5 -o index.html index.adoc
+            - rm -rf *.adoc
+            - mv index.html home.html
+            - echo '<?php include_once("home.html"); ?>' > index.php
+            - echo '{}' > composer.json
+            - git add .
+            - git commit -m "deploy to heroku"
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:master -f
