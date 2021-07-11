@@ -37,16 +37,16 @@ image::cookie.png[Установка куки в JavaScript, align=center]
 
 Выше использовались только два параметра: *имя куки* и *значение*. То есть в случае со строкой `"login=tom32;"` куки имеет имя `login` и значение `tom32`.
 
-Но, подобная куки имеет очень ограниченный срок жизни: если явным образом не установить срок действия, то кука будет удалена с закрытием браузера. Подобная ситуация, возможно, идеальна для тех случаев, когда необходимо удалять всю информацию после завершения работы с веб-приложением и закрытия браузера. Однако данное поведение не всегда подходит.
+Но, подобная куки имеет очень ограниченный срок жизни: если явным образом не установить срок действия, то кука будет удалена с закрытием браузера. Подобная ситуация, возможно, идеальна для тех случаев, когда необходимо удалять всю информацию после завершения работы с web-приложением и закрытия браузера. Однако данное поведение не всегда подходит.
 
 И в этом случае нам надо установить параметр `expires`, то есть срок действия куков:
 
 [source, javascript]
 ----
-document.cookie = "login=tom32;expires=Mon, 31 Aug 2021 00:00:00 GMT;";
+document.cookie = "login=tom32;expires=Mon, 30 Aug 2021 00:00:00 GMT;";
 ----
 
-То есть срок действия куки `login` истекает в понедельник 31 августа 2021 года в 00:00. Формат параметра `expires` очень важен. Однако его можно сгенерировать программно. Для этого мы можем использовать метод `toUTCString()` объекта `Date`:
+То есть срок действия куки `login` истекает в _понедельник 30 августа 2021 года в 00:00_. Формат параметра `expires` очень важен. Однако его можно сгенерировать программно. Для этого мы можем использовать метод `toUTCString()` объекта `Date`:
 
 [source, javascript]
 ----
@@ -75,7 +75,7 @@ document.cookie = "login=tom32;expires=Mon, 31 Aug 2015 00:00:00 GMT;path=/;doma
 
 Параметр `path=/` указывает, что куки будут доступны для всех директорий и путей поддомена `blog.mysite.com`.
 
-Последний параметр - `secure` задает использование *SSL* (*SecureSockets Layer*) и подходит для сайтов, использующих протокол *https`. Если значение этого параметра равно `true`, то куки будут использоваться только при установке защищенного соединения *ssl*. По умолчанию данный параметр равен `false`.
+Последний параметр - `secure` задает использование *SSL* (*SecureSockets Layer*) и подходит для сайтов, использующих протокол *HTTPS*. Если значение этого параметра равно `true`, то куки будут использоваться только при установке защищенного соединения *ssl*. По умолчанию данный параметр равен `false`.
 
 [source, javascript]
 ----
@@ -109,8 +109,8 @@ for (var i = 0; i < cookies.length; i++) {
     var parts = cookies[i].split("=");
     name = parts[0];
     value = parts[1];
-    document.write("Имя куки: " + name + "<br/>");
-    document.write("Значение: " + value + "<br/><br/>");
+    document.write("Имя куки: " + name + "<br>");
+    document.write("Значение: " + value + "<br><br>");
 }
 ----
 
@@ -172,7 +172,11 @@ localStorage.clear();
 localStorage.setItem("age", 23);
 var age = localStorage.getItem("age");
 age = parseInt(age) + 10;
-document.write(age); // 33
+console.log(age);
+----
+
+----
+33
 ----
 
 Если в данном случае не преобразовать значение к числу с помощью `parseInt()`, то age будет действовать как строка.
@@ -188,8 +192,13 @@ var user = {
 };
 localStorage.setItem("user", user);
 var savedUser = localStorage.getItem("user");
-document.write(savedUser); // [object Object]
-document.write(savedUser.name); // undefined - savedUser - строка, а не объект
+console.log(savedUser);
+console.log(savedUser.name);
+----
+
+----
+[object Object]
+undefined
 ----
 
 В этом случае нам надо использовать сериализацию в формат *JSON*:
@@ -204,7 +213,11 @@ var user = {
 
 localStorage.setItem("user", JSON.stringify(user));
 var savedUser = JSON.parse(localStorage.getItem("user"));
-document.write(savedUser.name + " " + savedUser.age +" " + savedUser.married); // Tom 23 false
+console.log(savedUser.name + " " + savedUser.age +" " + savedUser.married);
+----
+
+----
+Tom 23 false
 ----
 
 И в завершении надо сказать, что в некоторых браузерах с помощью специальных инструментов мы можем увидеть сохраненные объекты в *local storage*. Например, в *Google Chrome*:

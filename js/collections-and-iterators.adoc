@@ -13,7 +13,7 @@ let items = users.entries();
 console.log(items.next());
 ----
 
-Метод `next` возвратит следующий объект на консоль:
+Метод `next()` возвратит следующий объект на консоль:
 
 ----
 {value: Array(2), done: false}
@@ -45,9 +45,9 @@ while (result.done === false) {
 
 .Консольный вывод
 ----
-0 "Tom"
-1 "Bob"
-2 "Sam"
+0 Tom
+1 Bob
+2 Sam
 ----
 
 Но в этом нет смысла, поскольку все коллекции, возвращающие итераторы, поддерживают перебор с помощью цикла `for ... of`, который как раз и использует итератор для получения элементов:
@@ -55,8 +55,9 @@ while (result.done === false) {
 [source, javascript]
 ----
 let users = ["Tom", "Bob", "Sam"];
-for(let val of users)
+for(let val of users) {
     console.log(val);
+}
 ----
 
 Если мы хотим извлечь еще и индекс элемента в массиве, то мы можем использовать для перебора итератор из `entries()`:
@@ -71,9 +72,9 @@ for (let user of users.entries()) {
 
 .Консольный вывод
 ----
-0 "Tom"
-1 "Bob"
-2 "Sam"
+0 Tom
+1 Bob
+2 Sam
 ----
 
 == Генераторы
@@ -261,7 +262,7 @@ let m = yield 25 * n;
 [source, javascript]
 ----
 function* takeItem(arr) {
-    for (var i = 0; i < arr.length; i++){
+    for (var i = 0; i < arr.length; i++) {
         yield arr[i];
     }
 }
@@ -282,7 +283,7 @@ var timer = setInterval(function() {
 
 == Множества `Set`
 
-*Множества* (*sets*) представляют структуру данных, которая может хранить только уникальные значения. В *JavaScript* функционал *множества* определяет объект `Set`. Для создания множества применяется конструктор этого объекта:
+*Множества* (*sets*) представляют структуру данных, которая может хранить только уникальные значения. В JavaScript функционал *множества* определяет объект `Set`. Для создания множества применяется конструктор этого объекта:
 
 [source, javascript]
 ----
@@ -295,7 +296,11 @@ let mySet = new Set();
 ----
 let arr = [1, 1, 2, 3, 4, 5, 2, 4];
 let numbers = new Set(arr);
-console.log(numbers); // Set(5) {1, 2, 3, 4, 5}
+console.log(numbers);
+----
+
+----
+Set(5) {1, 2, 3, 4, 5}
 ----
 
 В данном случае в множество передаются данные из массива. Однако поскольку множество может хранить только уникальные значения, то при его создании повторяющиеся значения, которые есть в массиве, удаляются.
@@ -306,7 +311,11 @@ console.log(numbers); // Set(5) {1, 2, 3, 4, 5}
 ----
 let arr = [1, 1, 2, 3, 4, 5, 2, 4];
 let numbers = new Set(arr);
-console.log(numbers.size); // 5
+console.log(numbers.size);
+----
+
+----
+5
 ----
 
 === Добавление
@@ -319,9 +328,13 @@ let numbers = new Set();
 numbers.add(1);
 numbers.add(3);
 numbers.add(5);
-numbers.add(3); // не добавляется
-numbers.add(1); // не добавляется
-console.log(numbers); // Set(3) {1, 3, 5}
+numbers.add(3); // не добавляется, т.к. есть
+numbers.add(1); // не добавляется, т.к. есть
+console.log(numbers);
+----
+
+----
+Set(3) {1, 3, 5}
 ----
 
 При этом, поскольку множество хранит только уникальные значения, то добавление элементов, которые уже в нем есть, не имеет смысла.
@@ -332,7 +345,11 @@ console.log(numbers); // Set(3) {1, 3, 5}
 ----
 let numbers = new Set();
 numbers.add(1).add(3).add(5);
-console.log(numbers); // Set(3) {1, 3, 5}
+console.log(numbers);
+----
+
+----
+Set(3) {1, 3, 5}
 ----
 
 === Удаление
@@ -344,7 +361,11 @@ console.log(numbers); // Set(3) {1, 3, 5}
 let numbers = new Set();
 numbers.add(1).add(3).add(5);
 numbers.delete(3);
-console.log(numbers); // Set(2) {1, 5}
+console.log(numbers);
+----
+
+----
+Set(2) {1, 5}
 ----
 
 Причем данный метод возвращает булево значение: `true` - если элемент удален и `false` - если удаление не произошло (например, когда удаляемого элемента нет в множестве):
@@ -354,9 +375,14 @@ console.log(numbers); // Set(2) {1, 5}
 let numbers = new Set();
 numbers.add(1).add(3).add(5);
 let isDeleted = numbers.delete(3);
-console.log(isDeleted); // true
+console.log(isDeleted);
 isDeleted = numbers.delete(54);
-console.log(isDeleted); // false
+console.log(isDeleted);
+----
+
+----
+true
+false
 ----
 
 Если необходимо удалить вообще все элементы из множества, то применяется метод `clear()`:
@@ -366,7 +392,11 @@ console.log(isDeleted); // false
 let numbers = new Set();
 numbers.add(1).add(3).add(5);
 numbers.clear();
-console.log(numbers); // Set(0) {}
+console.log(numbers);
+----
+
+----
+Set(0) {}
 ----
 
 === Проверка наличия элемента
@@ -377,8 +407,13 @@ console.log(numbers); // Set(0) {}
 ----
 let numbers = new Set();
 numbers.add(1).add(3).add(5);
-console.log(numbers.has(3)); // true
-console.log(numbers.has(32)); // false
+console.log(numbers.has(3));
+console.log(numbers.has(32));
+----
+
+----
+true
+false
 ----
 
 === Перебор множества
@@ -401,7 +436,7 @@ numbers.forEach(function(value1, value2, set) {
 [source, javascript]
 ----
 let numbers = new Set([1, 2, 3, 5]);
-for(n of numbers) {
+for (n of numbers) {
     console.log(n);
 }
 ----
@@ -420,7 +455,11 @@ let myMap = new Map();
 [source, javascript]
 ----
 let myMap = new Map([[1, "a"], [2, "b"], [3, "c"]]);
-console.log(myMap); // Map(3) {1 => "a", 2 => "b", 3 => "c"}
+console.log(myMap);
+----
+
+----
+Map(3) {1 => "a", 2 => "b", 3 => "c"}
 ----
 
 В данном случае числа `1`, `2`, `3` являются ключами, а строки `a`, `b`, `c` - значениями.
@@ -430,7 +469,11 @@ console.log(myMap); // Map(3) {1 => "a", 2 => "b", 3 => "c"}
 [source, javascript]
 ----
 let myMap = new Map([["a", 1], [2, "b"], ["c", true]]);
-console.log(myMap); // Map(3) {"a" => 1, 2 => "b", "c" => true}}
+console.log(myMap);
+----
+
+----
+Map(3) {"a" => 1, 2 => "b", "c" => true}}
 ----
 
 === Добавление и изменение элементов
@@ -442,7 +485,11 @@ console.log(myMap); // Map(3) {"a" => 1, 2 => "b", "c" => true}}
 let myMap = new Map([[1, "a"], [2, "b"], [3, "c"]]);
 myMap.set(4, "d"); // добавление элемента
 myMap.set(2, "v"); // изменение элемента
-console.log(myMap); // Map(4) {1 => "a", 2 => "v", 3 => "c", 4 => "d"}
+console.log(myMap);
+----
+
+----
+Map(4) {1 => "a", 2 => "v", 3 => "c", 4 => "d"}
 ----
 
 Первый параметр метода `set()` представляет ключ, а второй параметр — значение элемента. Если по такому ключу нет элементов, то добавляется новый элемент. Если ключ уже есть, то уже имеющийся элемент изменяет свое значение.
@@ -454,8 +501,13 @@ console.log(myMap); // Map(4) {1 => "a", 2 => "v", 3 => "c", 4 => "d"}
 [source, javascript]
 ----
 let myMap = new Map([[1, "Tom"], [2, "Bob"], [3, "Sam"]]);
-console.log(myMap.get(2)); // Bob
-console.log(myMap.get(7)); // undefined
+console.log(myMap.get(2));
+console.log(myMap.get(7));
+----
+
+----
+Bob
+undefined
 ----
 
 Если `map` не содержит элемента по заданному ключу, то метод возвращает `undefined`.
@@ -465,8 +517,13 @@ console.log(myMap.get(7)); // undefined
 [source, javascript]
 ----
 let myMap = new Map([[1, "Tom"], [2, "Bob"], [3, "Sam"]]);
-console.log(myMap.has(2)); // true
-console.log(myMap.has(7)); // false
+console.log(myMap.has(2));
+console.log(myMap.has(7));
+----
+
+----
+true
+false
 ----
 
 === Удаление элементов
@@ -477,7 +534,11 @@ console.log(myMap.has(7)); // false
 ----
 let myMap = new Map([[1, "Tom"], [2, "Bob"], [3, "Sam"]]);
 myMap.delete(2);
-console.log(myMap); // Map(2) {1 => "Tom", 3 => "Sam"}
+console.log(myMap);
+----
+
+----
+Map(2) {1 => "Tom", 3 => "Sam"}
 ----
 
 Для удаления всех элементов используется метод `clear()`:
@@ -486,7 +547,11 @@ console.log(myMap); // Map(2) {1 => "Tom", 3 => "Sam"}
 ----
 let myMap = new Map([[1, "Tom"], [2, "Bob"], [3, "Sam"]]);
 myMap.clear();
-console.log(myMap); // Map(0) {}
+console.log(myMap);
+----
+
+----
+Map(0) {}
 ----
 
 === Перебор элементов
@@ -546,10 +611,8 @@ for (item of myMap.values()) {
 
 [source, javascript]
 ----
-// пустой WeakSet
-let weakSet1 = new WeakSet();
-// инициализация начальными значениями
-let weakSet2 = new WeakSet([{name:"Tom"}, {age: 34}]);
+let weakSet1 = new WeakSet(); // пустой WeakSet
+let weakSet2 = new WeakSet([{name:"Tom"}, {age: 34}]); // инициализация начальными значениями
 ----
 
 Для инициализации как в случае с объектом `Set` в конструктор передается массив, но данный массив содержит именно объекты, а не скалярные значения, типа чисел или строк.
@@ -562,7 +625,11 @@ let weakSet = new WeakSet();
 weakSet.add({lang: "JavaScript"});
 weakSet.add({lang: "TypeScript"});
 // weakSet.add(34); // так нельзя - 34 - число, а не объект
-console.log(weakSet); // {{lang: "JavaScript"}, {lang: "TypeScript"}}
+console.log(weakSet);
+----
+
+----
+{{lang: "JavaScript"}, {lang: "TypeScript"}}
 ----
 
 Причем опять же добавить мы можем только объект, а не скалярные значения типа чисел или строк.
@@ -577,7 +644,11 @@ var ts = {lang: "TypeScript"};
 weakSet.add(js);
 weakSet.add(ts);
 weakSet.delete(js);
-console.log(weakSet); // {{lang: "TypeScript"}}
+console.log(weakSet);
+----
+
+----
+{{lang: "TypeScript"}}
 ----
 
 Если надо проверить, имеется ли объект в `WeakSet`, то можно использовать метод `has()`, который возвращает true при наличии объекта:
@@ -590,6 +661,11 @@ var java = {lang: "Java"};
 let weakSet = new WeakSet([js, ts]);
 console.log(weakSet.has(ts)); // true
 console.log(weakSet.has(java)); //  false
+----
+
+----
+true
+false
 ----
 
 === `WeakMap`
@@ -619,7 +695,11 @@ var key2 = {key:2};
 var value1 = {name: "Tom"};
 var value2 = {name: "Sam"};
 let weakMap2 = new WeakMap([[key1, value1], [key2, value2]]);
-console.log(weakMap2.get(key1)); // {name: "Tom"}
+console.log(weakMap2.get(key1));
+----
+
+----
+{name: "Tom"}
 ----
 
 Для добавления новых объектов или изменения старых применяется метод `set()`:
@@ -634,8 +714,13 @@ var value2 = {name: "Sam"};
 let weakMap2 = new WeakMap([[key1, value1]]);
 weakMap2.set(key2, value2);
 weakMap2.set(key1, {name: "Kate"});
-console.log(weakMap2.get(key1)); // {name: "Kate"}
-console.log(weakMap2.get(key2)); // {name: "Sam"}
+console.log(weakMap2.get(key1));
+console.log(weakMap2.get(key2));
+----
+
+----
+{name: "Kate"}
+{name: "Sam"}
 ----
 
 Чтобы проверить наличие элемента по определенному ключу, применяется метод `has()`, который возвращает `true` при наличии элемента:
@@ -647,8 +732,13 @@ var key1 = {key:1},
 var value1 = {name: "Tom"},
     value2 = {name: "Sam"};
 let weakMap2 = new WeakMap([[key1, value1]]);
-console.log(weakMap2.has(key1)); // true
-console.log(weakMap2.has(key2)); // false
+console.log(weakMap2.has(key1));
+console.log(weakMap2.has(key2));
+----
+
+----
+true
+false
 ----
 
 Для удаления элемента по ключу применяется метод `delete()`:
@@ -660,7 +750,12 @@ var key1 = {key:1},
 var value1 = {name: "Tom"},
     value2 = {name: "Sam"};
 let weakMap2 = new WeakMap([[key1, value1], [key2, value2]]);
-console.log(weakMap2.has(key1)); // true
+console.log(weakMap2.has(key1));
 weakMap2.delete(key1);
-console.log(weakMap2.has(key1)); // false
+console.log(weakMap2.has(key1));
+----
+
+----
+true
+false
 ----

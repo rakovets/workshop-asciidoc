@@ -1,11 +1,11 @@
 = AJAX
 :imagesdir: ../assets/img/js
 
-Современные веб-приложение, как правило, разделяются на две части: клиент и сервер. Клиент представляет собой веб-страницу с кодом *JavaScript*. К серверным технологиям относятся *Java*, *PHP*, *Ruby*, *Node.js*, *ASP.NET* и т.д., которые получают запрос от клиента, обрабатывают и отправляют в ответ результат обработки.
+Современные web-приложение, как правило, разделяются на две части: клиент и сервер. Клиент представляет собой web-страницу с кодом *JavaScript*. К серверным технологиям относятся *Java*, *PHP*, *Ruby*, *Node.js*, *ASP.NET* и т.д., которые получают запрос от клиента, обрабатывают и отправляют в ответ результат обработки.
 
-*AJAX* представляет технологию для отправки запросов к серверу из клиентского кода *JavaScript* без перезагрузки страницы. Сам термин расшифровывается как *Asynchronous JavaScript And XML*. То есть изначально *AJAX* предполагал асинхронное взаимодействие клиента и сервера посредством данных в формате *XML*. Хотя сейчас *XML* во многом вытеснил формат *JSON*. В любом случае *AJAX* революционизировал веб-среду, позволив создавать динамичные отзывчивые веб-приложения.
+*AJAX* представляет технологию для отправки запросов к серверу из клиентского кода *JavaScript* без перезагрузки страницы. Сам термин расшифровывается как *Asynchronous JavaScript And XML*. То есть изначально *AJAX* предполагал асинхронное взаимодействие клиента и сервера посредством данных в формате *XML*. Хотя сейчас *XML* во многом вытеснил формат *JSON*. В любом случае *AJAX* революционизировал web-среду, позволив создавать динамичные отзывчивые web-приложения.
 
-Поскольку *AJAX*  предполагает взаимодействие клиента и сервера, то для работы с *AJAX*  и в частности этой главы необходим локальный веб-сервер. Это может быть любой веб-сервер: *nginx*, *Apache*, *IIS* и т.д.
+Поскольку *AJAX*  предполагает взаимодействие клиента и сервера, то для работы с *AJAX*  и в частности этой главы необходим локальный web-сервер. Это может быть любой web-сервер: *nginx*, *Apache*, *IIS* и т.д.
 
 == Объект `XMLHttpRequest`
 
@@ -58,9 +58,9 @@ request.send();
 * `responseText`: возвращает текст ответа сервера
 * `responseXML`: возвращает `xml`, если ответ от сервера в формате `xml`
 
-Например, выполним запрос к текстовому файлу, который находится на локальном веб-сервере. Для выполнения *AJAX*-запросов потребуется запущенный локальный веб-сервер, на котором будет лежать файл `hello.txt`, в котором будет содержаться одна строка: `Привет мир`.
+Например, выполним запрос к текстовому файлу, который находится на локальном web-сервере. Для выполнения *AJAX*-запросов потребуется запущенный локальный web-сервер, на котором будет лежать файл `hello.txt`, в котором будет содержаться одна строка: `Привет мир`.
 
-Код веб-страницы (пусть она называется `test.html`) будет следующим:
+Код web-страницы (пусть она называется `test.html`) будет следующим:
 
 [source, html]
 ----
@@ -81,6 +81,7 @@ request.send();
             document.write("Ресурс не найден")
         } else {
             document.write(request.statusText)
+        }
     </script>
 </body>
 </html>
@@ -212,20 +213,19 @@ request.send();
 [source, php]
 ----
 <?php
-$name = "Не известно";
-$age = "Не известно";
-if(isset($_GET['name'])) $name = $_GET['name'];
-if (isset($_GET['age'])) $age = $_GET['age'];
-echo "Ваше имя: $name  <br> Ваш возраст: $age";
+    $name = "Не известно";
+    $age = "Не известно";
+    if(isset($_GET['name'])) $name = $_GET['name'];
+    if (isset($_GET['age'])) $age = $_GET['age'];
+    echo "Ваше имя: $name  <br> Ваш возраст: $age";
 ?>
 ----
 
 Конкретная технология стороны сервера тут не важна. И в качестве тестирования можно взять любую другую технологию. Например, `ASP.NET MVC`. Метод контроллера в `ASP.NET MVC`, который принимает данные, мог бы выглядеть следующим образом:
 
-[source]
+[source, javascript]
 ----
-public string PostData(string name, int age)
-{
+public string PostData(string name, int age) {
     return "Ваше имя: "+name +"; Ваш возраст: "+ age;
 }
 ----
@@ -273,8 +273,9 @@ var user = {
 };
 var request = new XMLHttpRequest();
 function reqReadyStateChange() {
-    if (request.readyState == 4 && request.status == 200)
+    if (request.readyState == 4 && request.status == 200) {
         document.getElementById("output").innerHTML=request.responseText;
+    }
 }
 var body = "name=" + user.name + "&age="+user.age;
 request.open("POST", "http://localhost:8080/postdata.php");
@@ -296,8 +297,9 @@ formData.append('name', 'Tom');
 formData.append('age', 23);
 var request = new XMLHttpRequest();
 function reqReadyStateChange() {
-    if (request.readyState == 4 && request.status == 200)
+    if (request.readyState == 4 && request.status == 200) {
         document.getElementById("output").innerHTML=request.responseText;
+    }
 }
 request.open("POST", "http://localhost:8080/display.php");
 request.onreadystatechange = reqReadyStateChange;
@@ -432,7 +434,12 @@ get("http://localhost:8080/users.json").then(function(text) {
     });
 ----
 
-Для обработки результата объекта `Promise` вызывается метод `then()`, который принимает два параметра: функцию, вызываемую при успешном выполнении запроса, и функцию, которая вызывается при неудачном выполнении запроса. Метод `then()` также возвращает объект `Promise`. Поэтому при необходимости мы можем применить к его результату цепочки вызовов метода `then: get().then().then()...`. Например:
+Для обработки результата объекта `Promise` вызывается метод `then()`, который принимает два параметра:
+
+* функцию, вызываемую при успешном выполнении запроса
+* функцию, которая вызывается при неудачном выполнении запроса.
+
+Метод `then()` также возвращает объект `Promise`. Поэтому при необходимости мы можем применить к его результату цепочки вызовов метода `then: get().then().then()...`. Например:
 
 [source, javascript]
 ----
@@ -457,7 +464,7 @@ get("http://localhost:8080/users.jsn").then(function(response) {
     return JSON.parse(response);
 }).then(function(data) {
     console.log(data[0]);
-}).catch(function(error){
+}).catch(function(error) {
     console.log("Error!!!");
     console.log(error);
 });
@@ -473,10 +480,11 @@ function post(url, requestuestBody) {
         request.open("POST", url, true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.addEventListener("load", function() {
-            if (request.status < 400)
+            if (request.status < 400) {
                 succeed(request.responseText);
-            else
+            } else {
                 fail(new Error("Request failed: " + request.statusText));
+            }
         });
         request.addEventListener("error", function() {
             fail(new Error("Network error"));
