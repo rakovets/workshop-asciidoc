@@ -134,3 +134,13 @@ Workshop for theme 'AsciiDoc'
         var message = "доход больше 50";
         alert(message);
     }
+
+* Написание аббревиатур и имен собственных с маленькой буквы
+
+** Bad
+
+    css, html, javascript
+
+** Good
+
+    CSS, HTML, JavaScript
