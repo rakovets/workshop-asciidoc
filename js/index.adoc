@@ -16,6 +16,8 @@ include::strings.adoc[]
 
 include::bom.adoc[]
 
+include::dom.adoc[]
+
 include::events.adoc[]
 
 include::forms.adoc[]
