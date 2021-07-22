@@ -1,0 +1,9 @@
+= Architecture
+
+:leveloffset: +1
+
+include::client-server-architecture.adoc[]
+
+include::n-tier architecture.adoc[]
+
+:leveloffset: -1

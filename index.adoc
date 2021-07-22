@@ -10,7 +10,7 @@ Wiki for lab.
 
 :leveloffset: +1
 
-include::application-architecture/client-server-architecture.adoc[]
+include::application-architecture/index.adoc[]
 
 include::web/http.adoc[]
 
