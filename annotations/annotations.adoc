@@ -1,0 +1,1279 @@
+= Руководство по аннотациям
+:imagesdir: ../assets/img/annotations
+
+*Аннотации* появились в *Java 5* в 2004 году.
+
+*Аннотация* — специальная форма синтаксических метаданных, которая может быть добавлена в исходный код. *Аннотации* используются для анализа кода, при *компиляции* или *во время выполнения* программы. Их можно применять к:
+
+* пакетам
+* классам
+* методам
+* переменным
+* параметрам
+
+Самая простая аннотация, применимая к классу, выглядит так:
+
+[source, java]
+----
+@MyAnnotation
+public class Foo {}
+----
+
+== Маркерный интерфейс
+
+С момента появления языка Java возникла необходимость помечать, для выполнения тех или иных действий, определенным образом класс или иерархию классов. До Java 5 это делалось через *интерфейсы без методов*.
+
+Этот вид интерфейса не похож ни на один другой. Он не определяет никаких контрактов между собой и реализующим его классами, т.к. всегда пуст. Поэтому он называется *маркерным интерфейсом*. Такие интерфейсы нужны для маркировки чего-либо для JVM, компилятора или какой-либо библиотеки.
+
+`Serializable` и `Cloneable` — два примера маркерных интерфейсов, которые достались в наследство. Например, `Serializable` позволяет пометить класс, сообщая о том, что его экземпляры можно _сериализовать. При этом перед сериализацией делается проверка на наличие имплементации этого интерфейса.
+
+image::marker-interfaces.png[маркерные интерфейсы, align=center]
+
+С появлением аннотаций необходимость в использовании маркерных интерфейсов хоть и отпала, но до сих пор повсеместно используется.
+
+.Пример интерфейса и аналогичной ему аннотации:
+[source, java]
+----
+public class Foo implements MarkerInterface {} <1>
+
+@MyAnnotation
+public class Foo {} <2>
+----
+
+<1> Маркерный интерфейс
+<2> Аннотация — эквивалент маркерного интерфейса
+
+=== Интерфейсы определяют тип
+
+По факту, маркерный интерфейс отмечает объект, реализующий какой-либо тип, что исключает ошибки на этапе компиляции.
+
+Например, создадим интерфейс без методов `MyMark` и ряд классов:
+
+* `MarkedClass` (реализует `MyMark`);
+* `NonMarkedClass`;
+* `Main`, в котором разместим метод `test`, принимающий на вход объект типа `MyMark`.
+
+[source, java]
+----
+public interface MyMark {
+}
+
+
+class MarkedClass implements MyMark {
+}
+
+
+class NonMarkedClass {
+}
+
+
+class Main {
+    public static void main(String[] args) {
+    	  MarkedClass marked = new MarkedClass();
+    	  NonMarkedClass nonMarked = new NonMarkedClass();
+
+    	  test(marked);
+        //test(nonMarked);
+    }
+
+    static void test(MyMark markedObject) {
+        System.out.println("Метод 'Test' успешно завершен!");
+    }
+}
+----
+
+.Результат выполнения кода
+----
+Метод 'Test' успешно завершен!
+----
+
+Код `test(marked)` успешно выполнится, поскольку класс объекта `marked` реализует интерфейс `MyMark`, что требуется для работы метода `test(MyMark markedObject)`.
+
+Если раскомментировать строку `test(nonMarked)`, получим ошибку компиляции:
+
+----
+java: incompatible types: NonMarkeredClass cannot be converted to MyMark
+----
+
+Ошибка вызвана тем, что требуемым типом для метода `test()` является `MyMark`, а мы передаем тип `NonMarkedClass`.
+
+=== Интерфейс определяет тип для наследников класса
+
+Если класс реализует интерфейс, то и все его наследники будут реализовывать этот интерфейс. Нельзя «отвязать» интерфейс от наследников.
+
+В этом месте аннотации имеют преимущество, поскольку позволяют реализовать такой механизм «отвязывания». Но в этом есть и минус — проверка наличия маркера (аннотации) теперь проводится во время исполнения, а не во время компиляции, что чревато ошибками.
+
+Рассмотрим следующий код:
+
+[source, java]
+----
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(value = ElementType.TYPE)
+@Retention(value = RetentionPolicy.RUNTIME)
+public @interface MyAnnotation {}
+----
+
+[source, java]
+----
+public interface MyMark {
+}
+
+@MyAnnotation
+class Parent implements MyMark {
+}
+
+class Child extends Parent {
+}
+
+class Main {
+    public static void main(String[] args) {
+        Parent parent = new Parent();
+        Child child = new Child();
+
+        testInterface(parent);
+        testInterface(child);
+
+        testAnnotation(parent);
+        testAnnotation(child);
+    }
+
+    public static void testInterface(MyMark markedObject) {
+        System.out.println("Метод 'TestInterface' успешно завершен!");
+    }
+
+    public static void testAnnotation(Object object) {
+        if (!object.getClass().isAnnotationPresent(MyAnnotation.class)) {
+            throw new RuntimeException("Объект не аннотирован аннотацией 'MyAnnotation'");
+        }
+        System.out.println("Метод 'testAnnotation' успешно завершен!");
+    }
+}
+----
+
+.Результат выполнения кода
+----
+Метод 'TestInterface' успешно завершен!
+Метод 'TestInterface' успешно завершен!
+Метод 'testAnnotation' успешно завершен!
+Exception in thread "main" java.lang.RuntimeException: Объект не аннотирован аннотацией 'MyAnnotation'
+	at Main.testAnnotation(Main.java:21)
+	at Main.main(Main.java:12)
+----
+
+Вызов метода `testAnnotation(child)` на этапе исполнения генерирует исключение, сообщая, что объект не аннотирован аннотацией `MyAnnotation`, которой был аннотирован его родительский класс `Parent`. Для успешной компиляции классу `Child` также необходимо использовать `MyAnnotation`.
+
+===  Ключевые моменты
+
+* Если требуется знать, могут ли методы принимать объекты каких-то классов, то такие классы удобнее пометить (реализовать) интерфейсами, так как ошибка выявится на этапе компиляции.
+
+* Если необходимо провести анализ метаданных класса, то использование аннотаций даёт больше возможностей, в том числе принимая во внимание возможность аннотаций иметь параметры. Однако в этом случае анализ аннотаций происходит во время исполнения кода.
+
+== Синтаксис аннотаций
+
+Реализация базового определения аннотации имеет следующий вид:
+
+[source, java]
+----
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Inherited
+@Documented
+public @interface MyAnnotation {
+    String name() default "";
+    int value();
+}
+----
+
+Начальный символ `@` сообщает о наличии аннотации.
+
+Кратко расшифруем каждую строку с аннотациями и что они определяют:
+
+* `@Retention`: в каком жизненном цикле кода аннотация (тут и до конца абзаца речь про `@MyAnnotation`) будет доступна (в исходнике, в class-файле или во время выполнения)
+* `@Target`: для какого элемента ее можно использовать (поле, класс, пакет и тд)
+* `@Inherited`: позволяет реализовать наследование аннотаций родительского класса классом-наследником
+* `@Documented`: аннотация будет помещена в сгенерированную документацию javadoc
+* `@interface`: сообщает о том, что это аннотация
+
+Как значения параметров аннотации, так и значения по умолчанию, являются опциональными (в данном примере присутствует два параметра: `name` типа `String` со значением по умолчанию и `value` типа `int`).
+
+Стоит заметить, что в аннотации можно перечислить несколько значений, если значения по умолчанию отсутствуют. При этом переменная, именуемая `value`, относится к специальным переменным. Значение `value` может использоваться без имени переменной, если другие значения отсутствуют.
+
+[source, java]
+----
+// Оба значения приведены, их именование обязательно
+@MyAnnotation(name = "какое-то имя", value = 42)
+public class MyType {
+}
+----
+
+[source, java]
+----
+// Присутствует только "value()", в качестве "name()" будет его значение по умолчанию
+@MyAnnotation(value = 42)
+public class MyType2 {
+}
+----
+
+[source, java]
+----
+// Если требуется только "value()", мы можем опустить имя
+@MyAnnotation(42)
+public class MyType3 {
+}
+----
+
+=== Пример
+
+Создадим аннотацию `JavaFileInfo`, которая будет аннотировать классы и методы информацией об их авторах и версиях класса/метода:
+
+
+[source, java]
+----
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface JavaFileInfo {
+    String name() default "no name";
+    String value() default "0.0";
+}
+----
+
+Добавим аннотируемый класс DemoClass:
+
+[source, java]
+----
+@JavaFileInfo("2.0")
+public class DemoClass {
+    @JavaFileInfo(name = "Rox Black", value = "1.0")
+    public void printString() {}
+}
+----
+
+Создадим класс `Main`, который при помощи рефлексии извлечет параметры нашей аннотации из `DemoClass`:
+
+[source, java]
+----
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
+
+public class Main {
+    public static void main(String[] args) throws NoSuchMethodException, SecurityException {
+        Class<DemoClass> demoClassObj = DemoClass.class;
+        readAnnotationOn(demoClassObj);
+        Method method = demoClassObj.getMethod("printString");
+        readAnnotationOn(method);
+    }
+
+    static void readAnnotationOn(AnnotatedElement element) {
+        try {
+            System.out.println("\nПоиск аннотаций в " + element.getClass().getName());
+            Annotation[] annotations = element.getAnnotations();
+            for (Annotation annotation : annotations) {
+                if (annotation instanceof JavaFileInfo) {
+                    JavaFileInfo fileInfo = (JavaFileInfo) annotation;
+                    System.out.println("Автор: " + fileInfo.name());
+                    System.out.println("Версия: " + fileInfo.value());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+----
+
+Результат выполнения программы:
+
+----
+Поиск аннотаций в java.lang.Class
+Автор: no name
+Версия: 2.0
+
+Поиск аннотаций в java.lang.reflect.Method
+Автор: Rox Black
+Версия: 1.0
+----
+
+== Классификация аннотаций
+
+Аннотации можно классифицировать по следующим признакам:
+
+* *Аннотации для аннотаций* или *мета-аннотации*:
+** `@Target`
+** `@Retention`
+** `@Documented`
+** `@Inherited`
+** `@Repeatable`
+
+* *Аннотации для кода*:
+** `@Override`
+** `@Deprecated`
+** `@SuppressWarnings`
+** `@SafeVarargs`
+** `@FunctionalInterface`
+
+* *Нативные аннотации*
+
+* *Аннотации разработанные программистом*
+
+== Аннотации для аннотаций
+
+*Аннотации для аннотаций* еще называют *мета-аннотациями*.
+
+* `@Target`: указывает контекст, для которого применима аннотация
+* `@Retention`: указывает, до какого шага во время компиляции аннотация будет доступна
+* `@Documented`: указывает, что аннотация должна быть задокументирована с помощью javadoc
+* `@Inherited`: позволяет реализовать наследование аннотаций родительского класса классом-наследником
+* `@Repeatable`: указывает, что аннотация может быть использована повторно в том же месте
+
+=== Аннотация `@Target`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Target{
+}
+----
+
+Для определения мета-аннотации `@Target` используется мета-аннотация `@Target`.
+
+`@Target` определяет контекст, для которого она применима (актуально для *Java 15*):
+
+* `ElementType.ANNOTATION_TYPE`: применяется для определения другой аннотации
+* `ElementType.CONSTRUCTOR`: применяется для определения конструктора
+* `ElementType.FIELD`: применяется для определения поля, включая константы `Enum`
+* `ElementType.LOCAL_VARIABLE`: применяется для определения локальной переменной
+* `ElementType.METHOD`: применяется для определения метода
+* `ElementType.MODULE`: применяется для определения модуля (с *Java 9*)
+* `ElementType.PACKAGE`: применяется для определения пакета
+* `ElementType.PARAMETER`: применяется для определения параметра
+* `ElementType.TYPE`: применяется для определения класса, интерфейса (включая аннотируемый тип), `Enum` или `record`.
+* `ElementType.TYPE_PARAMETER`: применяется для определения типа параметра (с *Java 8*)
+* `ElementType.TYPE_USE`: применяется для определения используемого типа (с *Java 8*)
+* `ElementType.RECORD_COMPONENT`: ассоциируется с records как компонент записи (с *Java 14*)
+
+`ElementType` представляет собой `Enum`, обеспечивая простую классификацию возможных мест для размещения аннотаций в коде. В свою очередь, они делятся на *контексты объявления*, где аннотации применяются к объявлениям, и на *контексты типов*, где аннотации применяются к типам, используемые в объявлениях и выражениях.
+
+Константы `ANNOTATION_TYPE`, `CONSTRUCTOR, FIELD`, `LOCAL_VARIABLE`, `METHOD`, `PACKAGE`, `MODULE`, `PARAMETER`, `TYPE` и `TYPE_PARAMETER` соответствуют *контекстам объявления*. `TYPE_USE` соответствует *контекстам типа*, а также двум контекстам объявления: *объявлениям типов* (включая объявления типов аннотаций) и *объявлениям параметров типа*.
+
+Например, аннотация, тип которой аннотирован с помощью `@Target(ElementType.FIELD)`, может быть записан только как модификатор для объявления поля. В то же время аннотация, тип которой аннотирован с помощью `@Target(ElementType.TYPE_USE)`, может быть записана в типе поля, а также может выступать в качестве модификатора, например, для объявления класса.
+
+==== Примеры
+
+===== Пример 1
+
+В этом примере `@Target` информирует о том, что определяемый аннотацией `MetaAnnotationType` тип сам по себе является мета-аннотацией и может быть использован только для аннотаций:
+
+[source, java]
+----
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface MetaAnnotationType {}
+----
+
+Ярким примером такого использования аннотации является определение самой аннотации `@Target`, показанное ранее.
+
+===== Пример 2
+
+`@Target` информирует о том, что объявленный ею тип предназначен исключительно для использования в качестве типа элемента в объявлениях сложных типов аннотаций:
+
+[source, java]
+----
+@Target({})
+public @interface MemberType {}
+----
+
+===== Пример 3
+
+Когда константа `ElementType` появляется более одного раза в аннотации `@Target`, возникает ошибка времени компиляции (compile-time error):
+
+[source, java]
+----
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.FIELD})
+public @interface Bogus {}
+----
+
+=== Аннотации типов
+
+До Java 8 аннотации можно было размещать только перед объявлением метода, класса, конструктора и т. д. В Java 8 добавилось еще одно место для размещения аннотаций — рядом с типом. Такой вид аннотации часто называют *аннотацией типа*. Теперь мы можем аннотировать возвращаемый методом тип, generics. *Аннотации типов* важны, поскольку улучшают систему типов Java и позволяют программным инструментам (например, IDE) автоматически выполнять дополнительные проверки типов во время компиляции.
+
+*Аннотация типа* должна включать `ElementType.TYPE_USE` или/и `ElementType.TYPE_PARAM` в качестве `@Target`. Пример:
+
+[source, java]
+----
+@Target({ElementType.TYPE_PARAMETER, ElementType.TYPE_USE})
+@interface TypeAnnotation {}
+----
+
+`ElementType.TYPE_PARAMETER` указывает, что аннотация `TypeAnnotation` может быть записана в объявлении переменной типа.
+
+В то же время, `ElementType.TYPE_USE` указывает, что аннотация может быть использована для любого типа (например, типов, появляющихся в объявлениях, generics и при преобразованиях типов).
+
+Аннотацию `@TypeAnnotation` необходимо разместить перед аннотируемым типом:
+
+[source, java]
+----
+void method() throws @TypeAnnotation NullPointerException {}
+----
+
+Другие возможные варианты применения аннотации типов:
+
+[source, java]
+----
+@NotNull String str = getValue(args);
+
+@Encrypted String str;
+
+@Format(theFormatterConstant) String str;
+
+@Localized String str;
+
+List<@ReadOnly T> list;
+
+Store<@NotNull Product> product;
+
+Store<@Prod(Type.Grocery) Product> product;
+
+void showResources(@Authenticated User user);
+
+@SwingElementOrientation int orientation;
+
+@Positive int i;
+
+@CreditCard string cardNumber;
+
+Date date = (@Readonly Date) object;
+
+Date date = (@NotNull Date) object;
+----
+
+В языке Java отсутствуют встроенные аннотации типов, но можно создать их самостоятельно, а также написать свой *обработчик аннотаций* и подключить его к компилятору для проверки аннотированного кода. При этом генерируя на основе созданных правил ошибки или предупреждения, если код им не соответствует.
+
+=== Аннотация `@Retention`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Retention{
+}
+----
+
+Аннотация `@Retention` (с англ. означает удержание, задержка) определяет, до какого шага во время компиляции аннотация будет доступна. Все шаги, они еще называются *политиками*, находятся в `Enum`:
+
+* `RetentionPolicy.SOURCE`: аннотация сохраняется только в исходном файле и удаляется во время компиляции
+* `RetentionPolicy.CLASS`: аннотация сохраняется в файле `.class` во время компиляции, но недоступна во время выполнения через JVM
+* `RetentionPolicy.RUNTIME`: аннотация сохраняется в файле `.class` во время компиляции и доступна через JVM во время выполнения
+
+В случае отсутствия аннотации `@Retention` по умолчанию будет использована политика `RetentionPolicy.CLASS`.
+
+Рассмотрим пример.
+
+Опишем аннотацию в `RetentionAnnotation.java`:
+
+[source, java]
+----
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface RetentionAnnotation {
+}
+----
+
+Создадим файл `AnnotatedClass.java`, аннотированный двумя аннотациями:
+
+[source, java]
+----
+@RetentionAnnotation
+@Deprecated
+public class AnnotatedClass {
+}
+----
+
+Создадим и запустим файл `Main.java`:
+
+[source, java]
+----
+import java.lang.annotation.Annotation;
+
+public class Main {
+    public static void main(String[] args) {
+        AnnotatedClass anAnnotatedClass = new AnnotatedClass();
+        Annotation[] annotations = anAnnotatedClass.getClass().getAnnotations();
+
+        System.out.println("Общее кол-во аннотаций времени исполнения (RunTime): " + annotations.length);
+        System.out.println("1: " + annotations[0]);
+        System.out.println("2: " + annotations[1]);
+    }
+}
+----
+
+Результат выполнения программы:
+
+----
+Общее кол-во аннотаций времени исполнения (RunTime): 2
+1: @com.rakovets.course.java.core.example.annotations.example4.RetentionAnnotation()
+2: @java.lang.Deprecated(forRemoval=false, since="")
+----
+
+В этом примере создали собственную аннотацию `RetentionAnnotation`, а также использовали аннотацию `@Deprecated`, которая также имеет политику `RetentionPolicy.RUNTIME`.
+
+Если исправить политику аннотации `RetentionAnnotation` с `RetentionPolicy.RUNTIME` на `RetentionPolicy.SOURCE` (и закомментировать строку в классе `Main`, выводящую второй элемент массива), то программа отобразит только одну аннотацию `@Deprecated`, поскольку аннотация с `RetentionPolicy.SOURCE` во время компиляции будет удалена.
+
+=== Аннотация `@Documented`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Documented {
+}
+----
+
+По умолчанию аннотации не включаются в *javadoc*. Аннотация, помеченная `@Documented` информирует, что такая аннотация должна быть задокументирована с помощью инструмента *javadoc*.
+
+Рассмотрим пример использования `@Documented`.
+
+Создадим аннотацию `@TestDocumented`, используя `@Documented`:
+
+[source, java]
+----
+import java.lang.annotation.Documented;
+@Documented
+public @interface TestDocumented {
+    String doTestDocument();
+}
+----
+
+Создадим аннотацию `@TestNotDocumented`, и не пометим её какой-либо аннотацией:
+
+[source, java]
+----
+public @interface TestNotDocumented {
+    String doTestNoDocument();
+}
+----
+
+Теперь создадим класс `Tester`, пометив в нем два метода, созданными ранее аннотациями:
+
+[source, java]
+----
+public class Tester {
+    @TestDocumented(doTestDocument = "Hello DOC with annotation")
+    public void doSomeTestDocumented() {
+        System.out.println("Test for annotation with 'Documented'");
+    }
+
+    @TestNotDocumented(doTestNoDocument = "Hello DOC without annotation")
+    public void doSomeTestNotDocumented() {
+        System.out.println("Test for annotation without 'Documented'");
+    }
+}
+----
+
+Теперь, если вы запустите команду *javadoc* (или используете *IntellijIdea: Tools - Generate JavaDoc*…) и просмотрите сгенерированный файл `Tester.html`, то увидите следующее (представлена часть видимого экрана):
+
+image::documented-example.webp[содержимое javadoc, align=center]
+
+Как видно на скриншоте, для метода `doSomeTestNotDocumented()` отсутствует информация о типе аннотации, но эта информация предоставляется для метода `doSomeTestDocumented()`. Причина этому `@Documented`, прикрепленная к нашей аннотации `@TestDocumented`. `@TestNotDocumented` не использует эту аннотацию.
+
+=== Аннотация `@Inherited`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Inherited {
+}
+----
+
+В данном примере `@Inherited` может использоваться только для аннотирования класса.
+
+По умолчанию аннотации, примененные к родительскому классу, не будут доступны в наследуемом классе. Если мы хотим, чтобы аннотации также наследовались, родительский класс необходимо пометить аннотацией `@Inherited`: в этом случае все аннотации родительского класса будут применимы к наследникам.
+
+Рассмотрим пример использования `@Inherited`.
+
+Создадим наследуемую аннотацию` @InheritedAnnotation`:
+
+[source, java]
+----
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+public @interface InheritedAnnotation {
+}
+----
+
+Создадим не «наследуемую» аннотацию `@NonInheritedAnnotation`:
+
+[source, java]
+----
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface NonInheritedAnnotation {
+}
+----
+
+Создадим родительский класс `Parent`, применив к нему две аннотации:
+
+[source, java]
+----
+@InheritedAnnotation
+@NonInheritedAnnotation
+public class Parent {
+}
+----
+
+Создадим наследника `Parent`, класс `Child`:
+
+[source, java]
+----
+public class Child extends Parent {
+}
+----
+
+Что мы получили сейчас: в классе `Parent` применены две аннотации (одна из них наследуемая), а в классе `Child` аннотации явно отсутствуют, но неявно присутствует унаследованная от родительского класса аннотация `@InheritedAnnotation`.
+
+Используем перечисленные выше классы в `Main` и запустим его:
+
+[source, java]
+----
+import java.lang.annotation.Annotation;
+
+public class Main {
+    public static void main(String[] args) {
+       Parent parent = new Parent();
+       Child child = new Child();
+       if(parent.getClass().getAnnotations().length > 0) {
+           System.out.println("Для класса 'Parent' применены следующие аннотации: ");
+           for(Annotation annotationName: parent.getClass().getAnnotations()) {
+               System.out.println(annotationName);
+           }
+       } else {
+           System.out.println("К классу 'Parent' не применены какие-либо аннотации.");
+    	  }
+       if(child.getClass().getAnnotations().length > 0) {
+           System.out.println("\nДля класса 'Child' применены следующие аннотации: ");
+           for(Annotation annotationName: child.getClass().getAnnotations()) {
+               System.out.println(annotationName);
+           }
+       } else {
+           System.out.println("\nК классу 'Child' не применены какие-либо аннотации.");
+        }
+    }
+}
+----
+
+Результат выполнения программы:
+
+----
+Для класса 'Parent' применены следующие аннотации:
+@InheritedAnnotation()
+@NonInheritedAnnotation()
+
+Для класса 'Child' применены следующие аннотации:
+@InheritedAnnotation()
+----
+
+== Аннотация `@Repeatable`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Repeatable {
+}
+----
+
+Иногда возникают ситуации, когда необходимо повторно применить одну и ту же аннотацию к какому-то элементу (объявлению класса, интерфейсу, полю или к используемому типу).
+
+До Java 8 применялось группирование аннотаций в единый *контейнер аннотаций*. Выглядело это следующим образом.
+
+Определим повторяемую аннотацию `Game`:
+
+[source, java]
+----
+@interface Game {
+    String name() default "Что-то под вопросом";
+    String day();
+}
+----
+
+Определим контейнер `Games`:
+
+[source, java]
+----
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface Games {
+    Game[] value();
+}
+----
+
+Использовалось это так:
+
+[source, java]
+----
+@Games({
+@Game(name = "Крикет",  day = "воскресенье"),
+@Game(day = "четверг"),
+@Game(name = "Хоккей",   day = "понедельник")
+})
+public class Main {
+    public static void main(String[] args) {
+        Games games = Main.class.getAnnotation(Games.class);
+        for (Game game : games.value()) {
+            System.out.println(game.name() + " в " + game.day());
+        }
+    }
+}
+----
+
+Обратите внимание, повторяющиеся аннотации разделяются запятой.
+
+----
+Крикет в воскресенье
+Что-то под вопросом в четверг
+Хоккей в понедельник
+----
+
+С появлением Java 8 и `@Repeatable` все стало немного проще.
+
+В поле `value` такой аннотации необходимо указать *контейнер* для повторяющейся аннотации. Контейнер также представляет собой аннотацию, в которой поле `value` является массивом типа повторяющейся аннотации.
+
+Таким образом, мы должны создать контейнерную аннотацию, а затем указать её тип в качестве аргумента.
+
+В нашем случае, перед определением аннотации `@Game` необходимо добавить новую аннотацию `@Repeatable`:
+
+[source, java]
+----
+import java.lang.annotation.Repeatable;
+
+@Repeatable(Games.class)
+@interface Game {
+String name() default "Что-то под вопросом";
+String day();
+}
+----
+
+Теперь перед определением класса `Main` можно применить несколько раз аннотацию `@Game`:
+
+[source, java]
+----
+@Game(name = "Крикет",  day = "воскресенье")
+@Game(day = "четверг")
+@Game(name = "Хоккей",   day = "понедельник")
+public class Main {
+public static void main(String[] args) {
+Games games = Main.class.getAnnotation(Games.class);
+
+    	  for (Game game : games.value()) {
+            System.out.println(game.name() + " в " + game.day());
+    	  }
+    }
+}
+----
+
+Результат выполнения программы тот же:
+
+----
+Крикет в воскресенье
+Что-то под вопросом в четверг
+Хоккей в понедельник
+----
+
+Так же можно вместо `getAnnotation(Games.class)` использовать `getAnnotationsByType(Game.class)` или `getDeclaredAnnotationByType(Game.class)`:
+
+[source, java]
+----
+@Game(name = "Крикет",  day = "воскресенье")
+@Game(day = "вторник")
+@Game(name = "Хоккей",   day = "пятница")
+public class Main {
+    public static void main(String[] args) {
+        Game[] arrayGames = Main.class.getAnnotationsByType(Game.class);
+        for(Game game : arrayGames) {
+           System.out.println(game.name() + " в " + game.day());
+        }
+    }
+}
+----
+
+Результат будет тем же.
+
+----
+Крикет в воскресенье
+Что-то под вопросом в вторник
+Хоккей в пятница
+----
+
+== Аннотации для кода
+
+* `@Override`: указывает, что метод переопределяет, объявленный в родительском классе или интерфейсе метод
+* `@Deprecated`: помечает код, как устаревший
+* `@SuppressWarnings`: отключает для аннотированного элемента предупреждения компилятора. Обратите внимание, что если необходимо отключить несколько категорий предупреждений, их следует добавить в фигурные скобки, например `@SuppressWarnings({"unchecked", "cast"})`.
+* `@SafeVarargs`: отключает предупреждения для всех методов или конструкторов, принимающих в качестве параметра varargs
+* `@FunctionalInterface`: помечает интерфейсы, имеющие только один абстрактный метод (при этом они могут содержать любое количество методов по умолчанию или статических)
+
+=== Аннотация `@Override`
+
+[source, java]
+----
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.SOURCE)
+public @interface Override{
+}
+----
+
+Аннотация `@Override` относится к маркерным аннотациям и указывает, что метод переопределяет/реализует унаследованный метод. Эта информация не является строго необходимой, но помогает уменьшить количество ошибок, поскольку при такой аннотации компилятор должен генерировать сообщение об ошибке, если не выполняется одно из двух следующих условий:
+
+* Метод переопределяет или реализует метод, объявленный в родительском классе
+* У метода есть сигнатура (название метода + список параметров), эквивалентная переопределяемой сигнатуре метода, объявленного в родительском классе/интерфейсе.
+
+Продемонстрируем применение аннотации. Создадим класс `Parent` с методом `display()`, класс `Child`, который является его наследником. Так же создадим класс `Main`, который создает экземпляр `Child` и запускает метод `display()`:
+
+[source, java]
+----
+public class Parent {
+    public void display() {
+        System.out.println("Выполнился метод из родительского класса");
+    }
+}
+----
+
+[source, java]
+----
+public class Child extends Parent {
+    public void display() {
+        System.out.println("Выполнился метод из класса-наследника");
+    }
+}
+----
+
+[source, java]
+----
+public class Main {
+    public static void main(String[] args) {
+        Child instance = new Child();
+        instance.display();
+    }
+}
+----
+
+.Результат выполнения программы
+----
+Выполнился метод из класса-наследника
+----
+
+Давайте умышленно добавим ошибку в названии метода в классе `Child`:
+
+[source, java]
+----
+public class Child extends Parent {
+    public void dispay() {
+        System.out.println("Выполнился метод из класса-наследника");
+    }
+}
+----
+
+Результат выполнения программы:
+
+----
+Выполнился метод из родительского класса
+----
+
+В итоге в классе `Child` мы имеем два метода: унаследованный метод родительского класса `display()` и новый метод `dispay()`. В классе `Main` у нас вызывается именно родительский метод, поскольку другого метода `display()` в классе `Child` нет.
+
+Перед определением метода в класс `Child` добавим аннотацию `@Override`:
+
+[source, java]
+----
+public class Child extends Parent {
+    @Override
+    public void dispay() {
+        System.out.println("Выполнился метод из класса-наследника");
+    }
+}
+----
+
+В такой ситуации IDE подчеркнет красным аннотацию, информируя, что _Method does not override method from its superclass_ (метод не переопределяет метод его родительского класса).
+
+При запуске получим ошибку компиляции:
+
+----
+error: method does not override or implement a method from a supertype
+----
+
+Теперь уже компилятор сообщает нам, что _метод не переопределяет или не реализует метод его родительского класса_
+
+Исправим «опечатку» в названии метода в классе `Child` и запустим программу:
+
+[source, java]
+----
+public class Child extends Parent {
+    @Override
+    public void display() {
+        System.out.println("Выполнился метод из класса-наследника");
+    }
+}
+----
+
+.Результат выполнения программы
+----
+Выполнился метод из класса-наследника
+----
+
+Таким образом, применяя аннотацию `@Override`, мы даем задание компилятору выполнять проверку соответствия сигнатуры метода класса наследника классу родителя, что устраняет ошибки «по невнимательности» в виде опечаток.
+
+=== Аннотация `@Deprecated`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(value={CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, MODULE, PARAMETER, TYPE})
+public @interface Deprecated {
+}
+----
+
+В код предыдущего примера добавим в класс `Child` аннотацию `@Deprecated`:
+
+[source, java]
+----
+public class Child extends Parent {
+    @Override
+    @Deprecated(since = "1.2", forRemoval = true)
+    public void display() {
+        System.out.println("Выполнился метод из класса-наследника");
+    }
+}
+----
+
+.Результат выполнения программы
+----
+Выполнился метод из класса-наследника
+----
+
+Результат остался тем же, ошибок нет. Но, обратите внимание на класс `Main`, используемый метод `display()` в _IntellijIdea_ перечеркнут. Подобные визуальные оповещения есть и в других IDE.
+
+[source,java]
+----
+public class Main {
+    public static void main(String[] args) {
+        Child instance = new Child();
+        instance.display();
+    }
+}
+----
+
+=== Аннотация `@SuppressWarnings`
+
+[source, java]
+----
+@Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE, MODULE})
+@Retention(RetentionPolicy.SOURCE)
+public @interface SuppressWarnings {
+}
+----
+
+Предупреждающие сообщения компилятора обычно полезны, но иногда, они могут замусорить полезную информацию. Особенно, когда мы не можем или не хотим их устранять. В таких случаях можно воспользоваться аннотацией `@SuppressWarnings`, отключив такие предупреждения, чтобы они не отображались.
+
+Рассматривая код для аннотации `@Override`, мы вызывали в классе `Main` метод `display()` из класса `Child`. В то же время метод `display()` из класса `Parent` не использовался. IDE предполагала, что здесь где-то может быть ошибка (создали лишний метод или ошибочно используем не тот метод и т. д.) и соответственно, подсвечивая, выделяла цветом название неиспользуемого метода `display()` (и при наведении курсора выдавала сообщение: _Method 'display()' is never used_).
+
+Чтобы этого не было, такое предупреждение можно отключить аннотацией `@SuppressWarnings("unused")`, установив её перед методом `display()`:
+
+[source, java]
+----
+public class Parent {
+    @SuppressWarnings("unused")
+    public void display() {
+        System.out.println("Выполнился метод из родительского класса");
+    }
+}
+----
+
+Еще одним предупреждением компилятора является предупреждение о применении устаревшего метода, помеченного в коде аннотацией `@Deprecated`. Чтобы его устранить, необходимо пометить вызов метода `main()` в классе `Main` аннотацией `@SuppressWarnings("deprecation")`:
+
+[source, java]
+----
+public class Main {
+    @SuppressWarnings("deprecation")
+    public static void main(String[] args) {
+        Child instance = new Child();
+        instance.display();
+    }
+}
+----
+
+Сам код теперь стал проще для чтения, а название метода `display()` не перечеркивается.
+
+Чтобы отключить список из нескольких предупреждений, необходимо через запятую перечислить список предупреждений.
+
+Например, в следующем виде:
+
+[source, java]
+----
+public class Main {
+    @SuppressWarnings({"unused", "deprecation"})
+    public static void main(String[] args) {
+        Child instance = new Child();
+        instance.display();
+    }
+}
+----
+
+=== Аннотация `@SafeVarargs`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
+public @interface SafeVarargs {
+
+}
+----
+
+Эта аннотация, представленная в Java 7, гарантирует, что тело аннотированного метода или конструктора не выполняет потенциально небезопасные операции с параметром varargs. Аннотация `@SafeVarargs` похожа на `@SuppressWarnings` тем, что позволяет нам объявить, что конкретное предупреждение компилятора является ложным срабатыванием. Добавлять эту аннотацию мы можем только убедившись в том, что наши действия безопасны.
+
+=== Аннотация `@FunctionalInterface`
+
+[source, java]
+----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface FunctionalInterface {
+}
+----
+
+Как и аннотация `@Override`, аннотация `@FunctionalInterface` защищает код от возможных ошибок программиста. Несмотря на то, что любой интерфейс может содержать бесконечное множество абстрактных методов, функциональный интерфейс может содержать исключительно один абстрактный метод, иначе он не сможет использоваться в лямбда-выражении.
+
+В то же время, абстрактные методы, переопределяющие один из публичных методов класса `Object`, не учитываются.
+
+Рассмотрим простейший пример: напишем функциональный интерфейс, реализующий что-то абстрактное и важное.
+
+[source, java]
+----
+@FunctionalInterface
+public interface MyFunctionalInterface {
+    abstract public void abstractMethod();
+
+//    abstract public void anotherAbstractMethod();
+}
+----
+
+[source, java]
+----
+public class Main implements MyFunctionalInterface {
+    public static void main(String[] args) {
+        Main main = new Main();
+    	  main.abstractMethod();
+    }
+
+    @Override
+    public void abstractMethod() {
+        System.out.println("Это сообщение из abstractMethod()");
+    }
+}
+----
+
+----
+Это сообщение из abstractMethod()
+----
+
+Если мы добавим еще один абстрактный метод (`anotherAbstractMethod()`, в коде он закомментирован), компилятор сообщит про ошибку:
+
+----
+error: Unexpected @FunctionalInterface annotation
+@FunctionalInterface
+^
+  MyFunctionalInterface is not a functional interface
+    multiple non-overriding abstract methods found in interface MyFunctionalInterface
+----
+
+Ошибка сообщает, что наш интерфейс `functionalInterface` не является функциональным интерфейсом и включает в себя несколько не переопределенных абстрактных методов.
+
+Создадим еще один функциональный интерфейс и расширим им интерфейс, созданный нами ранее:
+
+[source, java]
+----
+@FunctionalInterface
+public interface AnotherFunctionalInterface extends MyFunctionalInterface {
+    abstract public void anotherAbstractMethod();
+}
+----
+
+Вроде все хорошо, у нас один абстрактный метод, но IDE снова подсказывает о наличии той же самой ошибки:
+
+----
+error: Unexpected @FunctionalInterface annotation
+@FunctionalInterface
+^
+  AnotherFunctionalInterface is not a functional interface
+    multiple non-overriding abstract methods found in interface AnotherFunctionalInterface
+----
+
+Ошибка вызвана тем, что мы, расширяя интерфейс `MyFunctionalInterface`, наследуем абстрактный метод расширяемого интерфейса, и как результат, имеем два абстрактных метода, что не совместимо с аннотацией `@FunctionalInterface`.
+
+Таким образом, мы не сможем использовать интерфейс, помеченный аннотацией `@FunctionalInterface` и включающей в себя явно или неявно два и более абстрактных метода.
+
+== Аннотация `@Native`
+
+[source, java]
+----
+@Documented
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.SOURCE)
+public @interface Native {
+}
+----
+
+Начиная с Java 8, в пакете `java.lang.annotation` появилась новая аннотация под названием `@Native`, применимая только к полям. Она указывает, что аннотированное поле является константой, на которую можно ссылаться с нативного кода. Например, вот как она используется в классе `Integer`:
+
+[source, java]
+----
+public final class Integer {
+    @Native public static final int MIN_VALUE = 0x80000000;
+    // последующий код опущен
+}
+----
+
+Эта аннотация также может служить подсказкой для программных инструментов, генерирующих некоторые вспомогательные файлы.
+
+== Обработка аннотаций
+
+Аннотации используются в рефлексии и обработчиках аннотаций. И рефлексия, и обработчики аннотаций, затрагиваемые здесь, заслуживают отдельной, полноценной статьи не меньшего размера, чем текущая. Частично применение рефлексии рассматривалось в примерах использования аннотаций по тексту выше, но это был исключительно необходимый минимум для демонстрации использования аннотаций.
+
+=== Обработка аннотаций во время выполнения: рефлексия
+
+*Рефлексия*, как способность получать информацию о коде во время его выполнения, появилась в Java с момента появления языка.
+
+Например:
+
+[source, java]
+----
+var session = request.getHttpSession();
+var object = session.getAttribute("object"); <1>
+var clazz = object.getClass();               <2>
+var methods = clazz.getMethods();            <3>
+
+
+for (var method : methods) {
+    if (method.getParameterCount() == 0) {   <4>
+        method.invoke(foo);                  <5>
+    }
+}
+----
+
+<1> Получаем объект, хранящийся в сеансе
+<2> Получаем класс среды выполнения (runtime class) объекта
+<3> Получаем все общедоступные методы, имеющиеся у объекта
+<4> Если у метода нет параметра, то
+<5> Вызываем этот метод
+
+С появлением аннотаций рефлексия получила соответствующие улучшения:
+
+image::java-reflection-api.svg[рефлексия и аннотации, align=center]
+
+*Фреймворки* начали использовать аннотации для различных сценариев использования. Среди них сценарий конфигурирования был одним из наиболее часто используемых: например, вместо (или, точнее, в дополнение к) XML, *Spring* добавил возможность конфигурирования на основе аннотаций.
+
+=== Обработка аннотаций во время компиляции: обработчики аннотаций
+
+Долгое время и получатели данных, и поставщики данных были довольны доступом через рефлексию к аннотациям во время выполнения. Поскольку основное внимание уделяется сценариям конфигурирования, рефлексия происходит во время запуска приложения. В ограниченном по производительности окружении это слишком большая нагрузка для приложений: наиболее известным примером такого окружения является платформа *Android*. Здесь хотелось бы иметь самое быстрое время запуска, но рефлексия замедляет его.
+
+Альтернативным решением этой проблемы является обработка аннотаций во время их компиляции. Для этого компилятор должен быть настроен на использование специальных *обработчиков аннотаций*. У них могут быть разные выходные данные: простые файлы, сгенерированный код и т. д. Компромисс этого подхода заключается в том, что компиляция приложения каждый раз снижает производительность, но при этом не влияет на время запуска.
+
+Одним из первых фреймворков, в которых использовался этот подход для генерации кода, был *Dagger*: это *DI-фреймворк* (*Dependency Injection*) для Android. Работа фреймворка базируется не на *времени выполнения* (*runtime-based*), а на *времени компиляции* (*compile-time*). Долгое время генерация кода во время компиляции использовалась только в экосистеме Android.
+
+Однако, в последнее время такой подход приняли и такие серверные фреймворки, как *Quarkus* и *Micronaut*. Цель состоит в том, чтобы сократить время запуска приложения за счет генерации кода во время компиляции вместо самоанализа во время выполнения. Кроме того, предварительная компиляция полученного байт-кода в собственный код дополнительно сокращает время запуска, а также потребление памяти.
+
+Мир обработчиков аннотаций огромен: этот раздел представляет собой очень небольшое введение, поэтому при желании можно продолжить их изучение.
+
+*Обработчик аннотаций* — это просто определенный класс, который необходимо *зарегистрировать* во время компиляции. Зарегистрировать их можно несколькими способами. С *Maven* это просто вопрос настройки плагина компилятора:
+
+`pom.xml`
+
+[source, html]
+----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <annotationProcessors>
+                    <annotationProcessor>ch.frankel.blog.SampleProcessor</annotationProcessor>
+                </annotationProcessors>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+----
+
+Сам обработчик должен реализовывать `Processor`, но абстрактный класс `AbstractProcessor` самостоятельно реализует большую часть своих методов, кроме метода `process()`: на практике достаточно наследоваться от `AbstractProcessor`. Очень упрощенная схема API выглядит так:
+
+image::java-annotation-proc.svg[обработчик аннотаций, align=center]
+
+Давайте создадим очень простой обработчик. Он должен перечислять только классы, помеченные конкретными аннотациями. Настоящие процессоры аннотаций, скорее всего, сделают что-нибудь полезное, например сгенерируют код, но эта дополнительная логика выходит далеко за рамки этого поста.
+
+[source, java]
+----
+@SupportedAnnotationTypes("com.example.*")                                              <1>
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+public class SampleProcessor extends AbstractProcessor {
+
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations,                      <2>
+    RoundEnvironment env) {
+        annotations.forEach(annotation -> {                                             <3>
+            Set<? extends Element> elements = env.getElementsAnnotatedWith(annotation); <4>
+            elements.stream()
+                    .filter(TypeElement.class::isInstance)                              <5>
+                    .map(TypeElement.class::cast)                                       <6>
+                    .map(TypeElement::getQualifiedName)                                 <7>
+                    .map(name -> "Class " + name + " is annotated with " + annotation.getQualifiedName())
+                    .forEach(System.out::println);
+        });
+    return true;
+    }
+}
+----
+
+<1> Обработчик будет вызываться для каждой аннотации, принадлежащей пакету `com.example`
+<2> `process()`: основной метод, подлежащий переопределению
+<3> Цикл вызывается для каждой аннотации
+<4> Аннотация не так интересна, как аннотированный ею элемент. Это способ получить аннотированный элемент
+<5> В зависимости от того, какой элемент аннотирован, его необходимо привести к правильному дочернему интерфейсу `Element`. Здесь могут быть аннотированы только классы, поэтому, переменная должна быть протестирована, чтобы проверить, имеет ли назначаемый `TypeElement` доступ к своим дополнительным атрибутам далее по цепочке операций
+<6> Нам нужно полное имя класса, для которого установлена аннотация, поэтому необходимо привести его к типу, который делает этот конкретный атрибут доступным
+<7> получаем полное имя для `TypeElement`
+
+== Итого
+
+Аннотации очень эффективны и не важно, используются ли они во время выполнения или во время компиляции. С другой стороны, самая большая проблема заключается в том, что они работают как будто по волшебству: нет простого способа узнать, какой класс, использующий рефлексию, или обработчик аннотаций их использует. Каждый в своем контексте должен решать, перевешивают ли плюсы аннотаций их минусы. Использование аннотаций без каких-либо предположений о будущем программы оказывает большую медвежью услугу такому коду… так же, как и отказ от них из-за неуместной идеологии.
