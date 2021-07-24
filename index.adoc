@@ -12,6 +12,8 @@ Wiki for lab.
 
 include::application-architecture/index.adoc[]
 
+include::annotations/annotations.adoc[]
+
 include::web/http.adoc[]
 
 include::web/html.adoc[]
