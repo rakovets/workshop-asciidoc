@@ -1,0 +1,108 @@
+= Руководство по Hibernate. Сохраняемые классы.
+
+Ключевая функция Hibernate заключается в том, что мы можем взять занчения из нашего
+Java-класса и созранить их в таблице базы данных (далее – БД). С помощью конфигурационных
+файлов мы указываем Hibernate как извлечь данные из класса и соединить с определённым
+столбцами в таблице БД.
+
+Если мы хотим, чтобы экземпляры (объекты) Java-класса в будущем созранялся в таблице БД,
+то мы называем их “сохранямые классы” (persistent class). Для того, чтобы сделать работу с
+Hibernate аксимально удобной и эффективной, мы следует использовать
+программную молель Простых Старых Java Объектов (Plain Old Java Object – POJO).
+
+Сущесвуют определённые требования к POJO классам. Вот самые главные из них:
+
+* Все классы должны иметь ID для простой идентификации наших объектов в БД и в Hibernate. Это поле класса соединяется
+с первичным ключём (primary key) таблицы БД.
+* Все POJO – классы должны иметь конструктор по умолчанию (пустой).
+Все поля POJO – классов должны иметь модификатор доступа *private*
+иметь набор getter-ов и setter-ов в стиле JavaBean.
+* POJO – классы не должны содержать бизнес-логику.
+
+----
+package net.proselyte.hibernate.pojo;
+
+public class Developer {
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String specialty;
+    private int experience;
+
+    /**
+     * Default Constructor
+     */
+    public Developer() {
+    }
+
+    /**
+     * Plain constructor
+     */
+    public Developer(int id, String firstName, String lastName, String specialty, int experience) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.specialty = specialty;
+        this.experience = experience;
+    }
+
+
+    /**
+     * Getters and Setters
+     */
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    /**
+     * toString method (optional)
+     */
+    @Override
+    public String toString() {
+        return "Developer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", specialty='" + specialty + '\'' +
+                ", experience=" + experience +
+                '}';
+    }
+}
+----
+В этой статье мы рассмотрели основные понятия созраняемых классов (persistent classes).
