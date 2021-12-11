@@ -6,7 +6,7 @@
 
 :toc!:
 
-Wiki for 'Example'.
+Wiki for 'kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/documenation.adoc[leveloffset=1]
+
