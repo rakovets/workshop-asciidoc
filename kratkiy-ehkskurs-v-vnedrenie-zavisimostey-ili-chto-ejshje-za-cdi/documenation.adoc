@@ -253,6 +253,7 @@ link:http://docs.jboss.org/cdi/api/2.0/javax/enterprise/inject/Vetoed.html[`@Vet
 .Правильное размещение файла
 image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/correct CDI bean structure.png[correct CDI structure,align=center]
 {empty}
+
 Как только появляется данный файл, то артефакт с кодом будет называться
 "link:http://docs.jboss.org/weld/reference/latest/en-US/html/ee.html#packaging-and-deployment[Explicit bean archive]".
 
