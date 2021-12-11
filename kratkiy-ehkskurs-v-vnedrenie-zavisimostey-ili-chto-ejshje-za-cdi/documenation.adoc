@@ -38,7 +38,7 @@ image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/G
 Напоминаю, что у CDI есть интересный сайт — link:http://www.cdi-spec.org/[].
 
 .Таблица в разделе download, которая содержит необходимые данные
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI download.png[cdi-spec.org download,align=center]
+image:images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI download.png[cdi-spec.org download,align=center]
 
 В таблице можно подсмотреть, как для Maven описывается тот факт, что используется в проекте API для CDI.
 API - это application programming interface, то есть некоторый программный интерфейс. Работая с интерфейсом,
@@ -249,8 +249,8 @@ link:http://docs.jboss.org/cdi/api/2.0/javax/enterprise/inject/Vetoed.html[`@Vet
 Чтобы включить альтернативу должен появиться файл *beans.xml*. Может возникнуть вопрос:
 "link:https://stackoverflow.com/questions/13056336/cdi-beans-xml-where-do-i-put-you[beans.xml, where do the developer put this file?]". +
 
-.Правильное размещение файла +
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/correct CDI bean structure.png[correct CDI structure,align=center]
+.Правильное размещение файла
+image:images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/correct CDI bean structure.png[correct CDI structure,align=center]
 
 Как только появляется данный файл, то артефакт с кодом будет называться
 "link:http://docs.jboss.org/weld/reference/latest/en-US/html/ee.html#packaging-and-deployment[Explicit bean archive]".
