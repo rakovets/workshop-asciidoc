@@ -90,7 +90,7 @@ image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/C
 *CDI* — это механизм. Этим механизмом кто-то должен управлять. Как указывалось выше, то таким управляющим
 является контейнер. Следовательно, такой контейнер нужно создать.
 
-.Дописываем `main` метод
+.Дописываем `main()` метод
 [source,java]
 --
 public static void main(String[] args) {
@@ -125,7 +125,7 @@ public class Logger {
 }
 --
 
-.Вызываем bean из `main` метода:
+.Вызываем bean из `main()` метода:
 [source,java]
 --
 Logger logger = container.select(Logger.class).get();
@@ -205,7 +205,7 @@ public class SystemOutLogger implements Logger {
     }
 }
 --
-Как видно, это logger, который пишет в `System.out.` Прекрасно. Теперь, `main` метод отработает как и раньше.
+Как видно, это logger, который пишет в `System.out.` Прекрасно. Теперь, `main()` метод отработает как и раньше.
 
 [source,java]
 --
@@ -522,7 +522,7 @@ public class LogObserver {
 private LogObserver observer;
 --
 
-.В методе `print` уведомляем наблюдателя о появлении нового события:
+.В методе `print()` уведомляем наблюдателя о появлении нового события:
 [source,java]
 --
 public void print(String message) {
@@ -530,7 +530,7 @@ public void print(String message) {
 --
 
 Тут важно знать, что события можно обрабатывать в одном потоке и в нескольких. Для асинхронной обработки служит
-метод `.fireAsync` (вместо `.fire`) и аннотация `@ObservesAsync` (вместо `@Observes`). Например, если все события
+метод `.fireAsync()` (вместо `.fire()`) и аннотация `@ObservesAsync` (вместо `@Observes`). Например, если все события
 выполняются в разных потоках, то если 1 поток упадёт с Exception, то остальные смогут выполнить свою работу
 для других событий.
 
