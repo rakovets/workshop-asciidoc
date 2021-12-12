@@ -1,8 +1,8 @@
 = Руководство по Hibernate. Виды связей. List Mapping.
 
-Коллекция Java, которая хранит последовательность элементов и в которой допускается хранение одинаковых элементов называется *List*. Получить доступ к любому элементу List можно по индексу.
+Коллекция Java, которая хранит последовательность элементов и в которой допускается хранение одинаковых элементов называется *List*. Получить доступ к любому элементу `List` можно по индексу.
 
-List связывается (mapped) с помощью элемента `<list>` и инициализируется с помощью `java.util.ArrayList`.
+`List` связывается (mapped) с помощью элемента `<list>` и инициализируется с помощью `java.util.ArrayList`.
 
 Пример:
 
@@ -485,4 +485,4 @@ Company Name: One more Company
 Feb 20, 2016 6:22:40 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl stop
 INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost/PROSELYTE_TUTORIAL]
 ----
-В этой статье рассмотрены основы связывания (mapping) с использованием коллекции List.
+В этой статье рассмотрены основы связывания (mapping) с использованием коллекции `List`.
