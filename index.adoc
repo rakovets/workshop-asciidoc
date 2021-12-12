@@ -1,12 +1,2 @@
-= Theme
-:source-highlighter: prettify
-:sectnums:
-:toc: left
-:toclevels: 2
+include::hybernate-manual/simple-application-example.adoc[leveloffset=0]
 
-:toc!:
-
-Wiki for 'Example'.
-
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
