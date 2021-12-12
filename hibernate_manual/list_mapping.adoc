@@ -1,12 +1,10 @@
 = Руководство по Hibernate. Виды связей. List Mapping.
 
-*Коллекция Java, которая хранит последовательность элементов и в которой допускается хранение одинаковых элементов называется List*. Получить доступ к любому элементу List можно по индексу.
+Коллекция Java, которая хранит последовательность элементов и в которой допускается хранение одинаковых элементов называется *List*. Получить доступ к любому элементу List можно по индексу.
 
-*List* связывается (mapped) с помощью элемента *<list>* и инициализируется с помощью *java.util.ArrayList*.
+List связывается (mapped) с помощью элемента `<list>` и инициализируется с помощью `java.util.ArrayList`.
 
 Пример:
-
-Исходный код проекта можно скачать по *_https://xxx[ЭТОЙ ССЫЛКЕ]_*.
 
 == Шаг 1. Создаём 2 таблицы в базе данных (далее – БД)
 
@@ -20,7 +18,7 @@ CREATE TABLE HIBERNATE_DEVELOPERS(
    PRIMARY KEY(ID)
 );
 ----
-*HIBERNATE_PROJECTS*
+`HIBERNATE_PROJECTS`
 ----
 create table HIBERNATE_PROJECTS (
    id INT NOT NULL auto_increment,
@@ -33,7 +31,7 @@ create table HIBERNATE_PROJECTS (
 ----
 == Шаг 2. Создаём POJO-классы
 
-*Developer.java*
+`Developer.java`
 [source, java]
 ----
 package net.proselyte.hibernate.mappings.list;
@@ -130,7 +128,7 @@ public class Developer {
     }
 }
 ----
-*Project.java*
+`Project.java`
 [source, java]
 ----
 package net.proselyte.hibernate.mappings.list;
@@ -191,7 +189,7 @@ public class Project {
 ----
 == Шаг 3. Создаём конфигурационные файлы
 
-*hibernate.cfg.xml*
+`hibernate.cfg.xml`
 [source, xml]
 ----
 <?xml version="1.0" encoding="utf-8"?>
@@ -224,7 +222,7 @@ public class Project {
     </session-factory>
 </hibernate-configuration>
 ----
-*Developer.hbm.xml*
+`Developer.hbm.xml`
 [source, xml]
 ----
 <?xml version="1.0" encoding="utf-8"?>
@@ -265,7 +263,7 @@ public class Project {
 ----
 == Шаг 4. Создаём гласс DeveloperRunner.java
 
-*DeveloperRunner.java*
+`DeveloperRunner.java`
 [source, java]
 ----
 package net.proselyte.hibernate.mappings.list;
