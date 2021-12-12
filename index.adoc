@@ -8,5 +8,5 @@
 
 Wiki for 'Example'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::karmyzov/mapping-files.adoc[leveloffset=1]
+include::karmyzov/persistent-classes.adoc[leveloffset=1]
