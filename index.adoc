@@ -1,4 +1,4 @@
-= Theme
+= Hibernate manual. Types of connections.
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,11 +6,8 @@
 
 :toc!:
 
-Wiki for 'Example'.
-
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
 
 include::hibernate_manual/list_mapping.adoc[leveloffset=1]
+
 include::hibernate_manual/сollection_mapping.adoc[leveloffset=1]
 
