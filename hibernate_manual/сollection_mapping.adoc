@@ -1,12 +1,10 @@
 = Руководство по Hibernate. Виды связей. Collection Mapping
 
-*Коллекция Java, которая хранит элементы без какой-либо последовательности и позволяет хранение одинаковых элементов, называется Bag.*
+Коллекция Java, которая хранит элементы без какой-либо последовательности и позволяет хранение одинаковых элементов, называется *Bag*.
 
-*Collection* связывается (mapped) с помощью элемента *<bag>* и инициализируется с помощью *java.util.ArrayList*.
+`Collection` связывается (mapped) с помощью элемента `<bag>` и инициализируется с помощью `java.util.ArrayList`.
 
 Пример:
-
-Исходный код проекта можно скачать по https://xxx[*_ЭТОЙ ССЫЛКЕ_*].
 
 == Шаг 1. Создадим две табилцы в базе данных (далее – БД)
 
@@ -20,7 +18,7 @@ CREATE TABLE HIBERNATE_DEVELOPERS(
    PRIMARY KEY(ID)
 );
 ----
-*HIBERNATE_PROJECTS*
+`HIBERNATE_PROJECTS`
 ----
 create table HIBERNATE_PROJECTS (
    id INT NOT NULL auto_increment,
@@ -32,7 +30,7 @@ create table HIBERNATE_PROJECTS (
 ----
 == Шаг 2. Создадим POJO – классы
 
-*Developer.java*
+`Developer.java`
 [source, java]
 ----
 package net.proselyte.hibernate.mappings.list;
@@ -129,7 +127,7 @@ public class Developer {
     }
 }
 ----
-*Project.java*
+`Project.java`
 [source, java]
 ----
 package net.proselyte.hibernate.mappings.list;
@@ -190,7 +188,7 @@ public class Project {
 ----
 == Шаг 3. Создадим конфигурационные файлы
 
-*hibernate.cfg.xml*
+`hibernate.cfg.xml`
 [source,xml]
 ----
 <?xml version="1.0" encoding="utf-8"?>
@@ -223,7 +221,7 @@ public class Project {
     </session-factory>
 </hibernate-configuration>
 ----
-*Deveoper.hbm.xml*
+`Deveoper.hbm.xml`
 [source,xml]
 ----
 <?xml version="1.0" encoding="utf-8"?>
@@ -263,7 +261,7 @@ public class Project {
 ----
 == Шаг 4. Создадим класс DeveloperRunner.java
 
-*DeveloperRunner.java*
+`DeveloperRunner.java`
 [source,java]
 ----
 package net.proselyte.hibernate.mappings.list;
@@ -485,4 +483,4 @@ Company Name: One more Company
 Feb 20, 2016 7:45:11 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl stop
 INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost/PROSELYTE_TUTORIAL]
 ----
-В этой статье рассмотрен пример связывания с использованием Collection.
+В этой статье рассмотрен пример связывания с использованием `Collection`.
