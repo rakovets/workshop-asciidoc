@@ -6,7 +6,6 @@
 
 :toc!:
 
-Wiki for 'Example'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::feature-paramonov/hibernate-manual--relationship-types/one-to-one-mapping-example.adoc[leveloffset=1]
+include::feature-paramonov/hibernate-manual--relationship-types/many-to-one-mapping-example.adoc[leveloffset=1]
