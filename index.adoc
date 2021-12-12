@@ -6,7 +6,7 @@
 
 :toc!:
 
-Wiki for 'Example'.
+Wiki for 'rykovodstvo-po-hibernate'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::rykovodstvo-po-hibernate-obrabotka-paketov/documation.adoc
+include::rykovodstvo-po-hibernate-keshirovanie/documenation.adoc

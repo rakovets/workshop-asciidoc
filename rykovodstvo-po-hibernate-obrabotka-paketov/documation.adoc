@@ -1,7 +1,7 @@
 = Руководство по Hibernate. Обработка “пакетов”.
 
 Нам необходимо выполнить 100,000 записей в таблицу базы данных (далее – БД). Рассмотрим примитивный сопособ:
-
+[sourse,java]
 ----
   Session session = sessionFactory.openSession();
     Transaction transaction = session.beginTransaction();
@@ -22,6 +22,7 @@
 вставлять каждые 50 объектов, как единый пакет. Для этого нам необходимо установить *hibernate.jdbc.atch_size на 50* и
 написать, примерно, такой кусок кода:
 
+[sourse,java]
 ----
   Session session = sessionFactory.openSession();
     Transaction transaction = session.beginTransaction();
@@ -43,6 +44,7 @@
 ****
 HIBRNATE_DEVELOPERS
 ****
+[sourse,java]
 ----
  CREATE TABLE HIBERNATE_DEVELOPERS (
    id INT NOT NULL auto_increment,
@@ -59,6 +61,7 @@ HIBRNATE_DEVELOPERS
 ****
 Developer.java
 ****
+[sourse,java]
 ----
 package net.proselyte.hibernate.batch;
 
@@ -157,6 +160,7 @@ public class Developer {
 ****
 hibernate.cfg.xml
 ****
+[sourse,java]
 ----
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration SYSTEM
