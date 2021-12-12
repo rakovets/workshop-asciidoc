@@ -6,5 +6,5 @@
 
 :toc!:
 
-include::dir/page1.adoc[leveloffset=1]
-include::dir/page2.adoc[leveloffset=1]
+include::dir/set-mapping.adoc[leveloffset=1]
+include::dir/sorted-set-mapping.adoc[leveloffset=1]
