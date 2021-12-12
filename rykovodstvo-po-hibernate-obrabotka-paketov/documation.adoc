@@ -1,6 +1,6 @@
 = Руководство по Hibernate. Обработка “пакетов”.
 
- Нам необходимо выполнить 100,000 записей в таблицу базы данных (далее – БД). Рассмотрим примитивный сопособ:
+Нам необходимо выполнить 100,000 записей в таблицу базы данных (далее – БД). Рассмотрим примитивный сопособ:
 
 ----
   Session session = sessionFactory.openSession();
@@ -14,10 +14,13 @@
     session.close();
 ----
 
- На первый взгляд кажется, что мы получим 100_000 записей в нашу БД, но на практике мы получим OutOfMemoryException примерно в тот момент, когда попытаемся выполнить 50_000 – тысячную запись. Это вызвано тем, что Hibernate кэширует все сохраняемые объекты в кэш сессии.
- Как же нам решить данную проблему?
- Для этого нам необходимо использовать *обработку пакетов (batch processing)*. Например, мы говорим Hibernate, что хотим вставлять каждые 50 объектов, как единый пакет. Для этого нам необходимо
- установить *hibernate.jdbc.atch_size на 50* и написать, примерно, такой кусок кода:
+На первый взгляд кажется, что мы получим 100_000 записей в нашу БД, но на практике мы получим OutOfMemoryException
+примерно в тот момент, когда попытаемся выполнить 50_000 – тысячную запись. Это вызвано тем, что Hibernate кэширует все
+сохраняемые объекты в кэш сессии.
+Как же нам решить данную проблему?
+Для этого нам необходимо использовать *обработку пакетов (batch processing)*. Например, мы говорим Hibernate, что хотим
+вставлять каждые 50 объектов, как единый пакет. Для этого нам необходимо установить *hibernate.jdbc.atch_size на 50* и
+написать, примерно, такой кусок кода:
 
 ----
   Session session = sessionFactory.openSession();
@@ -37,8 +40,9 @@
 Для понимания того, как это работает на практике – рассмотрим пример небольшого приложения.
 
 Шаг 1. Создаём таблицу в нашей БД
-*HIBRNATE_DEVELOPERS*
-
+****
+HIBRNATE_DEVELOPERS
+****
 ----
  CREATE TABLE HIBERNATE_DEVELOPERS (
    id INT NOT NULL auto_increment,
@@ -52,8 +56,9 @@
 ----
 
 Шаг 2 . Создадим POJO – класс
-*Developer.java*
-
+****
+Developer.java
+****
 ----
 package net.proselyte.hibernate.batch;
 
@@ -149,8 +154,9 @@ public class Developer {
 ----
 
 Шаг 3. Создаём конфигруационные файлы
-*hibernate.cfg.xml*
-
+****
+hibernate.cfg.xml
+****
 ----
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration SYSTEM
@@ -187,7 +193,9 @@ public class Developer {
     </session-factory>
 </hibernate-configuration>
 ----
-*Developer.hbm.xml*
+****
+Developer.hbm.xml
+****
 ----
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
@@ -212,7 +220,9 @@ public class Developer {
 </hibernate-mapping>
 ----
 Шаг 4. Создаём класс DeveloperRunner.java
-*DeveloperRunner.java*
+****
+DeveloperRunner.java
+****
 ----
 package net.proselyte.hibernate.batch;
 
@@ -289,26 +299,28 @@ Feb 24, 2016 12:54:41 PM org.hibernate.engine.jdbc.connections.internal.DriverMa
 INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost/PROSELYTE_TUTORIAL]
 ----
 Примерно, вот так будет выглядеть наша таблица
- *HIBERNATE_DEVELOPERS*
+****
+HIBERNATE_DEVELOPERS
+****
 
 [options="HIBERNATE_DEVELOPERS"]
 |===
- +--------+------------------+-----------------+-----------------+------------+--------+
- | id     | FIRST_NAME       | LAST_NAME       | SPECIALTY       | EXPERIENCE | SALARY |
- +--------+------------------+-----------------+-----------------+------------+--------+
- | 100061 | First Name 99988 | Last Name 99988 | Specialty 99988 |      99988 | 999880 |
- | 100062 | First Name 99989 | Last Name 99989 | Specialty 99989 |      99989 | 999890 |
- | 100063 | First Name 99990 | Last Name 99990 | Specialty 99990 |      99990 | 999900 |
- | 100064 | First Name 99991 | Last Name 99991 | Specialty 99991 |      99991 | 999910 |
- | 100065 | First Name 99992 | Last Name 99992 | Specialty 99992 |      99992 | 999920 |
- | 100066 | First Name 99993 | Last Name 99993 | Specialty 99993 |      99993 | 999930 |
- | 100067 | First Name 99994 | Last Name 99994 | Specialty 99994 |      99994 | 999940 |
- | 100068 | First Name 99995 | Last Name 99995 | Specialty 99995 |      99995 | 999950 |
- | 100069 | First Name 99996 | Last Name 99996 | Specialty 99996 |      99996 | 999960 |
- | 100070 | First Name 99997 | Last Name 99997 | Specialty 99997 |      99997 | 999970 |
- | 100071 | First Name 99998 | Last Name 99998 | Specialty 99998 |      99998 | 999980 |
- | 100072 | First Name 99999 | Last Name 99999 | Specialty 99999 |      99999 | 999990 |
- +--------+------------------+-----------------+-----------------+------------+--------+
+
+ | id     | FIRST_NAME       | LAST_NAME       | SPECIALTY       | EXPERIENCE | SALARY
+
+ | 100061 | First Name 99988 | Last Name 99988 | Specialty 99988 |      99988 | 999880
+ | 100062 | First Name 99989 | Last Name 99989 | Specialty 99989 |      99989 | 999890
+ | 100063 | First Name 99990 | Last Name 99990 | Specialty 99990 |      99990 | 999900
+ | 100064 | First Name 99991 | Last Name 99991 | Specialty 99991 |      99991 | 999910
+ | 100065 | First Name 99992 | Last Name 99992 | Specialty 99992 |      99992 | 999920
+ | 100066 | First Name 99993 | Last Name 99993 | Specialty 99993 |      99993 | 999930
+ | 100067 | First Name 99994 | Last Name 99994 | Specialty 99994 |      99994 | 999940
+ | 100068 | First Name 99995 | Last Name 99995 | Specialty 99995 |      99995 | 999950
+ | 100069 | First Name 99996 | Last Name 99996 | Specialty 99996 |      99996 | 999960
+ | 100070 | First Name 99997 | Last Name 99997 | Specialty 99997 |      99997 | 999970
+ | 100071 | First Name 99998 | Last Name 99998 | Specialty 99998 |      99998 | 999980
+ | 100072 | First Name 99999 | Last Name 99999 | Specialty 99999 |      99999 | 999990
+
 
 |===
 
