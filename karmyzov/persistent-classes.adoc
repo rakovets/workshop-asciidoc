@@ -13,6 +13,7 @@
 Классы POJO называют для того, чтобы подчеркнуть тот факт, что эти объекты являются экземплярами обычных Java-классов.
 
 Пример `Developer.java`:
+
 [source,java]
 ----
 package net.proselyte.hibernate.pojo;
