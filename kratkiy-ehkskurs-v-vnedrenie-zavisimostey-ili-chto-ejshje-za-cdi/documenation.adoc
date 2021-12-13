@@ -297,7 +297,7 @@ initializer.selectAlternatives(NetworkLogger.class);
 CDI контейнер будет знать несколько альтернатив для одного и того же интерфейса, то можно дать подсказку CDI контейнеру,
 указав приоритет при помощи аннотации `@Priority` (Начиная с CDI 1.1).
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/qualifiers.png[Qualifiers,align=center]
+image::qualifiers.png[Qualifiers,align=center]
 
 == Квалификаторы
 
