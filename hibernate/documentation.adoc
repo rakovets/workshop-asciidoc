@@ -12,7 +12,7 @@
 
 . Создадим таблицу в нашей базе данных (далее – БД).
 +
-HIBERNATE_DEVELOPERS
+`HIBERNATE_DEVELOPERS`
 +
 [source, hibernate]
 -----
@@ -29,7 +29,7 @@ PRIMARY KEY (id)
 
 . Создаём POJO – классы
 +
-*Developer.java*
+`Developer.java`
 +
 [source, java]
 ----
@@ -127,7 +127,7 @@ public class Developer {
 }
 ----
 +
-*Company.java*
+`Company.java`
 +
 [source, java]
 ----
@@ -171,7 +171,7 @@ public class Company {
 
 . Создадим конфигурационные файлы
 +
-*hibernate.cfg.xml*
+`hibernate.cfg.xml`
 +
 [, xml]
 ----
@@ -206,7 +206,7 @@ public class Company {
 </hibernate-configuration>
 ----
 +
-*Developer.hbm.xml*
+`Developer.hbm.xml`
 +
 [, xml]
 ----
@@ -247,7 +247,7 @@ public class Company {
 
 .  Создаём класс DeveloperRunner.java
 +
-*DeveloperRunner.java*
+`DeveloperRunner.java`
 +
 [source, java]
 ----
