@@ -13,9 +13,9 @@
 
 Пример:
 
-Шаг 1. Создадим две таблицы в нашей БД:
+.Шаг 1. Создадим две таблицы в нашей БД:
 
-.HIBERNATE_DEVELOPERS
+`HIBERNATE_DEVELOPERS`
 
 ----
 CREATE TABLE HIBERNATE_DEVELOPERS(
@@ -28,7 +28,7 @@ CREATE TABLE HIBERNATE_DEVELOPERS(
 );
 ----
 
-.HIBERNATE_PROJECTS
+`HIBERNATE_PROJECTS`
 
 ----
 CREATE TABLE HIBERNATE_PROJECTS (
@@ -42,9 +42,9 @@ CREATE TABLE HIBERNATE_PROJECTS (
 
 Будем использовать отношение *one-to-many* между таблицами `HIBERNATE_DEVELOPERS` и `HIBERNATE_PROJECTS`.
 
-Шаг 2. Создаём класс `Developer.java`
+.Шаг 2. Создаём класс `Developer.java`
 
-.Developer.java
+`Developer.java`
 
 [source, java]
 ----
@@ -143,9 +143,9 @@ public class Developer {
 }
 ----
 
-Шаг 3. Создём класс `Project.java`
+.Шаг 3. Создём класс `Project.java`
 
-.Project.java
+`Project.java`
 
 [source, java]
 ----
@@ -232,9 +232,9 @@ public class Project {
 
 ----
 
-Шаг 4. Создаём конфигурационный файл `hibernate.cfg.xml`
+.Шаг 4. Создаём конфигурационный файл `hibernate.cfg.xml`
 
-.hibernate.cfg.xml
+`hibernate.cfg.xml`
 
 [source, xml]
 ----
@@ -269,9 +269,9 @@ public class Project {
 </hibernate-configuration>
 ----
 
-Шаг 5. Создаём конфигурационный файл `Developer.hbm.xml`
+.Шаг 5. Создаём конфигурационный файл `Developer.hbm.xml`
 
-.Developer.hbm.xml
+`Developer.hbm.xml`
 
 [source, xml]
 ----
@@ -311,9 +311,9 @@ public class Project {
 </hibernate-mapping>
 ----
 
-Шаг 6. Создаём и запускаем класс `DeveloperRunner.java`
+.Шаг 6. Создаём и запускаем класс `DeveloperRunner.java`
 
-.DeveloperRunner.java
+`DeveloperRunner.java`
 
 [source, java]
 ----

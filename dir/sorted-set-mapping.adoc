@@ -3,7 +3,7 @@
 
 `SortedSet` – это коллекция которая содердит только уникальные элементы и эти элементы упорядочены в естественном порядке или с помощью специального класса-компаратора.
 
-`SortedSet` связывается (mapped) с помощью элемента <set> в таблице связей и инициализируется с помощью `java.util.TreeSet`. 
+`SortedSet` связывается (mapped) с помощью элемента `<set>` в таблице связей и инициализируется с помощью `java.util.TreeSet`. 
 Свойство `sort` определяет будет ли происходить сортировка в натуральном порядке или с помощью класса-компаратора, созданного разработчиком. 
 Если мы выбираем натуральный порядок, то элементы будут упорядочены в восходящем порядке.
 
@@ -13,9 +13,9 @@
 
 Пример:
 
-Шаг 1. Создадим две таблицы в нашей БД:
+.Шаг 1. Создадим две таблицы в нашей БД:
 
-.HIBERNATE_DEVELOPERS
+`HIBERNATE_DEVELOPERS`
 
 ----
 CREATE TABLE HIBERNATE_DEVELOPERS(
@@ -28,7 +28,7 @@ CREATE TABLE HIBERNATE_DEVELOPERS(
 );
 ----
 
-.HIBERNATE_PROJECTS
+`HIBERNATE_PROJECTS`
 
 ----
 create table HIBERNATE_PROJECTS (
@@ -42,9 +42,9 @@ create table HIBERNATE_PROJECTS (
 
 Мы будем использовать отнощение *one-to-many* между таблицами HIBERNATE_DEVELOPERS и HIBERNATE_PROJECTS.
 
-Шаг 2. Создаём класс `Developer.java`
+.Шаг 2. Создаём класс `Developer.java`
 
-.Developer.java
+`Developer.java`
 
 [source, java]
 ----
@@ -143,9 +143,9 @@ public class Developer {
 }
 ----
 
-Шаг 3. Создём класс `Project.java`
+.Шаг 3. Создём класс `Project.java`
 
-.Project.java
+`Project.java`
 
 [source, java]
 ----
@@ -227,9 +227,9 @@ public class Project implements Comparable {
 
 ----
 
-Шаг 4. Создаём класс-компаратор `ProjectsComparator.java`
+.Шаг 4. Создаём класс-компаратор `ProjectsComparator.java`
 
-.ProjectsComparator.java
+`ProjectsComparator.java`
 
 [source, java]
 ----
@@ -261,9 +261,9 @@ public class ProjectsComparator implements Comparator {
 }
 ----
 
-Шаг 5. Создаём конфигурационный файл `hibernate.cfg.xml`
+.Шаг 5. Создаём конфигурационный файл `hibernate.cfg.xml`
 
-.hibernate.cfg.xml
+`hibernate.cfg.xml`
 
 [source, xml]
 ----
@@ -298,9 +298,9 @@ public class ProjectsComparator implements Comparator {
 </hibernate-configuration>
 ----
 
-Шаг 6. Создаём конфигурационный файл `Developer.hbm.xml`
+.Шаг 6. Создаём конфигурационный файл `Developer.hbm.xml`
 
-.Developer.hbm.xml
+`Developer.hbm.xml`
 
 [source, xml]
 ----
@@ -340,9 +340,9 @@ public class ProjectsComparator implements Comparator {
 </hibernate-mapping>
 ----
 
-Шаг 7. Создаём и запускаем класс `DeveloperRunner.java`
+.Шаг 7. Создаём и запускаем класс `DeveloperRunner.java`
 
-.DeveloperRunner.java
+`DeveloperRunner.java`
 
 [source, java]
 ----
