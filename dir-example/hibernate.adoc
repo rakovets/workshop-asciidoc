@@ -10,18 +10,18 @@
 
         Давайте рассмотрим основные ключевые слова языка HQL:
 
-FROM
+.FROM
 
         Если мы хотим загрузить в память наши сохраняемые объекты, то мы будем использовать ключевое слово 'FROM'. Вот пример его использования:
 
         [source, java]
 
-        ----
+----
 
         Query query = session.createQuery("FROM Developer");
         List developers = query.list();
 
-        ----
+----
 
         Developer – это POJO – класс Developer.java, который ассоцииргван с таблицей в шагей БД.
 
@@ -33,12 +33,12 @@ FROM
 
         [source, java]
 
-        ----
+----
 
         Query query =
         session.createQuery("INSERT INTO Developer (firstName, lastName, specialty, experience)");
 
-        ----
+----
 
 .UPDATE::
 
