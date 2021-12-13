@@ -1,29 +1,29 @@
+= workshop-asciidoc
+Dmitry Rakovets
+:source-highlighter: rouge
+:sectnums:
+:toc: left
+:toclevels: 2
+:figure-caption!:
 
-:toc!:
+:leveloffset: +1
 
-Wiki for 'kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi'.
+include::kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/documenation.adoc[]
 
-include::kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/documenation.adoc[leveloffset=1]
+include::karmyzov/mapping-files.adoc[]
 
-Wiki for 'hibernate-tutorial. mapping-files and persistent-classes'.
+include::karmyzov/persistent-classes.adoc[]
 
-include::karmyzov/mapping-files.adoc[leveloffset=1]
+include::hibernate_manual/list_mapping.adoc[]
 
-include::karmyzov/persistent-classes.adoc[leveloffset=1]
+include::hibernate_manual/сollection_mapping.adoc[]
 
-Wiki for 'Hibernate manual. Types of connections'.
+include::javaee-intro/documentation.adoc[]
 
-include::hibernate_manual/list_mapping.adoc[leveloffset=1]
+include::hibernate/documentation.adoc[
 
-include::hibernate_manual/сollection_mapping.adoc[leveloffset=1]
+include::dir/set-mapping.adoc[]
 
-Wiki for 'Java EE & Hibernate'.
+include::dir/sorted-set-mapping.adoc[]
 
-include::javaee-intro/documentation.adoc[leveloffset=1]
-include::hibernate/documentation.adoc[leveloffset=1]
-
-Wiki for 'rukovodstvo-po-hibernate-vidi-sviyzey'.
-
-include::dir/set-mapping.adoc[leveloffset=1]
-
-include::dir/sorted-set-mapping.adoc[leveloffset=1]
+:leveloffset: -1
