@@ -1,10 +1,12 @@
 = Краткий экскурс во внедрение зависимостей или "Что ещё за CDI?"
 
+:imagesdir: ../kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi
+
 Основой, на которой сейчас построены самые популярные фреймворки, является внедрение зависимостей.
 Предлагаю посмотреть, что про это говорится в спецификации CDI, какие базовые возможности есть и как этими возможностями
 можно воспользоваться.
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI key words.png[CDI key words,align=center]
+image::CDI key words.png[CDI key words,align=center]
 
 == Вступление
 
@@ -23,13 +25,13 @@ link:https://maven.apache.org/[]
 окно "Выполнить" и выполнить cmd) и попросим Maven всё сделать без нашего участия. Для этого у Maven есть такое понятие,
 как archetype: link:https://maven.apache.org/archetype/index.html[Maven Archetype].
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/mvn archetype.png[mvn archetype:generate,align=center]
+image::mvn archetype.png[mvn archetype:generate,align=center]
 
 После этого на вопросах *Choose a number or apply filter* и
 *Choose org.apache.maven.archetypes:maven-archetype-quickstart version* просто нажимаем Enter.
 Далее вводим идентификаторы проекта, так называемые GAV (см. link:https://maven.apache.org/guides/mini/guide-naming-conventions.html[Naming Convention Guide]).
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/GAV properties.png[Entering GAV properties,align=center]
+image::GAV properties.png[Entering GAV properties,align=center]
 
 После успешного создания проекта увидим надпись "BUILD SUCCESS". Теперь можно открывать наш проект в любимой IDE.
 
@@ -38,7 +40,7 @@ image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/G
 Напоминаю, что у CDI есть интересный сайт — link:http://www.cdi-spec.org/[].
 
 .Таблица в разделе download, которая содержит необходимые данные
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI download.png[cdi-spec.org download,align=center]
+image::CDI download.png[cdi-spec.org download,align=center]
 {empty}
 
 В таблице можно подсмотреть, как для Maven описывается тот факт, что используется в проекте API для CDI.
@@ -84,7 +86,7 @@ dependencies.
 Важно, что версии Weld третьей линейки поддерживают CDI 2.0. Следовательно, можно рассчитывать на API этой версии.
 Теперь все готово к написанию кода.
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI Container.png[CDI container,align=center]
+image::CDI Container.png[CDI container,align=center]
 
 == Инициализация CDI контейнера
 
@@ -108,7 +110,7 @@ SE окружение.
 
 Зачем использовать контейнер? Контейнер внутри содержит beans (CDI beans).
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI beans.png[CDI beans, align=center]
+image::CDI beans.png[CDI beans, align=center]
 
 == CDI Beans
 
@@ -176,7 +178,7 @@ public class Logger {
 
 Процедура определения того, что нужно внедрять, называется typesafe resolution, о чём и следует поговорить.
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/conflict-resolution.png[conflict-resolution,align=center]
+image::conflict-resolution.png[conflict-resolution,align=center]
 
 == Разрешение имени или Typesafe resolution
 
@@ -251,7 +253,7 @@ link:http://docs.jboss.org/cdi/api/2.0/javax/enterprise/inject/Vetoed.html[`@Vet
 "link:https://stackoverflow.com/questions/13056336/cdi-beans-xml-where-do-i-put-you[beans.xml, where do the developer put this file?]". +
 
 .Правильное размещение файла
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/correct CDI bean structure.png[correct CDI structure,align=center]
+image::correct CDI bean structure.png[correct CDI structure,align=center]
 {empty}
 
 Как только появляется данный файл, то артефакт с кодом будет называться
@@ -391,7 +393,7 @@ container.select(NetworkLogger.Sender.class, protocol).get().send(null);
 Например, значение может браться из каких-нибудь настроек. Тогда можно менять реализацию даже на лету,
 без перекомпилирования или рестарта программы/сервера. Гораздо интереснее становится, не правда ли? )
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/Producer bean.png[Produccer bean,align=center]
+image::Producer bean.png[Produccer bean,align=center]
 
 == Продюсеры
 
@@ -413,7 +415,7 @@ public Integer getRandomNumber() {
 То есть экземпляр класса Random не станет CDI bean только потому, что он получен из чего-то, что контролирует
 CDI контейнер (в данном случае продюсер).
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/Interceptors.png[CDI Interceptor,align=center]
+image::Interceptors.png[CDI Interceptor,align=center]
 
 == Interceptors
 
@@ -470,7 +472,7 @@ public void print(String message) {
 
 Как видите, довольно просто.
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/Observers.png[Observers,align=center]
+image::Observers.png[Observers,align=center]
 
 == Event & Observers
 
@@ -539,7 +541,7 @@ public void print(String message) {
 Подробнее про события в CDI можно прочитать, как обычно, в спецификации, в главе
 "link:http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#events[10. Events]".
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/Decorator.png[Decorator,align=center]
+image::Decorator.png[Decorator,align=center]
 
 == Decorators
 
@@ -587,7 +589,7 @@ public abstract class LoggerDecorator implements Logger {
 == Жизненный цикл
 
 .Жизненный цикл beans
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/Bean lifecycle.png[Schema of Bean Lifecycle,align=center]
+image::Bean lifecycle.png[Schema of Bean Lifecycle,align=center]
 
 Как видно по картинке, есть так называемые *lifecycle callbacks*. Это аннотации, которые скажут CDI контейнеру
 вызывать определённые методы на определённом этапе жизненного цикла bean.
@@ -612,7 +614,7 @@ public void init() {
 Так же стоит знать, что есть жизненный цикл и у самого контейнера, о чём можно прочитать
 в "link:https://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#init_events[Container lifecycle events]".
 
-image::images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/CDI  - iceberg.png[CD - iceberg,align=center]
+image::CDI  - iceberg.png[CD - iceberg,align=center]
 
 == Итого
 
