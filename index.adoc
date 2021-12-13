@@ -1,3 +1,4 @@
+
 :toc!:
 
 Wiki for 'kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi'.
@@ -20,3 +21,9 @@ Wiki for 'Java EE & Hibernate'.
 
 include::javaee-intro/documentation.adoc[leveloffset=1]
 include::hibernate/documentation.adoc[leveloffset=1]
+
+Wiki for 'rukovodstvo-po-hibernate-vidi-sviyzey'.
+
+include::dir/set-mapping.adoc[leveloffset=1]
+
+include::dir/sorted-set-mapping.adoc[leveloffset=1]
