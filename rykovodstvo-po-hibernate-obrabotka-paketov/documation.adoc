@@ -41,9 +41,8 @@ session.close();
 Для понимания того, как это работает на практике – рассмотрим пример небольшого приложения.
 
 Шаг 1. Создаём таблицу в нашей БД
-****
-HIBRNATE_DEVELOPERS
-****
+
+.HIBRNATE_DEVELOPERS
 [source,java]
 --
 CREATE TABLE HIBERNATE_DEVELOPERS (
@@ -58,9 +57,8 @@ CREATE TABLE HIBERNATE_DEVELOPERS (
 --
 
 Шаг 2 . Создадим `POJO` – класс
-****
-Developer.java
-****
+
+.Developer.java
 [source,java]
 --
 package net.proselyte.hibernate.batch;
@@ -157,9 +155,8 @@ public class Developer {
 --
 
 Шаг 3. Создаём конфигруационные файлы
-****
-hibernate.cfg.xml
-****
+
+.hibernate.cfg.xml
 [source,xml]
 --
 <?xml version="1.0" encoding="utf-8"?>
@@ -197,9 +194,8 @@ hibernate.cfg.xml
     </session-factory>
 </hibernate-configuration>
 --
-****
-Developer.hbm.xml
-****
+
+.Developer.hbm.xml
 [source,xml]
 --
 <?xml version="1.0" encoding="utf-8"?>
@@ -226,9 +222,8 @@ Developer.hbm.xml
 --
 
 Шаг 4. Создаём класс `DeveloperRunner.java`
-****
-DeveloperRunner.java
-****
+
+.DeveloperRunner.java
 [source, java]
 --
 package net.proselyte.hibernate.batch;
@@ -306,10 +301,8 @@ Feb 24, 2016 12:54:41 PM org.hibernate.engine.jdbc.connections.internal.DriverMa
 INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost/PROSELYTE_TUTORIAL]
 ----
 Примерно, вот так будет выглядеть наша таблица
-****
-HIBERNATE_DEVELOPERS
-****
 
+.HIBERNATE_DEVELOPERS
 [options="HIBERNATE_DEVELOPERS"]
 |===
 
