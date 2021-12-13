@@ -20,7 +20,7 @@ include::hibernate_manual/сollection_mapping.adoc[]
 
 include::javaee-intro/documentation.adoc[]
 
-include::hibernate/documentation.adoc[
+include::hibernate/documentation.adoc[]
 
 include::dir/set-mapping.adoc[]
 
