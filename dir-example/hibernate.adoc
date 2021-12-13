@@ -1,0 +1,151 @@
+= Руководство по Hibernate. Язык запросов Hibernate (HQL).
+
+        HQL (Hibernate Query Language) – это объекто-ориентированный (далее – ОО) язык запросов, который крайне похож на SQL.
+
+        Отличие между HQL и SQL состоит в том, что SQL работает таблицами в базе данных (далее – БД) и их столбацами, а HQL – с сохраняемыми объектами (Persistent Objects) и их полями (аттрибутами класса).
+
+        Hibernate трнаслирует HQL – запросы в понятные для БД SQL – запросы, которые и выполняют необходимые нам действия в БД.
+
+        Мы также имеем возможность испольщовать обычные SQL – запросы в Hibernate используя Native SQL, но использование HQL является более предпочтительным.
+
+        Давайте рассмотрим основные ключевые слова языка HQL:
+
+.FROM::
+
+        Если мы хотим загрузить в память наши сохраняемые объекты, то мы будем использовать ключевое слово 'FROM'. Вот пример его использования:
+
+        [source, java]
+
+        ----
+
+        Query query = session.createQuery("FROM Developer");
+        List developers = query.list();
+
+        ----
+
+        Developer – это POJO – класс Developer.java, который ассоцииргван с таблицей в шагей БД.
+
+.INSERT::
+
+        Мы используем ключевое слово 'INSERT', в том случае, если хотим добавить запись в таблицу нашей БД.
+
+        Вот пример использования этого ключевого слова:
+
+        [source, java]
+
+        ----
+
+        Query query =
+        session.createQuery("INSERT INTO Developer (firstName, lastName, specialty, experience)");
+
+        ----
+
+.UPDATE::
+
+        Ключевое слово 'UPDATE' используется для обновления одного или нескольких полей объекта. Вот так это выглядит на практике:
+
+        [source, java]
+
+        ----
+
+        Query query =
+        session.createQuery(UPDATE Developer SET experience =: experience WHERE id =: developerId);
+        query.setParameter("expericence", 3);
+
+        ----
+
+.DELETE::
+
+        Это ключевоеслово используется для удаления одного или нескольких объектов. Пример использования:
+
+        [source, java]
+
+----
+
+        Query query = session.createQuery("DELETE FROM Developer WHERE id = :developerId");
+        query.setParameter("developerId", 1);
+
+----
+
+.SELECT::
+
+        Если мы хотим получить запись из таблицы нашей БД, то мы должны использоваьб ключевое слово 'SELECT'. Пример использования:
+
+[source, java]
+
+----
+        Query query = session.createQuery("SELECT D.lastName FROM Developer D");
+        List developers = query.list();
+----
+
+.AS::
+
+        В предыдущем примере мы использовали запись формы Developer D. С использованием опционального ключевого слова 'AS' это будет выглядеть так:
+
+[source, java]
+
+----
+
+        Query query = session.createQuery("FROM Developer AS D");
+        List developers = query.list();
+
+----
+
+.WHERE::
+
+        В том случае, если мы хотим получить объекты, которые соответствуют опредлённым параметрам, то мы должны использовать ключевое слово 'WHERE'. На практике это выглядит следующим образом:
+
+[source, java]
+
+----
+
+        Query query = session.createQuery("FROM Developer D WHERE D.id = 1");
+        List developer = query.list();
+
+----
+
+.ORDER BY::
+
+        Жля того, чтобы отсортировать список обхектов, полученных в результате запроса, мы должны применить ключевое слово 'ORDER BY'. Нам необходимо укаать параметр, по которому список будет отсортирован и тип сортировки – по возрастанию (ASC) или по убыванию (DESC). В виде кода это выгллядит так:
+
+[source, java]
+
+----
+        Query query =
+        session.createQuery("FROM Developer D WHERE experience > 3 ORDER BY D.experience DESC");
+
+----
+
+.GROUP BY::
+
+        С помощью ключевого слова 'GROUP BY' мы можем группировать данные, полученные из БД по какому-либо признаку. Вот простой пример применения данного ключевого слова:
+
+----
+
+        Query query = session.createQuery("SELECT MAX(D.experience), D.lastName, D.specialty FROM Developer D GROUP BY D.lastName");
+        List developers = query.list();
+
+----
+
+        Методы аггрегации
+        Язык запросов Hibernate (HQL) пожжерживает различные методы аггрегации, которые доступны и в SQL. HQL поддреживает слудующие методы:
+
+        min(имя свойства)::
+
+        Мнимальное значение данного свойства.
+
+        max(имя свойства)::
+
+        Максимальное занчение данного свойтсва.
+
+        sum(имя свойства)::
+
+        Сумма всех занчений данного свойтсва.
+
+        avg(имя свойства)::
+
+        Среднее арифметическое всех значений данного свойства
+
+        count(имя свойства)::
+
+        Какое количество раз данное свойство встречается в результате.
