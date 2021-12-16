@@ -8,5 +8,5 @@
 
 Wiki for 'Example'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::hibernate-manual/nativeSQL.adoc[leveloffset=1]
+include::hibernate-manual/queriesUsingCriteria.adoc[leveloffset=1]

@@ -1,34 +1,42 @@
 = Руководство по Hibernate. Запросы с использованием Criteria
 
-Hibernate поддерживает различные способы манипулирования объектами и транслирования их в таблицы баз данных (далее – БД).
-Одним из таких способов является *Criteria API*, который позволяет нам создавать запросы с критериями, программным методом.
+`Hibernate` поддерживает различные способы манипулирования объектами и транслирования их в таблицы баз данных (далее – БД).
+Одним из таких способов является `Criteria API`, который позволяет создавать запросы с критериями, программным методом.
 
-Для создания *Criteria* используется метод createCriteria() интерфейса Session.
-Этот метод возвращает экземпляр сохраняемого класса (persistent class) в результате его выполнения.
+Для создания `Criteria` используется метод `createCriteria()` интерфейса `Session`.
+Этот метод возвращает экземпляр сохраняемого класса (`persistent class`) в результате его выполнения.
 
 Вот как это выглядит на практике:
 
-[source,java]
+[source, haml]
+----
 Criteria criteria = session.createCriteria(Developer.class);
 List developers = criteria.list();
+----
 
-Criteria имеет два важных метода:
+`Criteria` имеет два важных метода:
 
-*public Criteria setFirstResult(int firstResult)*
+[source, haml]
+----
+public Criteria setFirstResult(int firstResult)*
+----
 
-Этот метод указывает первый ряд нашего результата, который начинается с 0.
+Этот метод указывает первый ряд результата, который начинается с 0.
 
-*public Criteria setMaxResults(int maxResults)*
+[source, haml]
+----
+public Criteria setMaxResults(int maxResults)
+----
 
-Этот методограничивает максимальное количество оъектов, которое Hibernate сможет получить в результате запроса.
+Этот метод ограничивает максимальное количество объектов, которое `Hibernate` сможет получить в результате запроса.
 
-Для понимания того, как это работает на практке рассмотрим пример простого приложения.
+Для понимания того, как это работает на практике рассмотрим пример простого приложения.
 
 Пример:
 
 Исходный код проекта можно скачать по https://proselyte.net/wp-content/uploads/2016/02/HibernateCriteriaExample.zip[ЭТОЙ ССЫЛКЕ].
 
-Шаг 1. Создадим таблицу HIBERNATE_DEVELOPERS в нашей БД.
+.Шаг 1. Создание таблицы `HIBERNATE_DEVELOPERS` в БД.
 
 [source, haml]
 ----
@@ -43,9 +51,9 @@ PRIMARY KEY (id)
 );
 ----
 
-Шаг 2. Создадим POJO – класс
+.Шаг 2. Создание POJO–класса
 
-*Developer.java*
+`Developer.java`
 
 [source, java]
 ----
@@ -142,9 +150,9 @@ private int salary;
 }
 ----
 
-Шаг 3. Создаём конфигурационные файлы
+.Шаг 3. Создание конфигурационных файлов
 
-*hibernate.cfg.xml*
+`hibernate.cfg.xml`
 
 [source,xhtml]
 ----
@@ -179,7 +187,7 @@ com.mysql.jdbc.Driver
 </hibernate-configuration>
 ----
 
-*Developer.hbm.xml*
+`Developer.hbm.xml`
 
 [source,xhtml]
 ----
@@ -206,9 +214,9 @@ This class contains developer details.
 </hibernate-mapping>
 ----
 
-Шаг 4. Создаём класс DeveloperRunner.java
+.Шаг 4. Создание класса `DeveloperRunner.java`
 
-*DeveloperRunner.java*
+`DeveloperRunner.java`
 
 [source, java]
 ----
@@ -292,7 +300,7 @@ public class DeveloperRunner {
 }
 ----
 
-Если всё было сделано правильно, то в резлуьтате работы программы мы получим, примерно, следующий результат:
+Если всё было сделано правильно, то в результате работы программы получится, примерно, следующий результат:
 
 [source, haml]
 ----
@@ -344,4 +352,4 @@ Feb 23, 2016 1:58:16 PM org.hibernate.engine.jdbc.connections.internal.DriverMan
 INFO: HHH10001008: Cleaning up connection pool [jdbc:mysql://localhost/PROSELYTE_TUTORIAL]
 ----
 
-В этой статье мы изучили основы запросов с критериями (*Criteria Queries*) и рассмотрели пример их применения.
+В этой статье изучены основы запросов с критериями (`Criteria Queries`) и рассмотрен пример их применения.
