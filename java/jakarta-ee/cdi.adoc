@@ -1,6 +1,6 @@
 = Краткий экскурс во внедрение зависимостей или "Что ещё за CDI?"
 
-:imagesdir: ../kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi/images/kratkiy-ehkskurs-v-vnedrenie-zavisimostey-ili-chto-ejshje-za-cdi
+:imagesdir: ../../assets/img/java/jakarta-ee/cdi
 
 Основой, на которой сейчас построены самые популярные фреймворки, является внедрение зависимостей.
 Предлагаю посмотреть, что про это говорится в спецификации CDI, какие базовые возможности есть и как этими возможностями

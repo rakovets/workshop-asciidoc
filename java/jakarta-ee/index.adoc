@@ -1,4 +1,4 @@
-= workshop-asciidoc
+= Java with Jakarta EE
 Dmitry Rakovets
 :source-highlighter: rouge
 :sectnums:
@@ -6,10 +6,14 @@ Dmitry Rakovets
 :toclevels: 2
 :figure-caption!:
 
+:toc!:
+
+Wiki for course "Java with Jakarta EE".
+
 :leveloffset: +1
 
-include::java/jakarta-ee/index.adoc[]
+include::intro.adoc[]
 
-include::java/data-persistence/index.adoc[]
+include::cdi.adoc[]
 
 :leveloffset: -1
