@@ -10,6 +10,6 @@ Dmitry Rakovets
 
 include::java/jakarta-ee/index.adoc[]
 
-include::java/data-persistence/index.adoc[]
+include::java/data-persistence/hibernate/index.adoc[]
 
 :leveloffset: -1
