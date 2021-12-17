@@ -1,14 +1,4 @@
 = Java with Jakarta EE
-Dmitry Rakovets
-:source-highlighter: rouge
-:sectnums:
-:toc: left
-:toclevels: 2
-:figure-caption!:
-
-:toc!:
-
-Wiki for course "Java with Jakarta EE".
 
 :leveloffset: +1
 

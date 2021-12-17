@@ -1,14 +1,4 @@
 = Data Persistence in Java
-Dmitry Rakovets
-:source-highlighter: rouge
-:sectnums:
-:toc: left
-:toclevels: 2
-:figure-caption!:
-
-:toc!:
-
-Wiki for course "Data Persistence in Java".
 
 :leveloffset: +1
 

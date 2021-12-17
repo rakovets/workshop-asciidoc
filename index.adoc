@@ -6,6 +6,8 @@ Dmitry Rakovets
 :toclevels: 2
 :figure-caption!:
 
+Wiki
+
 :leveloffset: +1
 
 include::java/jakarta-ee/index.adoc[]
