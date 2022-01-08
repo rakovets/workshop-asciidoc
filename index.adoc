@@ -18,3 +18,9 @@ include::karmyzov/persistent-classes.adoc[leveloffset=1]
 
 include::feature-paramonov/hibernate-manual--relationship-types/one-to-one-mapping-example.adoc[leveloffset=1]
 include::feature-paramonov/hibernate-manual--relationship-types/many-to-one-mapping-example.adoc[leveloffset=1]
+
+Wiki for 'Hibernate manual. Types of connections'.
+
+include::hibernate_manual/list_mapping.adoc[leveloffset=1]
+
+include::hibernate_manual/сollection_mapping.adoc[leveloffset=1]

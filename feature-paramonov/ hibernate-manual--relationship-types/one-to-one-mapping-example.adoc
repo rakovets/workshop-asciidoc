@@ -1,7 +1,7 @@
 ////
 https://proselyte.net/tutorials/hibernate-tutorial/mapping-types/one-to-one-mapping-example/
 ////
-= Руководство по Hibernate. Виды связей. One-to-One.
+== Руководство по Hibernate. Виды связей. One-to-One.
 
 В том случае, если поле одного из объектов содержит один единственный экземпляр другого объекта имеет смысл применить тип ассоциации *One-to-One*.
 
@@ -11,9 +11,9 @@ https://proselyte.net/tutorials/hibernate-tutorial/mapping-types/one-to-one-mapp
 
 Исходный код проекта можно скачать по https://proselyte.net/wp-content/uploads/2016/02/HibernateAssociationOneToOneExample.zip[ЭТОЙ ССЫЛКЕ].
 
-Шаг 1. Создадим две таблицы в нашей базе данных (далее – БД)
+===== Шаг 1. Создадим две таблицы в нашей базе данных (далее – БД)
 
-== *HIBERNATE_DEVELOPERS*
+==== `HIBERNATE_DEVELOPERS`
 
 ....
 CREATE TABLE HIBERNATE_DEVELOPERS(
@@ -27,7 +27,7 @@ CREATE TABLE HIBERNATE_DEVELOPERS(
 );
 ....
 
-== *HIBERNATE_CONTACTS*
+==== `HIBERNATE_CONTACTS`
 
 ....
 CREATE TABLE HIBERNATE_CONTACTS (
@@ -40,9 +40,9 @@ CREATE TABLE HIBERNATE_CONTACTS (
 );
 ....
 
-Шаг 2. Создаём POJO-классы
+===== Шаг 2. Создаём POJO-классы
 
-*Developer.java*
+`Developer.java`
 
 [source, java]
 ----
@@ -141,7 +141,7 @@ public class Developer {
 }
 ----
 
-*Contact.java*
+`Contact.java`
 
 [source, java]
 ----
@@ -214,9 +214,9 @@ public class Contact {
 }
 ----
 
-Шаг 3. Создаём конфигурационные файлы
+===== Шаг 3. Создаём конфигурационные файлы
 
-*hibernate.cfg.xml*
+`hibernate.cfg.xml`
 
 [source, xml]
 ----
@@ -251,7 +251,7 @@ public class Contact {
 </hibernate-configuration>
 ----
 
-*Developer.hbm.xml*
+`Developer.hbm.xml`
 
 [source, xml]
 ----
@@ -292,9 +292,9 @@ public class Contact {
 </hibernate-mapping>
 ----
 
-Шаг 4. Создаём класс DeveloperRunner.java
+===== Шаг 4. Создаём класс DeveloperRunner.java
 
-*DeveloperRunner.java*
+`DeveloperRunner.java`
 
 [source, java]
 ----
