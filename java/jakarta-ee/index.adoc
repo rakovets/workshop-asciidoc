@@ -1,0 +1,9 @@
+= Java with Jakarta EE
+
+:leveloffset: +1
+
+include::intro.adoc[]
+
+include::cdi.adoc[]
+
+:leveloffset: -1

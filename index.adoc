@@ -1,12 +1,21 @@
-= Theme
-:source-highlighter: prettify
+= workshop-asciidoc
+Dmitry Rakovets
+:source-highlighter: rouge
 :sectnums:
 :toc: left
 :toclevels: 2
+:figure-caption!:
 
-:toc!:
+Wiki
 
-Wiki for 'Example'.
+:leveloffset: +1
 
 include::hibernate-manual/nativeSQL.adoc[leveloffset=1]
+
 include::hibernate-manual/queriesUsingCriteria.adoc[leveloffset=1]
+
+include::java/jakarta-ee/index.adoc[]
+
+include::java/data-persistence/hibernate/index.adoc[]
+
+:leveloffset: -1

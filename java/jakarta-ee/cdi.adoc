@@ -1,0 +1,635 @@
+= Краткий экскурс во внедрение зависимостей или "Что ещё за CDI?"
+
+:imagesdir: ../../assets/img/java/jakarta-ee/cdi
+
+Основой, на которой сейчас построены самые популярные фреймворки, является внедрение зависимостей.
+Предлагаю посмотреть, что про это говорится в спецификации CDI, какие базовые возможности есть и как этими возможностями
+можно воспользоваться.
+
+image::CDI key words.png[CDI key words,align=center]
+
+== Вступление
+
+Данный небольшой обзор хочется посвятить такой штуке, как CDI. Что это? *CDI* — это Contexts and Dependency Injection.
+Это спецификация Java EE, описывающая внедрение зависимостей (Dependency Injection) и контексты.
+Для информации можно посмотреть на сайт link:http://cdi-spec.org/[].
+
+Так как *CDI* — это спецификация (описание того, как оно должно работать, набор интерфейсов),
+то для использования нам понадобится и реализация. Одной из таких реализаций является Weld —
+link:http://weld.cdi-spec.org/[] +
+Для управления зависимостями и создания проекта воспользуемся Maven —
+link:https://maven.apache.org/[]
+
+Итак, Maven уже установлен, теперь будем разбираться сразу на практике, чтобы не разбираться в абстрактном.
+Для этого при помощи Maven создадим проект. Откроем командную строку (в Windows можно при помощи Win+R вызвать
+окно "Выполнить" и выполнить cmd) и попросим Maven всё сделать без нашего участия. Для этого у Maven есть такое понятие,
+как archetype: link:https://maven.apache.org/archetype/index.html[Maven Archetype].
+
+image::mvn archetype.png[mvn archetype:generate,align=center]
+
+После этого на вопросах *Choose a number or apply filter* и
+*Choose org.apache.maven.archetypes:maven-archetype-quickstart version* просто нажимаем Enter.
+Далее вводим идентификаторы проекта, так называемые GAV (см. link:https://maven.apache.org/guides/mini/guide-naming-conventions.html[Naming Convention Guide]).
+
+image::GAV properties.png[Entering GAV properties,align=center]
+
+После успешного создания проекта увидим надпись "BUILD SUCCESS". Теперь можно открывать наш проект в любимой IDE.
+
+== Добавление CDI в проект
+
+Напоминаю, что у CDI есть интересный сайт — link:http://www.cdi-spec.org/[].
+
+.Таблица в разделе download, которая содержит необходимые данные
+image::CDI download.png[cdi-spec.org download,align=center]
+{empty}
+
+В таблице можно подсмотреть, как для Maven описывается тот факт, что используется в проекте API для CDI.
+API - это application programming interface, то есть некоторый программный интерфейс. Работая с интерфейсом,
+можно не переживать о том, что и как за этим интерфейсом работает. API представляет из себя некоторый jar архив, который
+можно начать использовать в своём проекте, то есть проект начинает зависеть от этого jar. Следовательно, CDI API
+для проекта зависимость, dependency.
+
+В Maven проект описывается в файлах `POM.xml` (*POM — Project Object Model*). Зависимости описываются в блоке
+dependencies.
+
+.В блок  dependencies добавляется новая запись
+[source,xml]
+--
+<dependency>
+	<groupId>javax.enterprise</groupId>
+	<artifactId>cdi-api</artifactId>
+	<version>2.0</version>
+</dependency>
+--
+
+Как можно заметить, `scope` не указывается со значением `provided`. Почему такое отличие? Такой `scope` означает,
+что зависимость предоставит кто-то. Когда приложение работает на Java EE сервере, то это означает что сервер
+предоставит приложению все необходимые JEE технологии. Для простоты данного обзора будем работать в Java SE
+окружении, следовательно никто не предоставит данную зависимость. Подробнее про Dependency Scope
+можно прочитать тут:
+"link:https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope[Dependency Scope]".
+
+Хорошо, теперь есть возможность работать с интерфейсами. Но нужна и реализация. Напоминаю,
+использоваться будет Weld. Интересно, что везде приводятся разные зависимости. Но следуем документации
+"link:http://docs.jboss.org/weld/reference/latest/en-US/html/environments.html#_setting_the_classpath"[18.4.5. Setting the Classpath]".
+
+.Прописываем dependencies, в соотвествии с документацией
+[source,xml]
+--
+<dependency>
+	<groupId>org.jboss.weld.se</groupId>
+	<artifactId>weld-se-core</artifactId>
+	<version>3.0.5.Final</version>
+</dependency>
+--
+
+Важно, что версии Weld третьей линейки поддерживают CDI 2.0. Следовательно, можно рассчитывать на API этой версии.
+Теперь все готово к написанию кода.
+
+image::CDI Container.png[CDI container,align=center]
+
+== Инициализация CDI контейнера
+
+*CDI* — это механизм. Этим механизмом кто-то должен управлять. Как указывалось выше, то таким управляющим
+является контейнер. Следовательно, такой контейнер нужно создать.
+
+.Дописываем `main()` метод
+[source,java]
+--
+public static void main(String[] args) {
+	SeContainerInitializer initializer = SeContainerInitializer.newInstance();
+	initializer.addPackages(App.class.getPackage());
+	SeContainer container = initializer.initialize();
+}
+--
+
+CDI контейнер cоздается вручную т.к. работа происходит в SE окружении. В обычных боевых проектах код выполняется на сервере,
+который предоставляет коду различные технологии. Соответственно, если сервер предоставляет CDI, то это значит,
+что на сервере уже есть CDI контейнер и не нужно будет ничего добавлять. Но для целей урока будет использоваться
+SE окружение.
+
+Зачем использовать контейнер? Контейнер внутри содержит beans (CDI beans).
+
+image::CDI beans.png[CDI beans, align=center]
+
+== CDI Beans
+
+Итак, beans. Что такое *CDI bean*? Это Java класс, который соответствует некоторым правилам. Эти правила описаны в
+спецификации, в главе "link:http://docs.jboss.org/weld/reference/latest/en-US/html/beanscdi.html#_what_kinds_of_classes_are_beans[2.2. What kinds of classes are beans?]".
+
+
+.Добавляем CDI bean в тот же пакет, где и класс App:
+[source,java]
+--
+public class Logger {
+    public void print(String message) {
+        System.out.println(message);
+    }
+}
+--
+
+.Вызываем bean из `main()` метода:
+[source,java]
+--
+Logger logger = container.select(Logger.class).get();
+logger.print("Hello, World!");
+--
+
+Как видно, bean не создавался при помощи ключевого слова new. Попросив у CDI контейнера: "CDI контейнер.
+Есть необходимость в экземпляре класса `Logger`, предоставь контейнер пожалуйста". Такой способ называется
+"pass:[<u>Dependency lookup</u>]", то есть поиск зависимости.
+
+.Создаем новый класс:
+[source,java]
+--
+public class DateSource {
+    public String getDate() {
+        return new Date().toString();
+    }
+}
+--
+
+Примитивный класс, возвращающий текстовое представление даты.
+
+.Добавляем вывод даты в сообщение:
+[source,java]
+--
+public class Logger {
+    @Inject
+    private DateSource dateSource;
+
+    public void print(String message) {
+        System.out.println(dateSource.getDate() + " : " + message);
+    }
+}
+--
+
+Появилась интересная аннотация `@Inject`. Как сказано в главе "link:http://docs.jboss.org/weld/reference/latest/en-US/html/injection.html#_injection_points"[4.1. Injection points]"
+документации cdi weld, при помощи данной аннотации определяется Injection Point. На русском это можно прочитать как
+"точки внедрения", которые используются CDI контейнером, чтобы внедрять зависимости в момент инстанциирования beans.
+
+Как видно, полю `dateSource` (источник даты) не присваивается никаких значений. Причиной тому тот факт, что CDI
+контейнер позволяет внутри CDI beans (только те beans, которые контейнер инстанциировал самостоятельно, т.е. которыми
+контейнер управляет) использовать "*Dependency Injection*". Это другой способ *Inversion of Control*, подхода,
+когда зависимостью управляет кто-то другой, вместо явного создания объектов.
+
+Внедрение зависимостей может быть выполнено через метод, конструктор или поле. Подробнее см. главу спецификации CDI
+"link:http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#injection[5.5. Dependency injection]".
+
+Процедура определения того, что нужно внедрять, называется typesafe resolution, о чём и следует поговорить.
+
+image::conflict-resolution.png[conflict-resolution,align=center]
+
+== Разрешение имени или Typesafe resolution
+
+Обычно, в качестве типа внедряемого объекта используется интерфейс, а CDI контейнер самостоятельно определяет,
+какую реализацию нужно выбрать. Это полезно по многим причинам, которые будут рассматриваться далее.
+
+.Интерфейс `Logger`:
+[source,java]
+--
+public interface Logger {
+    void print(String message);
+}
+--
+
+Данный интерфейс говорит, что есть некоторый logger, которому можно передать сообщение на выполнение задачи — logging
+Как и куда — в данном случае интересовать не будет.
+
+.Создаем реализацию для logger:
+[source,java]
+--
+public class SystemOutLogger implements Logger {
+    @Inject
+    private DateSource dateSource;
+
+    public void print(String message) {
+        System.out.println(message);
+    }
+}
+--
+Как видно, это logger, который пишет в `System.out.` Прекрасно. Теперь, `main()` метод отработает как и раньше.
+
+[source,java]
+--
+Logger logger = container.select(Logger.class).get();
+--
+
+Данная строка по-прежнему получит `logger`. И вся прелесть в том, что достаточно знать интерфейс,
+а о реализации вместо разработчика думает CDI контейнер.
+
+.Добавляем вторую реализацию, которая должна отправлять log на удалённое хранилище:
+[source,java]
+--
+public class NetworkLogger implements Logger {
+    @Override
+    public void print(String message) {
+        System.out.println("Send log message to remote log system");
+    }
+}
+--
+
+.Запускаем код без изменений, получаем ошибку:
+[source,java]
+--
+org.jboss.weld.exceptions.AmbiguousResolutionException: WELD-001335: Ambiguous dependencies for type Logger
+--
+CDI контейнер видит у интерфейса две реализации и не может из них выбрать.
+
+Что же делать? Существует несколько доступных вариаций. Самый простой — аннотация
+link:http://docs.jboss.org/cdi/api/2.0/javax/enterprise/inject/Vetoed.html[`@Vetoed`],
+которая передаст команду CDI контейнеру не воспринимать этот класс как CDI bean.
+
+Но есть куда более интересный подход. CDI bean может быть помечен как "альтернатива" при помощи аннотации
+`@Alternative`, описанной в главе
+"link:http://docs.jboss.org/weld/reference/latest/en-US/html/injection.html#alternatives[4.7. Alternatives]"
+документации по Weld CDI.
+
+Что это значит? Это значит, что пока явно не указывается, что нужно использовать CDI bean, ничего выбрано не будет.
+Это альтернативный вариант bean. Помечаем bean NetworkLogger как `@Alternative`, и код снова
+выполняется и используется `SystemOutLogger`.
+
+Чтобы включить альтернативу должен появиться файл *beans.xml*. Может возникнуть вопрос:
+"link:https://stackoverflow.com/questions/13056336/cdi-beans-xml-where-do-i-put-you[beans.xml, where do the developer put this file?]". +
+
+.Правильное размещение файла
+image::correct CDI bean structure.png[correct CDI structure,align=center]
+{empty}
+
+Как только появляется данный файл, то артефакт с кодом будет называться
+"link:http://docs.jboss.org/weld/reference/latest/en-US/html/ee.html#packaging-and-deployment[Explicit bean archive]".
+
+Теперь существует 2 отдельных конфигурации: программная и xml. Проблема в том, что конфигурации будут загружать
+одинаковые данные. Например, определение bean DataSource будет загружено 2 раза и при выполнении программа упадёт,
+т.к. CDI контейнер будет думать про конфигурации как про 2 отдельных bean (хотя по факту это один и тот же класс,
+о котором CDI контейнер узнал дважды). Чтобы это избежать есть 2 варианта:
+
+* убрать строку
+
+[source,java]
+--
+initializer.addPackages(App.class.getPackage())
+--
+
+.Добавляем указание альтернативы в xml файл:
+[source,xml]
+--
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="
+http://xmlns.jcp.org/xml/ns/javaee
+http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
+<alternatives>
+<class>ru.javarush.NetworkLogger</class>
+</alternatives>
+</beans>
+--
+
+* добавить в корневой элемент beans атрибут bean-discovery-mode со значением "none" и указать альтернативу программно:
+
+[source,java]
+--
+initializer.addPackages(App.class.getPackage());
+initializer.selectAlternatives(NetworkLogger.class);
+--
+
+Таким образом при помощи альтернативы CDI контейнер может определять, какой bean выбрать. Интересно, что если
+CDI контейнер будет знать несколько альтернатив для одного и того же интерфейса, то можно дать подсказку CDI контейнеру,
+указав приоритет при помощи аннотации `@Priority` (Начиная с CDI 1.1).
+
+image::qualifiers.png[Qualifiers,align=center]
+
+== Квалификаторы
+
+Отдельно стоит обсудить такую вещь как квалификаторы. Квалификатор указывается аннотацией над bean и уточняют
+поиск bean. А теперь подробнее.
+
+Интересно, что любой CDI bean в любом случае имеет как минимум один квалификатор — `@Any`.
+
+Если не указать над bean НИ ОДИН квалификатор, но тогда CDI контейнер сам добавляет к квалификатору
+`@Any` ещё один квалификатор — `@Default`. Если же хоть что-то указать (например, явно указать`@Any`),
+то квалификатор `@Default` автоматически добавлен не будет.
+
+Но вся прелесть квалификаторов в том, что можно делать свои квалификаторы. Квалификатор почти ничем не отличается
+от аннотаций, т.к. по сути это и есть просто аннотация, написанная особым образом.
+
+.Вводим Enum для типа протокола:
+[source,java]
+--
+public enum ProtocolType {
+    HTTP, HTTPS
+}
+--
+
+.Создаем квалификатор, который учитывает тип протокола
+[source,java]
+--
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Protocol {
+    ProtocolType value();
+    @Nonbinding String comment() default "";
+}
+--
+
+Стоит отметить, что поля, помеченные как `@Nonbinding` не влияют на определение квалификатора.
+
+Теперь надо указать квалификатор. Указывается он над типом bean (чтобы CDI знал, как его определить) и над
+Injection Point (с аннотацией `@Inject`, чтобы понимать, какой bean искать для внедрения в этом месте).
+
+Например, можно добавить какой-нибудь класс с квалификатором.
+
+.Делаем квалификаторы внутри `NetworkLogger`:
+[source,java]
+--
+public interface Sender {
+	void send(byte[] data);
+}
+
+@Protocol(ProtocolType.HTTP)
+public static class HTTPSender implements Sender{
+	public void send(byte[] data) {
+		System.out.println("sended via HTTP");
+	}
+}
+
+@Protocol(ProtocolType.HTTPS)
+public static class HTTPSSender implements Sender{
+	public void send(byte[] data) {
+		System.out.println("sended via HTTPS");
+	}
+}
+--
+
+.При выполнении `Inject`, указываем квалификатор, который будет влиять на то, какой именно класс будет использован:
+[source,java]
+--
+@Inject
+@Protocol(ProtocolType.HTTPS)
+private Sender sender;
+--
+
+Здорово, не правда ли?) Кажется, что красиво, но непонятно зачем.
+
+.Допускаем ситуацию
+[source,java]
+--
+Protocol protocol = new Protocol() {
+	@Override
+	public Class<? extends Annotation> annotationType() {
+		return Protocol.class;
+	}
+	@Override
+	public ProtocolType value() {
+		String value = "HTTP";
+		return ProtocolType.valueOf(value);
+	}
+};
+container.select(NetworkLogger.Sender.class, protocol).get().send(null);
+--
+
+Таким образом, можно переопределить получение значения value так, что значение может вычисляться динамически.
+Например, значение может браться из каких-нибудь настроек. Тогда можно менять реализацию даже на лету,
+без перекомпилирования или рестарта программы/сервера. Гораздо интереснее становится, не правда ли? )
+
+image::Producer bean.png[Produccer bean,align=center]
+
+== Продюсеры
+
+Ещё одной полезной возможностью CDI являются *продюсеры*. Это особые методы (отмечены специальной аннотацией),
+которые вызываются, когда какой-то bean запросил внедрение зависимости. Подробнее описано в документации
+в разделе "link:http://docs.jboss.org/weld/reference/latest/en-US/html/beanscdi.html#_producer_methods[2.2.3. Producer methods]".
+
+.Самый простой пример
+[source,java]
+--
+@Produces
+public Integer getRandomNumber() {
+	return new Random().nextInt(100);
+}
+--
+
+Теперь при `Inject` в поля типа `Integer` будет вызван данный метод и из него будет получено значение.
+Тут стоит сразу понимать, что когда есть ключевое слово new, то надо сразу понимать, что это НЕ CDI bean.
+То есть экземпляр класса Random не станет CDI bean только потому, что он получен из чего-то, что контролирует
+CDI контейнер (в данном случае продюсер).
+
+image::Interceptors.png[CDI Interceptor,align=center]
+
+== Interceptors
+
+*Интерцепторы* — это такие перехватчики, "вклинивающиеся" в работу. В CDI это сделано довольно понятно.
+Давайте посмотрим, как можно выполнить logging при помощи интерпцепторов (или перехватчиков).
+
+.Описываем привязку к интерцептору при помощи аннотаций
+[source,java]
+--
+@Inherited
+@InterceptorBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+public @interface ConsoleLog {
+}
+--
+
+Тут главное, что это привязка для интерцептора (`@InterceptorBinding`), которая будет наследоваться
+при extends (`@InterceptorBinding`).
+
+.Напишем интерцептор:
+[source,java]
+--
+@Interceptor
+@ConsoleLog
+public class LogInterceptor {
+    @AroundInvoke
+    public Object log(InvocationContext ic) throws Exception {
+        System.out.println("Invocation method: " + ic.getMethod().getName());
+        return ic.proceed();
+    }
+}
+--
+
+Подробнее про то, как пишутся интерцепторы, можно прочитать в примере из спецификации:
+"link:http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#_interceptor_example[1.3.6. Interceptor example]".
+
+.Включаем интерцептор, указываем аннотацию binding над выполняемым методом
+[source,java]
+--
+@ConsoleLog
+public void print(String message) {
+--
+
+И теперь ещё очень важная деталь. Интерцепторы по умолчанию выключены и их надо включать по аналогии с альтернативами.
+
+.Включаем интерцепторы в файле *beans.xml*
+[source,xml]
+--
+<interceptors>
+	<class>ru.javarush.LogInterceptor</class>
+</interceptors>
+--
+
+Как видите, довольно просто.
+
+image::Observers.png[Observers,align=center]
+
+== Event & Observers
+
+CDI предоставляет так же модель событий и наблюдателей. Тут не так всё очевидно, как с интерцепторами.
+
+Итак, Event'ом в данном случае может являться абсолютно любой класс, для описания ничего особого не надо.
+
+.Создаем
+[source,java]
+--
+public class LogEvent {
+    Date date = new Date();
+    public String getDate() {
+        return date.toString();
+    }
+}
+--
+
+.Создаем объект, который ожидает наступление события
+[source,java]
+--
+public class LogEventListener {
+    public void logEvent(@Observes LogEvent event){
+        System.out.println("Message Date: " + event.getDate());
+    }
+}
+--
+Здесь важно указать аннотацию `@Observes`, которая указывает, что это не просто метод, а метод,
+который должен быть вызван как результат наблюдения за событиями типа `LogEvent`.
+
+.Создаем наблюдателя
+[source,java]
+--
+public class LogObserver {
+    @Inject
+    private Event<LogEvent> event;
+    public void observe(LogEvent logEvent) {
+        event.fire(logEvent);
+    }
+}
+--
+
+Теперь есть единственный метод, который будет говорить контейнеру, что случилось событие `Event` для типа события `LogEvent`.
+
+Осталось только использовать наблюдатель. Например, в `NetworkLogger` можно добавить инжект нашего обсервера:
+
+.Добавляем в `NetworkLogger` `@Inject` нашего обсервера
+[source,java]
+--
+@Inject
+private LogObserver observer;
+--
+
+.В методе `print()` уведомляем наблюдателя о появлении нового события:
+[source,java]
+--
+public void print(String message) {
+	observer.observe(new LogEvent());
+--
+
+Тут важно знать, что события можно обрабатывать в одном потоке и в нескольких. Для асинхронной обработки служит
+метод `.fireAsync()` (вместо `.fire()`) и аннотация `@ObservesAsync` (вместо `@Observes`). Например, если все события
+выполняются в разных потоках, то если 1 поток упадёт с Exception, то остальные смогут выполнить свою работу
+для других событий.
+
+Подробнее про события в CDI можно прочитать, как обычно, в спецификации, в главе
+"link:http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#events[10. Events]".
+
+image::Decorator.png[Decorator,align=center]
+
+== Decorators
+
+Как указывалось выше, под крылом CDI собраны различные паттерны проектирования. И вот ещё один - *декоратор*.
+Это очень интересная штука.
+
+.Взлянем на класс:
+[source,java]
+--
+@Decorator
+public abstract class LoggerDecorator implements Logger {
+    public final static String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
+    @Inject
+    @Delegate
+    private Logger delegate;
+
+    @Override
+    public void print(String message) {
+        delegate.print(ANSI_GREEN + message + ANSI_RESET);
+    }
+}
+--
+
+Объявляя его декоратором, следует упомянуть, что когда будет использована какая-либо реализация `Logger`, то будет
+использоваться эта "надстройка", которая знает настоящую реализацию, которая хранится в поле delegate
+(т.к. оно помечено аннотацией `@Delegate`).
+
+Декораторы могут быть ассоциированы только с CDI bean, который сам не интерцептор и не декоратор.
+
+Пример можно увидеть так же в спецификации:
+"link:http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#_decorator_example[1.3.7. Decorator example]".
+
+.Включаем декоратор, как и интерцептор, в *beans.xml*:
+[source,xml]
+--
+<decorators>
+	<class>ru.javarush.LoggerDecorator</class>
+</decorators>
+--
+
+Подробнее см. weld reference: "link:https://docs.jboss.org/weld/reference/latest/en-US/html/decorators.html[Chapter 10. Decorators]".
+
+== Жизненный цикл
+
+.Жизненный цикл beans
+image::Bean lifecycle.png[Schema of Bean Lifecycle,align=center]
+
+Как видно по картинке, есть так называемые *lifecycle callbacks*. Это аннотации, которые скажут CDI контейнеру
+вызывать определённые методы на определённом этапе жизненного цикла bean.
+
+.Пример
+[source,java]
+--
+@PostConstruct
+public void init() {
+	System.out.println("Inited");
+}
+--
+
+Такой метод будет вызывать при инстанциировании bean CDI контейнером. Аналогично будет и с `@PreDestroy`
+при уничтожении bean, когда необходимость в нем отпадет.
+
+В аббревиатуре CDI не зря есть буква C - Context. Beans в CDI являются contextual, то есть их жизненный
+цикл зависит от контекста, в котором beans существуют внутри CDI контейнера. Чтобы в этом лучше разбираться
+стоит прочитать раздел спецификации
+"link:http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#lifecycle[7. Lifecycle of contextual instances]".
+
+Так же стоит знать, что есть жизненный цикл и у самого контейнера, о чём можно прочитать
+в "link:https://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#init_events[Container lifecycle events]".
+
+image::CDI  - iceberg.png[CD - iceberg,align=center]
+
+== Итого
+
+Выше рассмотрена самая верхушка айсберга под названием CDI, который является частью JEE спецификации
+и используется в JavaEE окружении. Те, кто используют Spring  - используют не CDI, а DI, то есть это
+несколько разные спецификации. Но зная и понимая вышеуказанное легко можно перестроиться. Учитывая,
+что Spring поддерживает аннотации из мира CDI (те же `Inject`).
+
+Дополнительные материалы:
+
+* "link:https://blog.akquinet.de/2017/01/04/dont-get-trapped-into-a-memory-leak-using-cdi-instance-injection/[DON’T GET TRAPPED INTO A MEMORY LEAK USING CDI INSTANCE INJECTION]"
+
+#Viacheslav
+
+
+
+
+
