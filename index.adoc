@@ -10,10 +10,6 @@ Wiki
 
 :leveloffset: +1
 
-include::hibernate-manual/nativeSQL.adoc[leveloffset=1]
-
-include::hibernate-manual/queriesUsingCriteria.adoc[leveloffset=1]
-
 include::java/jakarta-ee/index.adoc[]
 
 include::java/data-persistence/hibernate/index.adoc[]

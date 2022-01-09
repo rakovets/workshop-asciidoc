@@ -20,4 +20,8 @@ include::mapping-sorted-set.adoc[]
 
 include::mapping-component.adoc[]
 
+include::native-sql.adoc[]
+
+include::queries-using-criteria.adoc[]
+
 :leveloffset: -1
