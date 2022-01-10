@@ -20,6 +20,10 @@ include::mapping-sorted-set.adoc[]
 
 include::mapping-component.adoc[]
 
+include::mapping-relationship-one-to-one.adoc[]
+
+include::mapping-relationship-many-to-one.adoc[]
+
 include::native-sql.adoc[]
 
 include::queries-using-criteria.adoc[]
