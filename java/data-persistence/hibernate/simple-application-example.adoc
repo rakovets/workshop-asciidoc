@@ -96,7 +96,7 @@ private int experience;
 }
 ----
 Вторым шагом будет создание таблицы в базе данных (далее – БД). +
-`*HIBERNATE_DEVELOPERS*`
+`HIBERNATE_DEVELOPERS`
 
 [source, SQL]
 ----
