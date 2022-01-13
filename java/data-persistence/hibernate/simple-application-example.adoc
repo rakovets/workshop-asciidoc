@@ -6,7 +6,7 @@
 
 Итак, во-первых создадим POJO – класс `Developer.java`, который соотвтетсвует правилам POJO.
 
-`*Developer.java*`
+`Developer.java`
 
 [source, java]
 ----
