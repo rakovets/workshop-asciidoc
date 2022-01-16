@@ -1,0 +1,76 @@
+=Руководство по Hibernate. Конфигурирование.
+
+Для корректной работы, мы должны передать Hibernate подробную информацию, которая связывает наши Java-классы c таблицами в базе данных (далее – БД). Мы, также, должны укзать значения определённых свойств Hibernate.
+
+обычно, вся эта информация помещена в отдельный файл, либо XML-файл – *hibernate.cfg.xml*, либо – *hibernate.properties*.
+
+В этой статье мы рассмотрим конфигурирование приложение с помощью XML-файла *hibernate.cfg.xml*.
+
+Для начала рассмотрим ключевые свойства, которые должны быть настроены в типичном приложении:
+
+*hibernate.dialect*
+
+Указывает HIebrnate диалект БД. Hibernate, в своб очередь, генерирует необходимые SQL-запросы (например, org.hibernate.dialect.MySQLDialect, если мы используем MySQL).
+
+*hibernate.connection-driver_class*
+
+Указывает класс JDBC драйвера.
+
+*hibernate.connection.url*
+
+Указывает URL (ссылку) необходимой нам БД (например, jdbc:mysql://localhost:3306/database).
+
+*hibernate.connection.username*
+
+Указывает имя пользователя БД (например, root).
+
+*hibernate.connection.password*
+
+Укащывает пароль к БД (например, password).
+
+*hibernate.connection.pool_size*
+
+Ограничивает количество соединений, которые находятся в пуле соединений Hibernate.
+
+*hibernate.connection.autocommit*
+Указывает режим autocommit для JDBC-соединения.
+
+Давайте рассмотрим пример конфигурационного XML-файла.
+
+Исходные данные:
+Тип БД: MySQL
+
+Имя базы данных: database
+
+Имя пользователя: root
+
+Пароль: password
+
+----
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+   <session-factory>
+   <property name="hibernate.dialect">
+      org.hibernate.dialect.MySQLDialect
+   </property>
+   <property name="hibernate.connection.driver_class">
+      com.mysql.jdbc.Driver
+   </property>
+
+   <!-- Assume test is the database name -->
+   <property name="hibernate.connection.url">
+      jdbc:mysql://localhost/database
+   </property>
+   <property name="hibernate.connection.username">
+      root
+   </property>
+   <property name="hibernate.connection.password">
+      password
+   </property>
+
+</session-factory>
+</hibernate-configuration>
+----
