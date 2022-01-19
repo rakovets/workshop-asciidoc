@@ -28,4 +28,6 @@ include::native-sql.adoc[]
 
 include::queries-using-criteria.adoc[]
 
+include::simple-application-example.adoc[]
+
 :leveloffset: -1
