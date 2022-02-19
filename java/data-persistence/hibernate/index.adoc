@@ -1,0 +1,33 @@
+= Hibernate
+
+:leveloffset: +1
+
+include::intro.adoc[]
+
+include::architecture.adoc[]
+
+include::persistent-classes.adoc[]
+
+include::mapping-xml-config.adoc[]
+
+include::simple-application-example.adoc[]
+
+include::mapping-list.adoc[]
+
+include::mapping-collection.adoc[]
+
+include::mapping-set.adoc[]
+
+include::mapping-sorted-set.adoc[]
+
+include::mapping-relationship-one-to-one.adoc[]
+
+include::mapping-relationship-many-to-one.adoc[]
+
+include::mapping-component.adoc[]
+
+include::queries-using-criteria.adoc[]
+
+include::native-sql.adoc[]
+
+:leveloffset: -1
