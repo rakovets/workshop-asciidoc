@@ -14,4 +14,10 @@ include::java/jakarta-ee/index.adoc[]
 
 include::java/data-persistence/hibernate/index.adoc[]
 
+refactor:
+
+include::rykovodstvo-po-hibernate-obrabotka-paketov/documation.adoc[]
+
+include::rykovodstvo-po-hibernate-keshirovanie/documenation.adoc[]
+
 :leveloffset: -1
