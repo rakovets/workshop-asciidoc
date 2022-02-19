@@ -1,2 +1,25 @@
+= workshop-asciidoc
+Dmitry Rakovets
+:source-highlighter: rouge
+:sectnums:
+:toc: left
+:toclevels: 2
+:figure-caption!:
+
+Wiki
+
+:leveloffset: +1
+
+include::java/jakarta-ee/index.adoc[]
+
+include::java/data-persistence/hibernate/index.adoc[]
+
+refactor:
+
+include::rykovodstvo-po-hibernate-obrabotka-paketov/documation.adoc[]
+
+include::rykovodstvo-po-hibernate-keshirovanie/documenation.adoc[]
+
 include::hybernate-manual/simple-application-example.adoc[leveloffset=0]
 
+:leveloffset: -1

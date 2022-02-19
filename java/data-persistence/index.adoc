@@ -1,0 +1,5 @@
+= Data Persistence in Java
+
+:leveloffset: +1
+
+include::hibernate/index.adoc[]
