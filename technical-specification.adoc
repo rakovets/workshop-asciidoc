@@ -5,9 +5,10 @@
 == Требования по реализации
 
 * Обязательное соблюдение *Code Convention* (смотри типичные ошибки в _README_).
-* Работа через *GitHub Flow* workflow
+* Работа через *GitHub Flow* workflow.
 * Обязательное *Code Review* от ВСЕХ членов команды.
-* Обязательное *Code Review* от Team Lead, но после того, как ВСЕ члены команды сделали APPROVE *Pull Request*
+* Обязательное *Code Review* от Team Lead, но после того, как ВСЕ члены команды сделали APPROVE *Pull Request*.
+* Обязательное ТЕСТИРОВАНИЕ своего функционала после merge (сайт: https://workshop-asciidoc.rakovets.by/).
 
 == Инструменты и документация
 
