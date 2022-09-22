@@ -18,31 +18,31 @@
 == Задания для реализации
 
 .Задания для реализации
-[options="header"]
+[options="header", cols="^1,<6"]
 |===
-|Page|Mentee
-|https://habr.com/ru/amp/post/551026/|
-|https://proselyte.net/spring-tutorial-full-version/introduction/|
-|https://proselyte.net/spring-tutorial-full-version/create-simple-application/|
-|https://proselyte.net/spring-tutorial-full-version/ioc-containers/|
-|https://proselyte.net/spring-tutorial-full-version/introduction-into-beans/|
-|https://proselyte.net/spring-tutorial-full-version/bean-scope/|
-|https://proselyte.net/spring-tutorial-full-version/bean-lifecycle/|
-|https://proselyte.net/spring-tutorial-full-version/postbeanprocessor-interface/|
-|https://proselyte.net/spring-tutorial-full-version/bean-inheritance/|
-|https://proselyte.net/spring-tutorial-full-version/dependency-injection/|
-|https://proselyte.net/spring-tutorial-full-version/collection-injection/|
-|https://proselyte.net/spring-tutorial-full-version/autowiring/|
-|https://proselyte.net/spring-tutorial-full-version/configure-using-annotations/|
-|https://proselyte.net/spring-tutorial-full-version/java-annotations/|
-|https://proselyte.net/spring-tutorial-full-version/event-handling/|
-|https://proselyte.net/spring-tutorial-full-version/custom-events-handling/|
-|https://proselyte.net/spring-tutorial-full-version/aop-with-spring/|
-|https://proselyte.net/spring-tutorial-full-version/jdbc-in-spring/|
-|https://proselyte.net/spring-tutorial-full-version/transatcion-management/|
-|https://proselyte.net/tutorials/spring-tutorial-full-version/spring-mvc-framework/|
-|https://habr.com/ru/post/447322/|
-|https://devcolibri.com/unit/%D1%83%D1%80%D0%BE%D0%BA-14-%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE-%D1%81-%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%BE%D0%BC-json-%D0%BF%D0%B0%D1%80%D1%81%D0%B8%D0%BD%D0%B3-jsono/|
-|https://habr.com/ru/company/otus/blog/480564/?ysclid=l780uxvrh9444895638|
-|https://habr.com/ru/post/682720/|
+|Number|Page
+|1|https://habr.com/ru/amp/post/551026/
+|2|https://proselyte.net/spring-tutorial-full-version/introduction/
+|3|https://proselyte.net/spring-tutorial-full-version/create-simple-application/
+|4|https://proselyte.net/spring-tutorial-full-version/ioc-containers/
+|5|https://proselyte.net/spring-tutorial-full-version/introduction-into-beans/
+|6|https://proselyte.net/spring-tutorial-full-version/bean-scope/
+|7|https://proselyte.net/spring-tutorial-full-version/bean-lifecycle/
+|8|https://proselyte.net/spring-tutorial-full-version/postbeanprocessor-interface/
+|9|https://proselyte.net/spring-tutorial-full-version/bean-inheritance/
+|10|https://proselyte.net/spring-tutorial-full-version/dependency-injection/
+|11|https://proselyte.net/spring-tutorial-full-version/collection-injection/
+|12|https://proselyte.net/spring-tutorial-full-version/autowiring/
+|13|https://proselyte.net/spring-tutorial-full-version/configure-using-annotations/
+|14|https://proselyte.net/spring-tutorial-full-version/java-annotations/
+|15|https://proselyte.net/spring-tutorial-full-version/event-handling/
+|16|https://proselyte.net/spring-tutorial-full-version/custom-events-handling/
+|17|https://proselyte.net/spring-tutorial-full-version/aop-with-spring/
+|18|https://proselyte.net/spring-tutorial-full-version/jdbc-in-spring/
+|19|https://proselyte.net/spring-tutorial-full-version/transatcion-management/
+|20|https://proselyte.net/tutorials/spring-tutorial-full-version/spring-mvc-framework/
+|21|https://habr.com/ru/post/447322/
+|22|https://devcolibri.com/unit/%D1%83%D1%80%D0%BE%D0%BA-14-%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%BE-%D1%81-%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%BE%D0%BC-json-%D0%BF%D0%B0%D1%80%D1%81%D0%B8%D0%BD%D0%B3-jsono/
+|23|https://habr.com/ru/company/otus/blog/480564/?ysclid=l780uxvrh9444895638
+|24|https://habr.com/ru/post/682720/
 |===
