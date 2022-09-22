@@ -12,7 +12,8 @@
 
 == Инструменты и документация
 
-* Рабочий чат: https://t.me/+OeL1Tx_jG6QzMTYy
+* Chat: https://t.me/+OeL1Tx_jG6QzMTYy
+* Dashboard: https://github.com/users/rakovets/projects/6
 * Documentation: https://wiki.rakovets.by/common/#_asciidoc
 * Official site: link:https://asciidoc.org/[AsciiDoc]
 
