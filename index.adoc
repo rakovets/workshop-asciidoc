@@ -1,4 +1,4 @@
-= Theme
+= Java Passing Parametrs!
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,7 +6,6 @@
 
 :toc!:
 
-Wiki for 'Example'.
+Wiki for 'JavaPassingParametrs'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::JavaPassingParametrs/JavaPassingParametrs.adoc[leveloffset=1]
