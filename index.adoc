@@ -1,4 +1,4 @@
-= Theme
+= Spring
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -8,4 +8,5 @@
 
 Wiki for 'Spring'.
 
+include::spring/intro.adoc[leveloffset=1]
 include::spring/introduction-into-beans.adoc[leveloffset=1]
