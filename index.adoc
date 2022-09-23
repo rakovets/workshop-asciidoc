@@ -1,4 +1,5 @@
-= Spring
+
+= JavaPassingParametrs
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,6 +7,8 @@
 
 :toc!:
 
-Wiki for 'Spring'.
+Wiki for 'JavaPassingParametrs'.
+SvetaPiven marked this conversation as resolved.
+Show resolved
 
-include::spring/intro.adoc[leveloffset=1]
+include::JavaPassingParametrs/passing-parametrs.adoc[leveloffset=1]

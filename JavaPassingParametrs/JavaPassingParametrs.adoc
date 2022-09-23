@@ -1,0 +1,180 @@
+= Передача параметров по значению или по ссылке
+:imagesdir: ../assets/img/JavaPassingParametrs
+
+Основы. +
+
+Данные передаются между методами через параметры. Есть два способа передачи параметров:
+
+. Передача по значению (*by value*). Значения фактических параметров копируются. Вызываемый метод создает свою копию значений аргументов и затем ее использует. Поскольку работа ведется с копией, на исходный параметр это никак не влияет. +
+. Передача по ссылке (*by reference*). Параметры передаются как ссылка (адрес) на исходную переменную.
+Вызываемый метод не создает свою копию, а ссылается на исходное значение. Следовательно, изменения, сделанные в вызываемом методе, также будут отражены в исходном значении.
+
+В Java переменные хранятся следующим образом:
+
+. Локальные переменные, такие как примитивы и ссылки на объекты, создаются в *stack*.
+. Объекты в *heap*.
+
+*Java всегда передает параметры по значению*.
+
+.Пример передачи примитивов по значению:
+
+image::example-parameters-by-value.png[Передача объекта]
+
+Поскольку Java передает параметры по значению, метод `processData()` работает с копией данных. Следовательно, в исходных данных (в методе `main()`) не произошло никаких изменений.
+
+Пример: +
+
+.Передача объекта +
+
+image::example-passing-an-object.png[Передача объекта по ссылке]
+
+"*Java всегда передает параметры по значению*".
+
+.Память stack и heap +
+
+image::example-passing-an-object-by-reference.png[Память stack и heap]
+
+В программе, приведенной выше, список `fruits` передается методу `processData()`.
+Переменная `fruitRef` — это копия параметра `fruit`. И `fruits` и `fruitsRef` размещаются в стеке.
+Это две разные ссылки. Но самое интересное заключается в том, что они *указывают на один и тот же объект* в heap. То есть, любое изменение, которое будет внесено с помощью любой из этих ссылок, влияет на объект.
+
+Пример:
+
+.Передача объекта по ссылке
+
+image::example-passing-an-object-by-reference.png[Передача объекта по ссылке]
+
+.Память stack и heap
+
+image::stack-heap-operator-new.png[Память stack и heap]
+
+В этом случае для изменения ссылки `fruitRef` используем оператор `new`. Теперь `fruitRef` указывает на новый объект, и, следовательно, любые изменения, которые вносим в него, не повлияют на исходный объект списка фруктов.
+
+Java всегда передает параметры по значению. Однако необходимо быть осторожными при передаче ссылок на объекты.
+
+Вышеприведенная концепция очень важна для правильного решения задач. +
+Рассмотрим удаление узла в односвязном списке.
+
+.Удаление узла в связанном списке
+
+image::deleted-single-linked.png[Удаление узла в связанном списке]
+
+[source, java]
+----
+class Node {
+    int data;
+    Node next;
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+----
+
+[source, java]
+----
+class LinkedList {
+    public static Node push(Node head, int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+        return head;
+    }
+
+    public static void deleteNode(Node head, int position) {
+        // List is empty
+        if (head == null) {
+            return;
+        }
+        // If position is 1st, removing head node
+        if (position == 1) {
+            head = head.next;
+            return;
+        }
+        Node prevNode = head;
+        int i = 2;
+        while (prevNode != null && i != position) {
+            prevNode = prevNode.next;
+            i++;
+        }
+        // When position is more than number of node
+        if (prevNode == null || prevNode.next == null) {
+            return;
+        }
+        prevNode.next = prevNode.next.next;
+    }
+
+    public static void printList(Node head) {
+        Node currNode = head;
+        while (currNode != null) {
+            System.out.print(currNode.data + " ");
+            currNode = currNode.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Node head = null;
+        head = push(head, 5);
+        head = push(head, 4);
+        head = push(head, 3);
+        head = push(head, 2);
+        head = push(head, 1);
+        System.out.println("Created Linked list is: ");
+        printList(head);
+        // Delete node at position 2
+        deleteNode(head, 2);
+        System.out.println("\nLinked List after Deletion at position 2: ");
+        printList(head);
+    }
+}
+----
+Это решение работает во всех случаях, кроме одного — когда удаляем первый узел (`Position = 1`).
+
+.Удаление первого узла односвязного списка
+
+image::stack-heap-deleted-fitst-node.png[Удаление первого узла односвязного списка]
+
+Для исправления алгоритма необходимо сделать следующее:
+
+[source,java]
+----
+ public static Node deleteNode(Node head, int position) {
+        // List is empty
+        if (head == null) {
+            return head;
+        }
+        // If position is 1st, removing head node
+        if (position == 1) {
+            head = head.next;
+            return head;
+        }
+        Node prevNode = head;
+        int i = 2;
+        while (prevNode != null && i != position) {
+            prevNode = prevNode.next;
+            i++;
+        }
+        // When position is more than number of node
+        if (prevNode == null || prevNode.next == null) {
+            return head;
+        }
+        prevNode.next = prevNode.next.next;
+        return head;
+    }
+
+    public static void main(String[] args) {
+        Node head = null;
+        head = push(head, 5);
+        head = push(head, 4);
+        head = push(head, 3);
+        head = push(head, 2);
+        head = push(head, 1);
+        System.out.println("Created Linked list is: ");
+        printList(head);
+        // Delete node at position 2
+        head = deleteNode(head, 2);
+        System.out.println("\nLinked List after Deletion at position 2: ");
+        printList(head);
+    }
+//Rest of the code remains same
+----
