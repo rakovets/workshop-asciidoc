@@ -6,6 +6,6 @@
 
 :toc!:
 
-Wiki for 'Example'.
+Wiki for 'Spring'.
 
 include::spring/introduction-into-beans.adoc[leveloffset=1]
