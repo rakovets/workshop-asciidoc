@@ -94,12 +94,10 @@ class LinkedList {
         return head;
     }
     public static void deleteNode(Node head, int position) {
-
         // List is empty
         if (head == null) {
             return;
         }
-
         // If position is 1st, removing head node
         if (position == 1) {
             head = head.next;
@@ -117,7 +115,6 @@ class LinkedList {
         }
         prevNode.next = prevNode.next.next;
     }
-
     public static void printList(Node head) {
         Node currNode = head;
         while (currNode != null) {
@@ -125,7 +122,6 @@ class LinkedList {
             currNode = currNode.next;
         }
     }
-
     public static void main(String[] args) {
         Node head = null;
         head = push(head, 5);
@@ -135,10 +131,8 @@ class LinkedList {
         head = push(head, 1);
         System.out.println("Created Linked list is: ");
         printList(head);
-
         // Delete node at position 2
         deleteNode(head, 2);
-
         System.out.println("\nLinked List after Deletion at position 2: ");
         printList(head);
     }
@@ -160,7 +154,6 @@ image::stack-heap-deleted.png[Удаление первого узла одно�
         if (head == null) {
             return head;
         }
-
         // If position is 1st, removing head node
         if (position == 1) {
             head = head.next;
@@ -179,7 +172,6 @@ image::stack-heap-deleted.png[Удаление первого узла одно�
         prevNode.next = prevNode.next.next;
         return head;
     }
-
     public static void main(String[] args) {
         Node head = null;
         head = push(head, 5);
@@ -189,10 +181,8 @@ image::stack-heap-deleted.png[Удаление первого узла одно�
         head = push(head, 1);
         System.out.println("Created Linked list is: ");
         printList(head);
-
         // Delete node at position 2
         head = deleteNode(head, 2);
-
         System.out.println("\nLinked List after Deletion at position 2: ");
         printList(head);
     }
