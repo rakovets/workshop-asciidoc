@@ -8,4 +8,4 @@
 
 Wiki for 'Example'.
 
-include::introduction-into-beans/page1.adoc[leveloffset=1]
+include::spring/introduction-into-beans.adoc[leveloffset=1]
