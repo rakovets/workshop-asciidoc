@@ -1,4 +1,4 @@
-= Java Passing Parametrs!
+= Java
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,6 +6,6 @@
 
 :toc!:
 
-Wiki for 'JavaPassingParametrs'.
+Wiki for 'Java'.
 
-include::JavaPassingParametrs/JavaPassingParametrs.adoc[leveloffset=1]
+include::java/passing-parametrs.adoc[leveloffset=1]

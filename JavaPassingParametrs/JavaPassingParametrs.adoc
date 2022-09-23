@@ -1,12 +1,9 @@
-= _Java: передача параметров по значению или по ссылке_
-
+= Передача параметров по значению или по ссылке
 :imagesdir: ../assets/img/JavaPassingParametrs
 
 image::title.png[Шапка статьи]
 
-
-Многие программисты часто путают, какие параметры в Java передаются по значению, а какие по ссылке.
-Визуализируем этот процесс и увидим насколько все просто.
+Многие программисты часто путают, какие параметры в Java передаются по значению, а какие по ссылке. Визуализируем этот процесс и увидим насколько все просто.
 
 Начнем с основ. +
 
@@ -68,13 +65,10 @@ Java всегда передает параметры по значению.
 Вышеприведенная концепция очень важна для правильного решения задач. +
 Например, рассмотрим удаление узла в односвязном списке.
 
-====
-
 image::single-linked.png[Удаление узла в связанном списке]
-====
 
 .Удаление узла в связанном списке
-Решение:
+
 [source, java]
 ----
 class Node {
@@ -85,7 +79,9 @@ class Node {
         next = null;
     }
 }
-
+----
+[source, java]
+----
 class LinkedList {
     public static Node push(Node head, int data) {
         Node newNode = new Node(data);
@@ -93,6 +89,7 @@ class LinkedList {
         head = newNode;
         return head;
     }
+
     public static void deleteNode(Node head, int position) {
         // List is empty
         if (head == null) {
@@ -115,6 +112,7 @@ class LinkedList {
         }
         prevNode.next = prevNode.next.next;
     }
+
     public static void printList(Node head) {
         Node currNode = head;
         while (currNode != null) {
@@ -122,6 +120,7 @@ class LinkedList {
             currNode = currNode.next;
         }
     }
+
     public static void main(String[] args) {
         Node head = null;
         head = push(head, 5);
@@ -172,6 +171,7 @@ image::stack-heap-deleted.png[Удаление первого узла одно�
         prevNode.next = prevNode.next.next;
         return head;
     }
+
     public static void main(String[] args) {
         Node head = null;
         head = push(head, 5);
@@ -187,7 +187,6 @@ image::stack-heap-deleted.png[Удаление первого узла одно�
         printList(head);
     }
 //Rest of the code remains same
-----
 
 ---
 
