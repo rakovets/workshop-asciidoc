@@ -1,4 +1,4 @@
-= Theme
+= Spring
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,7 +6,6 @@
 
 :toc!:
 
-Wiki for 'Example'.
+Wiki for 'Spring'.
 
-include::dir-example/page1.adoc[leveloffset=1]
-include::dir-example/page2.adoc[leveloffset=1]
+include::spring/intro.adoc[leveloffset=1]

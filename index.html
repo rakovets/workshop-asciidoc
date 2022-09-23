@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<title>Theme</title>
+<title>Spring</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,20 +439,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Theme</h1>
+<h1>Spring</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_page_1">1. Page 1</a>
+<li><a href="#_руководство_по_spring_введение">1. Руководство по Spring. Введение.</a>
 <ul class="sectlevel2">
-<li><a href="#_this_is_example_header_2">1.1. This is Example Header 2</a></li>
-<li><a href="#_this_is_example_header_2_2">1.2. This is Example Header 2</a></li>
-<li><a href="#_this_is_example_header_2_3">1.3. This is Example Header 2</a></li>
-</ul>
-</li>
-<li><a href="#_page_2">2. Page 2</a>
-<ul class="sectlevel2">
-<li><a href="#_this_is_example_title">2.1. This is Example Title</a></li>
+<li><a href="#_введение">1.1. Введение</a></li>
+<li><a href="#_внедрение_зависимостей_dependency_injection">1.2. Внедрение зависимостей (Dependency Injection)</a></li>
+<li><a href="#_аспекто_ориентированное_программирование">1.3. Аспекто-ориентированное программирование</a></li>
+<li><a href="#_архитектура_spring_framework">1.4. Архитектура Spring Framework</a></li>
+<li><a href="#_прочее">1.5. Прочее</a></li>
 </ul>
 </li>
 </ul>
@@ -462,86 +459,133 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Wiki for 'Example'.</p>
+<p>Wiki for 'Spring'.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_page_1">1. Page 1</h2>
+<h2 id="_руководство_по_spring_введение">1. Руководство по Spring. Введение.</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_this_is_example_header_2">1.1. This is Example Header 2</h3>
-<div class="paragraph">
-<p>This is Example Paragraph</p>
-</div>
 <div class="imageblock">
 <div class="content">
-<img src="../assets/img/dir-example/example.png" alt="This is alternative text">
-</div>
+<img src="../assets/img/spring/spring-logo.jpg" alt="Spring логотип">
 </div>
 </div>
 <div class="sect2">
-<h3 id="_this_is_example_header_2_2">1.2. This is Example Header 2</h3>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. This is Example Table</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">1.1</th>
-<th class="tableblock halign-left valign-top">1.2</th>
-<th class="tableblock halign-left valign-top">1.3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.3</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="_введение">1.1. Введение</h3>
+<div class="paragraph">
+<p><strong>Spring</strong> один из самых популярных фреймворков для <strong>J2EE</strong>, был разработан в июне 2003 года Родом Джонсоном. С помощью Spring можно разработать любое Java приложение.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_this_is_example_header_2_3">1.3. This is Example Header 2</h3>
+<h3 id="_внедрение_зависимостей_dependency_injection">1.2. Внедрение зависимостей (Dependency Injection)</h3>
 <div class="paragraph">
-<p>This is Example Code:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="shell script">This is shell script (for CLI)</code></pre>
-</div>
+<p><strong>Dependency Injection</strong> (<strong>DI</strong>) – один из видов <strong>инверсии управления</strong> (<strong>Inversion of Control</strong> – <strong>IoC</strong>). При написании действительно крупных и сложных проектов разработчики сталкиваются с необходимостью делать классы приложения как можно более независимыми друг от друга для возможности повторного использования и unit-тестирования. Именно <strong>DI</strong> устанавливает связи между этими классами, при этом сохраняя их независимость друг от друга.</p>
 </div>
 <div class="paragraph">
-<p>This is Example Code:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="java">public class Example {
-    public static void main(String[] args){
-        System.out.println("This is example for java code");
-    }
-}</code></pre>
+<p><strong>Dependency Injection</strong> – это ситуация, когда внедряется элемент одного класса в другой (конкретные примеры будут приведены позже). На практике <strong>DI</strong> осуществляется путём передачи параметров конструктора или с помощью setters.</p>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_page_2">2. Page 2</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_this_is_example_title">2.1. This is Example Title</h3>
+<h3 id="_аспекто_ориентированное_программирование">1.3. Аспекто-ориентированное программирование</h3>
 <div class="paragraph">
-<p>This is Example Paragraph</p>
+<p>Другим ключевым компонентом Spring является <strong>Аспекто-ориентированное программирование</strong> (<strong>Aspect oriented programming</strong> – <strong>AOP</strong>). Это функции, которые охватывают несколько узлов приложения, называются <strong>cross-cutting concerns</strong>, и эти <strong>cross-cutting concerns</strong> отделены от непосредственной бизнес-логики приложения.</p>
 </div>
+<div class="paragraph">
+<p>В <strong>ООП</strong> ключевой единицей является класс, в то время, как в <strong>АОП</strong> ключевым элементом является аспект. <strong>DI</strong> помогает разделить классы приложения на отдельные модули, и <strong>АОП</strong> – помогает отделить <strong>cross-cutting concerns</strong> от объектов, на которые они влияют. На данный момент <strong>Spring</strong> разделён на некоторое количество отдельных модулей, что позволяет разработчикум решать, какие из них использовать в приложении.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_архитектура_spring_framework">1.4. Архитектура Spring Framework</h3>
 <div class="imageblock">
 <div class="content">
-<img src="../assets/img/dir-example/example.png" alt="This is alternative text">
+<img src="../assets/img/spring/spring-framework.jpg" alt="Архитектура Spring Framework">
 </div>
+</div>
+<div class="paragraph">
+<p><strong>Основной контейнер</strong> (<strong>Core Container</strong>) включает в себя <strong>Beans</strong>, <strong>Core</strong>, <strong>Context</strong> и <strong>SpEL</strong> (<strong>expression language</strong>).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Beans</strong> отвечает за <code>BeanFactory</code>, которая является сложной реализацией <em>паттерна Фабрика (GoF)</em>.</p>
+</li>
+<li>
+<p>Модуль <strong>Core</strong> обеспечивает ключевые части фреймворка, включая свойства <strong>IoC</strong> и <strong>DI</strong>.</p>
+</li>
+<li>
+<p><strong>Context</strong> построен на основе <strong>Beans</strong> и <strong>Core</strong> и позволяет получить доступ к любому объекту, который определён в настройках. Ключевым элементом модуля <strong>Context</strong> является интерфейс <strong>ApplicationContext</strong>.</p>
+</li>
+<li>
+<p>Модуль <strong>SpEL</strong> обеспечивает мощный язык выражений для манипулирования объектами во время исполнения.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Контейнер <strong>Data Access/Integration</strong> состоит из <strong>JDBC</strong>, <strong>ORM</strong>, <strong>OXM</strong>, <strong>JMS</strong> и модуля <strong>Transactions</strong>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>JDBC</strong> обеспечивает абстрактный слой <strong>JDBC</strong> и избавляет разработчика от необходимости вручную прописывать монотонный код, связанный с соединением с БД.</p>
+</li>
+<li>
+<p><strong>ORM</strong> обеспечивает интеграцию с такими популярными <strong>ORM</strong>, как <strong>Hibernate</strong>, <strong>JDO</strong>, <strong>JPA</strong> и т.д.</p>
+</li>
+<li>
+<p>Модуль <strong>OXM</strong> отвечает за связь Объект/XML – <strong>XMLBeans</strong>, <strong>JAXB</strong> и т.д.</p>
+</li>
+<li>
+<p>Модуль <strong>JMS</strong> (<strong>Java Messaging Service</strong>) отвечает за создание, передачу и получение сообщений.</p>
+</li>
+<li>
+<p><strong>Transactions</strong> поддерживает управление транзакциями для классов, которые реализуют определённые методы.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Web</strong>. Этот слой состоит из <strong>Web</strong>, <strong>Web-MVC</strong>, <strong>Web-Socket</strong>, <strong>Web-Portlet</strong>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Модуль <strong>Web</strong> обеспечивает такие функции, как загрузка файлов и т.д.</p>
+</li>
+<li>
+<p><strong>Web-MVC</strong> содержит реализацию <strong>Spring MVC</strong> для веб-приложений.</p>
+</li>
+<li>
+<p><strong>Web-Socket</strong> обеспечивает поддержку связи между клиентом и сервером, используя <strong>Web-Sockets</strong> в веб-приложениях.</p>
+</li>
+<li>
+<p><strong>Web-Portlet</strong> обеспечивает реализацию <strong>MVC</strong> в среде портлетов.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_прочее">1.5. Прочее</h3>
+<div class="paragraph">
+<p><strong>Spring</strong> также включает в себя ряд других важных модулей, таких как <strong>AOP</strong>, <strong>Aspects</strong>, <strong>Instrumentation</strong>, <strong>Messaging</strong> и <strong>Test</strong>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>AOP</strong> реализует аспекто-ориентированное программирование и позволяет использовать весь арсенал возможностей <strong>АОП</strong>.</p>
+</li>
+<li>
+<p>Модуль <strong>Aspects</strong> обеспечивает интеграцию с <strong>AspectJ</strong>, которая также является мощным фреймворком <strong>АОП</strong>.</p>
+</li>
+<li>
+<p><strong>Instrumentation</strong> отвечает за поддержку <strong>class instrumentation</strong> и <strong>class loader</strong>, которые используются в серверных приложениях.</p>
+</li>
+<li>
+<p>Модуль <strong>Messaging</strong> обеспечивает поддержку <strong>STOMP</strong>.</p>
+</li>
+<li>
+<p>Модуль <strong>Test</strong> обеспечивает тестирование с использованием <strong>TestNG</strong> или <strong>JUnit Framework</strong>.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -549,7 +593,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-09-22 04:31:36 UTC
+Last updated 2022-09-23 14:29:28 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
