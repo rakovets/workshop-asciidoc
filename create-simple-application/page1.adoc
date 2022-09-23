@@ -14,23 +14,18 @@ image::create-project-step3.webp[Project's name, location, etc.]
 image::project-structure.webp[Project's structure]
 
 * Классы приложения +
-_SpringHelloWorld.java_
-
+.`SpringHelloWorld.java`
 image::spring-hello-world-java.webp[SpringHelloWorld.java]
 
-_SpringHelloWorldRunner.java_
-
+.`SpringHelloWorldRunner.java`
 image::spring-hello-world-runner-java.webp[SpringHelloWorldRunner.java]
 
 Создание контекста происходит с помощью
-*API* `ClassPathXmlApplicationContext()`.
-Это *API* загружает конфигурационный файл _spring-hello-bean.xml_
-и создаёт и инициализирует все *beans* внутри этого файла. +
-Далее следует метод `getBean()` этого контекста.
-Этот метод принимает в качестве аргумента *bean ID*.
+*API* `ClassPathXmlApplicationContext()`. Это *API* загружает конфигурационный файл `spring-hello-bean.xml` и создаёт
+и инициализирует все *beans* внутри этого файла. +
+Далее следует метод `getBean()` этого контекста. Этот метод принимает в качестве аргумента *bean ID*.
 
-_spring-hello-bean.xml_
-
+.`spring-hello-bean.xml`
 image::spring-hello-bean-xml.webp[XML connection for elements]
 
 Главным звеном этого приложения является именно _spring-hello-bean.xml_,
@@ -39,7 +34,7 @@ image::spring-hello-bean-xml.webp[XML connection for elements]
 
 * Результат работы программы
 
-Комбинация клавиш для запуска программы `Alt + Shift + F10`, после нажатия
+Комбинация клавиш для запуска программы _Alt + Shift + F10_, после нажатия
 `Enter` вывод будет:
 
 image::program-result.webp[Result]
