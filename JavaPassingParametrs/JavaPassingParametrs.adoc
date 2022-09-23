@@ -93,7 +93,6 @@ class LinkedList {
         head = newNode;
         return head;
     }
-
     public static void deleteNode(Node head, int position) {
 
         // List is empty
