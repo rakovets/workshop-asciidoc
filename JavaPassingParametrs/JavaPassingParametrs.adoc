@@ -188,5 +188,3 @@ image::stack-heap-deleted.png[Удаление первого узла одно�
     }
 //Rest of the code remains same
 
----
-
