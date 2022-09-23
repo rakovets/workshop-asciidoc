@@ -80,7 +80,6 @@ image::single-linked.png[Удаление узла в связанном спи�
 class Node {
     int data;
     Node next;
-
     Node(int d) {
         data = d;
         next = null;
