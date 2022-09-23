@@ -68,4 +68,3 @@
 `xml-config.xml`
 
 image::xml-config.webp[Пример конфигурации]
-
