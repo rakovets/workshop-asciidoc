@@ -1,5 +1,5 @@
 = Создание простого приложения
-:imagesdir: ../assets/img/create-simple-application
+:imagesdir: ../assets/img/spring
 
 
 .Создание простого приложения с использованием Spring.
