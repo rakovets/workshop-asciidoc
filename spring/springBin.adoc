@@ -40,7 +40,8 @@ image::spring-by-pivotal.jpg[Spring логотип]
 
 По умолчанию область видимости устанавливается Singleton, но можно использовать такую запись:
 
-[source, java]
+.XML
+[source, xml]
 ----
 
 <bean id = "someBean" scope = "singleton">
@@ -75,7 +76,8 @@ image::singleton-result.jpg[Результат работы программы]
 
 Bean с областью видимости prototype можно создать следующим образом:
 
-[source, java]
+.XML
+[source, xml]
 ----
 
 <bean id = "someBean" scope = "prototype">
