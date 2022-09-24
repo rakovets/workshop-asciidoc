@@ -24,7 +24,7 @@ image::metadata.jpg[Работа Spring Container]
 
 == Spring BeanFactory Container
 
-Это самый простой контейнер, обеспечивающий базовую поддержку *DI* и который основан на интерфейсе `org.springframework.beans.factory.BeanFactory`. Такие интерфейсы, как `BeanFactoryAware` и `DisposableBean` всё ещё присутствуют в Spring для обеспечения обратной совместимости.
+Это самый простой контейнер, обеспечивающий базовую поддержку *DI* и который основан на интерфейсе `org.springframework.beans.factory.BeanFactory`. Такие интерфейсы, как `BeanFactoryAware` и `DisposableBean` всё ещё присутствуют в *Spring* для обеспечения обратной совместимости.
 
 Наиболее часто используемая реализация интерфейса `BeanFactory` – `XmlBeanFactory`.
 
