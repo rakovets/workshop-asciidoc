@@ -21,15 +21,15 @@ image::spring-by-pivotal.jpg[Spring логотип]
 
 *request*
 
-Создаётся один экземпляр *bean* на каждый HTTP запрос. Касается исключительно ApplicationContext.
+Создаётся один экземпляр *bean* на каждый HTTP запрос. Касается исключительно `ApplicationContext`.
 
 *session*
 
-Создаётся один экземпляр *bean* на каждую HTTP сессию. Касается исключительно ApplicationContext.
+Создаётся один экземпляр *bean* на каждую HTTP сессию. Касается исключительно `ApplicationContext`.
 
 *global-session*
 
-Создаётся один экземпляр *bean* на каждую глобальную HTTP сессию. Касается исключительно ApplicationContext.
+Создаётся один экземпляр *bean* на каждую глобальную HTTP сессию. Касается исключительно `ApplicationContext`.
 
 ---
 Рассмотрим singleton и prototype.
