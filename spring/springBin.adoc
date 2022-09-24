@@ -1,4 +1,4 @@
-= Руководство по Spring. Область видимости bean.
+= Руководство по Spring. Область видимости beans.
 :imagesdir: ../assets/img/spring
 
 При определении bean в Spring Framework, есть возможность объявить область видимости этого компонента.
@@ -36,18 +36,16 @@ image::spring-by-pivotal.jpg[Spring логотип]
 
 == Singleton
 
-Если установим свойству scope значение singleton, то контейнер Spring IoC создаёт только один экземпляр объекта определённого в bean. Этот экземпляр помещается в cache таких же bean (singleton) и все последующие вызовы bean с таким именем будут возвращать объект из cache.
+Если установим свойству scope значение singleton, то контейнер Spring IoC создаёт только один экземпляр объекта определённого в bean. Этот экземпляр помещается в cache таких же beans (singletons) и все последующие вызовы bean с таким именем будут возвращать объект из cache.
 
 По умолчанию область видимости устанавливается Singleton, но можно использовать такую запись:
 
 .XML
 [source, xml]
 ----
-
 <bean id = "someBean" scope = "singleton">
 <!--some code to configure bean-->
 </bean>
-
 ----
 
 .Структура программы
@@ -79,11 +77,9 @@ Bean с областью видимости prototype можно создать 
 .XML
 [source, xml]
 ----
-
 <bean id = "someBean" scope = "prototype">
 <!--some code to configure bean-->
 </bean>
-
 ----
 
 .Структура проекта
