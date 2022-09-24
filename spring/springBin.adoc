@@ -5,9 +5,9 @@
 
 image::spring-by-pivotal.jpg[Spring логотип]
 
-Например, чтобы Spring возвращал нам один и тот же bean при каждом запросе, необходимо выбрать область видимости *singleton*.
+Например, чтобы Spring возвращал нам один и тот же *bean* при каждом запросе, необходимо выбрать область видимости *singleton*.
 
-В Spring Framework имеются пять возможных значений свойства scope:
+В *Spring Framework* имеются пять возможных значений свойства *scope*:
 
 ---
 
@@ -32,7 +32,7 @@ image::spring-by-pivotal.jpg[Spring логотип]
 Создаётся один экземпляр *bean* на каждую глобальную HTTP сессию. Касается исключительно `ApplicationContext`.
 
 ---
-Рассмотрим singleton и prototype.
+Рассмотрим *singleton* и *prototype*.
 
 == Singleton
 
@@ -52,11 +52,11 @@ image::spring-by-pivotal.jpg[Spring логотип]
 
 image::singleton-structure.jpg[Структура программы]
 
-.Класс Message.java
+.Класс `Message.java`
 
 image::singleton-message.jpg[Класс Message.java]
 
-.Класс MessageRunner.java
+.Класс `MessageRunner.java`
 
 image::singleton-message-runner.jpg[Класс MessageRunner.java]
 
@@ -86,11 +86,11 @@ Bean с областью видимости *prototype* можно создат�
 
 image::singleton-structure-prototype.jpg[Структура проекта]
 
-.Класс Message.java
+.Класс `Message.java`
 
 image::singleton-message-prototype.jpg[Класс Message.java]
 
-.Класс MessageRunner.java
+.Класс `MessageRunner.java`
 
 image::singleton-message-runner-prototype.jpg[Класс MessageRunner.java]
 
