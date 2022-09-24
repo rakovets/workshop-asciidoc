@@ -1,4 +1,4 @@
-= spring
+= Spring
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,7 +6,7 @@
 
 :toc!:
 
-Wiki for 'spring'.
+Wiki for 'Spring'.
 
 include::spring/intro.adoc[leveloffset=1]
 
