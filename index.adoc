@@ -1,17 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 = JavaPassingParametrs
 :source-highlighter: prettify
 :sectnums:
