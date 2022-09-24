@@ -1,7 +1,7 @@
 = Руководство по Spring. Область видимости beans.
 :imagesdir: ../assets/img/spring
 
-При определении *bean* в Spring Framework, есть возможность объявить область видимости этого компонента.
+При определении *bean* в *Spring Framework*, есть возможность объявить область видимости этого компонента.
 
 image::spring-by-pivotal.jpg[Spring логотип]
 
