@@ -19,8 +19,8 @@ image::metadata.jpg[Работа Spring Container]
 
 В Spring имеется 2 различных вида контейнеров:
 
-. *Spring BeanFactory Container*;
-. *Spring ApplicationContext Container*;
+. *Spring* `BeanFactory` *Container*;
+. *Spring* `ApplicationContext` *Container*;
 
 == Spring BeanFactory Container
 
@@ -36,7 +36,7 @@ _Пример_:
 
 Структура проекта:
 
-image::project structure.jpg[Структура проекта]
+image::project-structure.jpg[Структура проекта]
 
 Класс `Message.java`:
 
@@ -70,7 +70,7 @@ _Пример_:
 
 Структура проекта:
 
-image::project structure2.jpg[Структура проекта]
+image::project-structure2.jpg[Структура проекта]
 
 Класс `Message.java`:
 
