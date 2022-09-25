@@ -49,23 +49,18 @@ image::spring-by-pivotal.jpg[Spring логотип]
 ----
 
 .Структура программы
-
 image::singleton-structure.jpg[Структура программы]
 
 .Класс `Message.java`
-
 image::singleton-message.jpg[Класс Message.java]
 
 .Класс `MessageRunner.java`
-
 image::singleton-message-runner.jpg[Класс MessageRunner.java]
 
 .Конфигурационный файл message-bean.xml
-
 image::singleton-message-xml.jpg[Конфигурационный файл message-bean.xml]
 
 .Результат работы программы
-
 image::singleton-result.jpg[Результат работы программы]
 
 == Prototype
@@ -83,23 +78,18 @@ Bean с областью видимости *prototype* можно создат�
 ----
 
 .Структура проекта
-
 image::singleton-structure-prototype.jpg[Структура проекта]
 
 .Класс `Message.java`
-
 image::singleton-message-prototype.jpg[Класс Message.java]
 
 .Класс `MessageRunner.java`
-
 image::singleton-message-runner-prototype.jpg[Класс MessageRunner.java]
 
 .Конфигурационный файл message-bean.xml
-
 image::singleton-message-xml.jpg[Конфигурационный файл message-bean.xml]
 
 .Результат работы программы
-
 image::singleton-result.jpg[Результат работы программы]
 
 В случае применения *singleton* получим два одинаковых сообщения, так как использовался один и тот же экземпляр *bean*. В то время как при использовании *prototype* получаем во втором сообщении `null`, так как был создан абсолютно новый объект, которому ничего не присваиваем.
