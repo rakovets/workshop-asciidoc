@@ -1,5 +1,5 @@
 = Передача параметров по значению или по ссылке
-:imagesdir: ../assets/img/JavaPassingParametrs
+:imagesdir: ../assets/img/java-passing-parametrs
 
 Основы. +
 
