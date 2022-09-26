@@ -1,4 +1,4 @@
-= java
+= Java
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -8,4 +8,4 @@
 
 Wiki for 'Passing-parametrs'.
 
-include::java/passing-parametrs.adoc[leveloffset=1]
+include::Java/passing-parametrs.adoc[leveloffset=1]
