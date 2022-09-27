@@ -6,6 +6,6 @@
 
 :toc!:
 
-Wiki for 'Passing-parametrs'.
+Wiki for 'Java'.
 
-include::Java/passing-parametrs.adoc[leveloffset=1]
+include::java/passing-parameters.adoc[leveloffset=1]
