@@ -1,5 +1,5 @@
-= Руководство по Spring. Введение. Контейнеры IoC.
-:imagesdir: ../assets/img/spring-ioc-containers
+= Введение. Контейнеры IoC.
+:imagesdir: ../assets/img/spring/ioc-containers
 
 Ключевым элементом *Spring Framework* является *Spring Container*. *Container* создаёт объекты, связывает их вместе, настраивает и управляет ими от создания до момента уничтожения.
 
@@ -9,20 +9,20 @@
 
 Метаданные могут быть получены 3 способами:
 
-. *XML*;
-. *Аннотации Java*;
-. *Java код*.
+. *XML*
+. *Аннотации Java*
+. *Java код*
 
 image::metadata.jpg[Работа Spring Container]
 
-`Java POJO` классы поступает в *Spring Container*, который на основании инструкций, полученных через метаданные, выдаёт приложение, готовое к использованию.
+Java *POJO* классы поступает в *Spring Container*, который на основании инструкций, полученных через метаданные, выдаёт приложение, готовое к использованию.
 
 В Spring имеется 2 различных вида контейнеров:
 
-. *Spring* `BeanFactory` *Container*;
-. *Spring* `ApplicationContext` *Container*;
+. `BeanFactory`;
+. `ApplicationContext`;
 
-== Spring BeanFactory Container
+== `BeanFactory`
 
 Это самый простой контейнер, обеспечивающий базовую поддержку *DI* и который основан на интерфейсе `org.springframework.beans.factory.BeanFactory`. Такие интерфейсы, как `BeanFactoryAware` и `DisposableBean` всё ещё присутствуют в *Spring* для обеспечения обратной совместимости.
 
@@ -34,58 +34,49 @@ image::metadata.jpg[Работа Spring Container]
 
 _Пример_:
 
-Структура проекта:
-
+.Структура проекта
 image::project-structure.jpg[Структура проекта]
 
-Класс `Message.java`:
-
+.Класс `Message.java`
 image::class-message.jpg[Класс Message.java]
 
-Конфигурационный файл `message-bean.xml`:
-
+.Конфигурационный файл `message-bean.xml`
 image::message-bean.jpg[Конфигурационный файл message-bean.xml]
 
-Класс `MessageRunnerWithBeanFactory.java`:
-
+.Класс `MessageRunnerWithBeanFactory.java`
 image::messagerunner.jpg[Класс MessageRunnerWithBeanFactory.java]
 
-Результат работы программы:
-
+.Результат работы программы
 image::result.jpg[Результат работы]
 
-== Spring ApplicationContext Container
+== `ApplicationContext`
 
 `ApplicationContext` является более сложным и более продвинутым *Spring Container*. Так же, как `BeanFactory`, `ApplicationContext` загружает бины, связывает их вместе и конфигурирует их определённым образом. Но кроме этого, `ApplicationContext` обладает дополнительной функциональностью: распознание текстовых сообщений из файлов настройки и отображение событий, которые происходят в приложении различными способами. Этот контейнер определяется интерфейсом `org.springframework.context.ApplicationContext`.
 
 Чаще всего используются следующие реализации `AppicationContext`:
 
-* `FileSystemXmlApplicationContext` загружает данные о бине из XML файла. При использовании этой реализации в конструкторе необходимо указать полный адрес конфигурационного файла.
-
-* `ClassPathXmlApplicationContext`. Этот контейнер также получает данные о бине из XML файла. Но в отличие от `FileSystemApplicationContext`, в этом случае необходимо указать относительный адрес конфигурационного файла (*CLASSPATH*).
-
-* `WebXmlApplicationContext`. Эта реализация `ApplicationContext` получает необходимую информацию из веб-приложения.
+* `FileSystemXmlApplicationContext` +
+Этот контейнер загружает данные о бине из XML файла. При использовании этой реализации в конструкторе необходимо указать полный адрес конфигурационного файла.
+* `ClassPathXmlApplicationContext` +
+Этот контейнер также получает данные о бине из XML файла. Но в отличие от `FileSystemApplicationContext`, в этом случае необходимо указать относительный адрес конфигурационного файла (*CLASSPATH*).
+* `WebXmlApplicationContext` +
+Эта реализация `ApplicationContext` получает необходимую информацию из веб-приложения.
 
 _Пример_:
 
-Структура проекта:
-
+.Структура проекта
 image::project-structure2.jpg[Структура проекта]
 
-Класс `Message.java`:
-
+.Класс `Message.java`
 image::class-message2.jpg[Класс Message.java]
 
-Конфигурационный файл `message-bean.xml`:
-
+.Конфигурационный файл `message-bean.xml`
 image::message-bean2.jpg[Конфигурационный файл message-bean.xml]
 
-Класс `MessageRunnerWithBeanFactory.java`:
-
+.Класс `MessageRunnerWithBeanFactory.java`
 image::messagerunner2.jpg[Класс MessageRunnerWithBeanFactory.java]
 
-Результат работы программы:
-
+.Результат работы программы:
 image::result2.jpg[Результат работы]
 
 == Заключение
