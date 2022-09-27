@@ -452,6 +452,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_прочее">1.5. Прочее</a></li>
 </ul>
 </li>
+<li><a href="#_создание_простого_приложения">2. Создание простого приложения</a></li>
 </ul>
 </div>
 </div>
@@ -590,10 +591,107 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_создание_простого_приложения">2. Создание простого приложения</h2>
+<div class="sectionbody">
+<div class="ulist">
+<div class="title">Создание простого приложения с использованием Spring.</div>
+<ul>
+<li>
+<p>Создание проекта</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/create-project-step1.webp" alt="Welcome IDEA window">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/create-project-step2.webp" alt="Project&#8217;s SDK choice">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/create-project-step3.webp" alt="Project&#8217;s name" width="location" height="etc.">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Структура проекта</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/project-structure.webp" alt="Project&#8217;s structure">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Классы приложения<br>
+.<code>SpringHelloWorld.java</code>
+image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/spring-hello-world-runner-java.webp" alt="SpringHelloWorldRunner.java">
+</div>
+<div class="title">Figure 1. <code>SpringHelloWorldRunner.java</code></div>
+</div>
+<div class="paragraph">
+<p>Создание контекста происходит с помощью <strong>API</strong> <code>ClassPathXmlApplicationContext()</code>. Это <strong>API</strong> загружает конфигурационный файл <code>spring-hello-bean.xml</code> и создаёт и инициализирует все <strong>beans</strong> внутри этого файла.</p>
+</div>
+<div class="paragraph">
+<p>Далее следует метод <code>getBean()</code> этого контекста. Этот метод принимает в качестве аргумента <strong>bean ID</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/spring-hello-bean-xml.webp" alt="XML connection for elements">
+</div>
+<div class="title">Figure 2. <code>spring-hello-bean.xml</code></div>
+</div>
+<div class="paragraph">
+<p>Главным звеном этого приложения является именно <em>spring-hello-bean.xml</em>, который, как некая связующая смесь соединяет все компоненты программы в один исправный механизм.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Результат работы программы</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Комбинация клавиш для запуска программы <em>Alt + Shift + F10</em>, после нажатия <em>Enter</em> вывод будет:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/program-result.webp" alt="Result">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Библиотеки автоматически включенные в проект</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/project-librarys.webp" alt="Librarys automatic merged into project">
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-09-23 14:29:28 UTC
+Last updated 2022-09-27 04:12:56 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

@@ -9,3 +9,4 @@
 Wiki for 'Spring'.
 
 include::spring/intro.adoc[leveloffset=1]
+include::spring/create-simple-application.adoc[leveloffset=1]
