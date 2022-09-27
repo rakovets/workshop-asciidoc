@@ -11,24 +11,19 @@ image::spring-by-pivotal.jpg[Spring логотип]
 
 ---
 
-*singleton*
-
+*singleton* +
 Определяет один единственный *bean* для каждого контейнера *Spring IoC* (используется по умолчанию).
 
-*prototype*
-
+*prototype* +
 Позволяет иметь любое количество экземпляров *bean*.
 
-*request*
-
+*request* +
 Создаётся один экземпляр *bean* на каждый HTTP запрос. Касается исключительно `ApplicationContext`.
 
-*session*
-
+*session* +
 Создаётся один экземпляр *bean* на каждую HTTP сессию. Касается исключительно `ApplicationContext`.
 
-*global-session*
-
+*global-session* +
 Создаётся один экземпляр *bean* на каждую глобальную HTTP сессию. Касается исключительно `ApplicationContext`.
 
 ---
