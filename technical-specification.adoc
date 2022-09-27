@@ -20,7 +20,7 @@
 == Задания для реализации
 
 .Задания для реализации
-[options="header", cols="^1,<6,^1"]
+[options="header", cols="^1,<6,^2"]
 |===
 |Number|Page|Status
 |1|https://habr.com/ru/amp/post/551026/|In progress
