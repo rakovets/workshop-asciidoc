@@ -1,15 +1,13 @@
-= Руководство по Spring. Область видимости beans.
+= Область видимости beans.
 :imagesdir: ../assets/img/spring
 
 При определении *bean* в *Spring Framework*, есть возможность объявить область видимости этого компонента.
 
-image::spring-by-pivotal.jpg[Spring логотип]
+image::spring-by-pivotal.webp[Spring логотип]
 
 Например, чтобы Spring возвращал нам один и тот же *bean* при каждом запросе, необходимо выбрать область видимости *singleton*.
 
 В *Spring Framework* имеются пять возможных значений свойства *scope*:
-
----
 
 *singleton* +
 Определяет один единственный *bean* для каждого контейнера *Spring IoC* (используется по умолчанию).
@@ -26,7 +24,6 @@ image::spring-by-pivotal.jpg[Spring логотип]
 *global-session* +
 Создаётся один экземпляр *bean* на каждую глобальную HTTP сессию. Касается исключительно `ApplicationContext`.
 
----
 Рассмотрим *singleton* и *prototype*.
 
 == Singleton
@@ -35,28 +32,27 @@ image::spring-by-pivotal.jpg[Spring логотип]
 
 По умолчанию область видимости устанавливается *singleton*, но можно использовать такую запись:
 
-.XML
 [source, xml]
 ----
 <bean id = "someBean" scope = "singleton">
-<!--some code to configure bean-->
+    <!--some code to configure bean-->
 </bean>
 ----
 
 .Структура программы
-image::singleton-structure.jpg[Структура программы]
+image::singleton-structure.webp[Структура программы]
 
 .Класс `Message.java`
-image::singleton-message.jpg[Класс Message.java]
+image::singleton-message.webp[Класс Message.java]
 
 .Класс `MessageRunner.java`
-image::singleton-message-runner.jpg[Класс MessageRunner.java]
+image::singleton-message-runner.webp[Класс MessageRunner.java]
 
 .Конфигурационный файл message-bean.xml
-image::singleton-message-xml.jpg[Конфигурационный файл message-bean.xml]
+image::singleton-message-xml.webp[Конфигурационный файл message-bean.xml]
 
 .Результат работы программы
-image::singleton-result.jpg[Результат работы программы]
+image::singleton-result.webp[Результат работы программы]
 
 == Prototype
 
@@ -64,27 +60,26 @@ image::singleton-result.jpg[Результат работы программы]
 
 Bean с областью видимости *prototype* можно создать следующим образом:
 
-.XML
 [source, xml]
 ----
 <bean id = "someBean" scope = "prototype">
-<!--some code to configure bean-->
+    <!--some code to configure bean-->
 </bean>
 ----
 
 .Структура проекта
-image::singleton-structure-prototype.jpg[Структура проекта]
+image::prototype-structure.webp[Структура проекта]
 
 .Класс `Message.java`
-image::singleton-message-prototype.jpg[Класс Message.java]
+image::prototype-message.webp[Класс Message.java]
 
 .Класс `MessageRunner.java`
-image::singleton-message-runner-prototype.jpg[Класс MessageRunner.java]
+image::prototype-message-runner.webp[Класс MessageRunner.java]
 
 .Конфигурационный файл message-bean.xml
-image::singleton-message-xml.jpg[Конфигурационный файл message-bean.xml]
+image::prototype-message-bean-xml.webp[Конфигурационный файл message-bean.xml]
 
 .Результат работы программы
-image::singleton-result.jpg[Результат работы программы]
+image::prototype-result.webp[Результат работы программы]
 
 В случае применения *singleton* получим два одинаковых сообщения, так как использовался один и тот же экземпляр *bean*. В то время как при использовании *prototype* получаем во втором сообщении `null`, так как был создан абсолютно новый объект, которому ничего не присваиваем.
