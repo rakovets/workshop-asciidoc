@@ -1,0 +1,39 @@
+= Создание простого приложения
+:images dir: ../assets/img/spring
+
+.Создание простого приложения с использованием Spring.
+* Создание проекта
+
+image::create-project-step1.webp[Welcome IDEA window]
+image::create-project-step2.webp[Project's SDK choice]
+image::create-project-step3.webp[Project's name, location, etc.]
+
+* Структура проекта
+
+image::project-structure.webp[Project's structure]
+
+* Классы приложения +
+.`SpringHelloWorld.java`
+image::spring-hello-world-java.webp[SpringHelloWorld.java]
+
+.`SpringHelloWorldRunner.java`
+image::spring-hello-world-runner-java.webp[SpringHelloWorldRunner.java]
+
+Создание контекста происходит с помощью *API* `ClassPathXmlApplicationContext()`. Это *API* загружает конфигурационный файл `spring-hello-bean.xml` и создаёт и инициализирует все *beans* внутри этого файла.
+
+Далее следует метод `getBean()` этого контекста. Этот метод принимает в качестве аргумента *bean ID*.
+
+.`spring-hello-bean.xml`
+image::spring-hello-bean-xml.webp[XML connection for elements]
+
+Главным звеном этого приложения является именно _spring-hello-bean.xml_, который, как некая связующая смесь соединяет все компоненты программы в один исправный механизм.
+
+* Результат работы программы
+
+Комбинация клавиш для запуска программы _Alt + Shift + F10_, после нажатия _Enter_ вывод будет:
+
+image::program-result.webp[Result]
+
+* Библиотеки автоматически включенные в проект
+
+image::project-librarys.webp[Librarys automatic merged into project]
