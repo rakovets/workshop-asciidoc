@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<title>Spring</title>
+<title>Java</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,37 +435,271 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Spring</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_руководство_по_spring_введение">1. Руководство по Spring. Введение.</a>
-<ul class="sectlevel2">
-<li><a href="#_введение">1.1. Введение</a></li>
-<li><a href="#_внедрение_зависимостей_dependency_injection">1.2. Внедрение зависимостей (Dependency Injection)</a></li>
-<li><a href="#_аспекто_ориентированное_программирование">1.3. Аспекто-ориентированное программирование</a></li>
-<li><a href="#_архитектура_spring_framework">1.4. Архитектура Spring Framework</a></li>
-<li><a href="#_прочее">1.5. Прочее</a></li>
-</ul>
-</li>
-<li><a href="#_создание_простого_приложения">2. Создание простого приложения</a></li>
-</ul>
-</div>
+<h1>Java</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Wiki for 'Spring'.</p>
+<p>Wiki for 'Java'.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_руководство_по_spring_введение">1. Руководство по Spring. Введение.</h2>
+<h2 id="_передача_параметров_по_значению_или_по_ссылке">1. Передача параметров по значению или по ссылке</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_основы">1.1. Основы.</h3>
+<div class="paragraph">
+<p>Данные передаются между методами через параметры. Есть два способа передачи параметров:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Передача по значению</strong> (<strong>by value</strong>).<br>
+Значения фактических параметров копируются. Вызываемый метод создает свою копию значений аргументов и затем ее использует. Поскольку работа ведется с копией, на исходный параметр это никак не влияет.</p>
+</li>
+<li>
+<p><strong>Передача по ссылке</strong> (<strong>by reference</strong>).<br>
+Параметры передаются как ссылка (адрес) на исходную переменную. Вызываемый метод не создает свою копию, а ссылается на исходное значение. Следовательно, изменения, сделанные в вызываемом методе, также будут отражены в исходном значении.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>В Java переменные хранятся следующим образом:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Локальные переменные</strong>, такие как примитивы и ссылки на объекты, создаются в <strong>stack</strong>.</p>
+</li>
+<li>
+<p><strong>Объекты</strong> в <strong>heap</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<strong>Java всегда передает параметры по значению</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/example-parameters-by-value.png" alt="Передача объекта">
+</div>
+<div class="title">Figure 1. Пример передачи примитивов по значению:</div>
+</div>
+<div class="paragraph">
+<p>Поскольку Java передает параметры по значению, метод <code>processData()</code> работает с копией данных. Следовательно, в исходных данных (в методе <code>main()</code>) не произошло никаких изменений.</p>
+</div>
+<div class="paragraph">
+<p>Пример:<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/example-passing-an-object.png" alt="Передача объекта по ссылке">
+</div>
+<div class="title">Figure 2. Передача объекта<br></div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<strong>Java всегда передает параметры по значению</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/example-passing-an-object-by-reference.png" alt="Память stack и heap">
+</div>
+<div class="title">Figure 3. Память stack и heap<br></div>
+</div>
+<div class="paragraph">
+<p>В программе, приведенной выше, список <code>fruits</code> передается методу <code>processData()</code>. Переменная <code>fruitRef</code> — это копия параметра <code>fruit</code>. И <code>fruits</code> и <code>fruitsRef</code> размещаются в стеке. Это две разные ссылки. Но самое интересное заключается в том, что они <strong>указывают на один и тот же объект</strong> в heap. То есть, любое изменение, которое будет внесено с помощью любой из этих ссылок, влияет на объект.</p>
+</div>
+<div class="paragraph">
+<p>Пример:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/example-passing-an-object-by-reference.png" alt="Передача объекта по ссылке">
+</div>
+<div class="title">Figure 4. Передача объекта по ссылке</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/stack-heap-operator-new.png" alt="Память stack и heap">
+</div>
+<div class="title">Figure 5. Память stack и heap</div>
+</div>
+<div class="paragraph">
+<p>В этом случае для изменения ссылки <code>fruitRef</code> используем оператор <code>new</code>. Теперь <code>fruitRef</code> указывает на новый объект, и, следовательно, любые изменения, которые вносим в него, не повлияют на исходный объект списка фруктов.</p>
+</div>
+<div class="paragraph">
+<p>Java всегда передает параметры по значению. Однако необходимо быть осторожными при передаче ссылок на объекты.</p>
+</div>
+<div class="paragraph">
+<p>Вышеприведенная концепция очень важна для правильного решения задач.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_пример_удаление_узла_в_односвязном_списке">1.2. Пример: удаление узла в односвязном списке.</h3>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/deleted-single-linked.png" alt="Удаление узла в связанном списке">
+</div>
+<div class="title">Figure 6. Удаление узла в связанном списке</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">class Node {
+    int data;
+    Node next;
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">class LinkedList {
+    public static void main(String[] args) {
+        Node head = null;
+        head = push(head, 5);
+        head = push(head, 4);
+        head = push(head, 3);
+        head = push(head, 2);
+        head = push(head, 1);
+        System.out.println("Created Linked list is: ");
+        printList(head);
+        // Delete node at position 2
+        deleteNode(head, 2);
+        System.out.println("\nLinked List after Deletion at position 2: ");
+        printList(head);
+    }
+
+    public static Node push(Node head, int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+        return head;
+    }
+
+    public static void deleteNode(Node head, int position) {
+        // List is empty
+        if (head == null) {
+            return;
+        }
+        // If position is 1st, removing head node
+        if (position == 1) {
+            head = head.next;
+            return;
+        }
+        Node prevNode = head;
+        int i = 2;
+        while (prevNode != null &amp;&amp; i != position) {
+            prevNode = prevNode.next;
+            i++;
+        }
+        // When position is more than number of node
+        if (prevNode == null || prevNode.next == null) {
+            return;
+        }
+        prevNode.next = prevNode.next.next;
+    }
+
+    public static void printList(Node head) {
+        Node currNode = head;
+        while (currNode != null) {
+            System.out.print(currNode.data + " ");
+            currNode = currNode.next;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Это решение работает во всех случаях, кроме одного — когда удаляем первый узел (<code>Position = 1</code>).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/java/passing-parameters/stack-heap-deleted-fitst-node.png" alt="Удаление первого узла односвязного списка">
+</div>
+<div class="title">Figure 7. Удаление первого узла односвязного списка</div>
+</div>
+<div class="paragraph">
+<p>Для исправления алгоритма необходимо сделать следующее:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">class LinkedList {
+    public static void main(String[] args) {
+        Node head = null;
+        head = push(head, 5);
+        head = push(head, 4);
+        head = push(head, 3);
+        head = push(head, 2);
+        head = push(head, 1);
+        System.out.println("Created Linked list is: ");
+        printList(head);
+        // Delete node at position 2
+        head = deleteNode(head, 2);
+        System.out.println("\nLinked List after Deletion at position 2: ");
+        printList(head);
+    }
+
+    // ...
+
+    public static Node deleteNode(Node head, int position) {
+        // List is empty
+        if (head == null) {
+            return head;
+        }
+        // If position is 1st, removing head node
+        if (position == 1) {
+            head = head.next;
+            return head;
+        }
+        Node prevNode = head;
+        int i = 2;
+        while (prevNode != null &amp;&amp; i != position) {
+            prevNode = prevNode.next;
+            i++;
+        }
+        // When position is more than number of node
+        if (prevNode == null || prevNode.next == null) {
+            return head;
+        }
+        prevNode.next = prevNode.next.next;
+        return head;
+    }
+
+    // ...
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_руководство_по_spring_введение">2. Руководство по Spring. Введение.</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -473,13 +707,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_введение">1.1. Введение</h3>
+<h3 id="_введение">2.1. Введение</h3>
 <div class="paragraph">
 <p><strong>Spring</strong> один из самых популярных фреймворков для <strong>J2EE</strong>, был разработан в июне 2003 года Родом Джонсоном. С помощью Spring можно разработать любое Java приложение.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_внедрение_зависимостей_dependency_injection">1.2. Внедрение зависимостей (Dependency Injection)</h3>
+<h3 id="_внедрение_зависимостей_dependency_injection">2.2. Внедрение зависимостей (Dependency Injection)</h3>
 <div class="paragraph">
 <p><strong>Dependency Injection</strong> (<strong>DI</strong>) – один из видов <strong>инверсии управления</strong> (<strong>Inversion of Control</strong> – <strong>IoC</strong>). При написании действительно крупных и сложных проектов разработчики сталкиваются с необходимостью делать классы приложения как можно более независимыми друг от друга для возможности повторного использования и unit-тестирования. Именно <strong>DI</strong> устанавливает связи между этими классами, при этом сохраняя их независимость друг от друга.</p>
 </div>
@@ -488,7 +722,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_аспекто_ориентированное_программирование">1.3. Аспекто-ориентированное программирование</h3>
+<h3 id="_аспекто_ориентированное_программирование">2.3. Аспекто-ориентированное программирование</h3>
 <div class="paragraph">
 <p>Другим ключевым компонентом Spring является <strong>Аспекто-ориентированное программирование</strong> (<strong>Aspect oriented programming</strong> – <strong>AOP</strong>). Это функции, которые охватывают несколько узлов приложения, называются <strong>cross-cutting concerns</strong>, и эти <strong>cross-cutting concerns</strong> отделены от непосредственной бизнес-логики приложения.</p>
 </div>
@@ -497,7 +731,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_архитектура_spring_framework">1.4. Архитектура Spring Framework</h3>
+<h3 id="_архитектура_spring_framework">2.4. Архитектура Spring Framework</h3>
 <div class="imageblock">
 <div class="content">
 <img src="../assets/img/spring/spring-framework.jpg" alt="Архитектура Spring Framework">
@@ -565,7 +799,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_прочее">1.5. Прочее</h3>
+<h3 id="_прочее">2.5. Прочее</h3>
 <div class="paragraph">
 <p><strong>Spring</strong> также включает в себя ряд других важных модулей, таких как <strong>AOP</strong>, <strong>Aspects</strong>, <strong>Instrumentation</strong>, <strong>Messaging</strong> и <strong>Test</strong>.</p>
 </div>
@@ -592,7 +826,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_создание_простого_приложения">2. Создание простого приложения</h2>
+<h2 id="_создание_простого_приложения">3. Создание простого приложения</h2>
 <div class="sectionbody">
 <div class="ulist">
 <div class="title">Создание простого приложения с использованием Spring.</div>
@@ -642,7 +876,7 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 <div class="content">
 <img src="../assets/img/spring/spring-hello-world-runner-java.webp" alt="SpringHelloWorldRunner.java">
 </div>
-<div class="title">Figure 1. <code>SpringHelloWorldRunner.java</code></div>
+<div class="title">Figure 8. <code>SpringHelloWorldRunner.java</code></div>
 </div>
 <div class="paragraph">
 <p>Создание контекста происходит с помощью <strong>API</strong> <code>ClassPathXmlApplicationContext()</code>. Это <strong>API</strong> загружает конфигурационный файл <code>spring-hello-bean.xml</code> и создаёт и инициализирует все <strong>beans</strong> внутри этого файла.</p>
@@ -654,7 +888,7 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 <div class="content">
 <img src="../assets/img/spring/spring-hello-bean-xml.webp" alt="XML connection for elements">
 </div>
-<div class="title">Figure 2. <code>spring-hello-bean.xml</code></div>
+<div class="title">Figure 9. <code>spring-hello-bean.xml</code></div>
 </div>
 <div class="paragraph">
 <p>Главным звеном этого приложения является именно <em>spring-hello-bean.xml</em>, который, как некая связующая смесь соединяет все компоненты программы в один исправный механизм.</p>
@@ -691,9 +925,8 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-09-27 04:34:58 UTC
+Last updated 2022-09-30 15:18:05 UTC
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
 </body>
 </html>
