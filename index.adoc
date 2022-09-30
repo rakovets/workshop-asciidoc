@@ -1,22 +1,5 @@
-<<<<<<<<< Temporary merge branch 1
-= Spring
-=========
+= Java
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-= JavaPassingParametrs
->>>>>>>>> Temporary merge branch 2
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -24,12 +7,10 @@
 
 :toc!:
 
-<<<<<<<<< Temporary merge branch 1
-Wiki for 'Spring'.
+Wiki for 'Java'.
+
+include::java/passing-parameters.adoc[leveloffset=1]
 
 include::spring/intro.adoc[leveloffset=1]
-=========
-Wiki for 'JavaPassingParametrs'.
 
-include::JavaPassingParametrs/passing-parametrs.adoc[leveloffset=1]
->>>>>>>>> Temporary merge branch 2
+include::spring/create-simple-application.adoc[leveloffset=1]
