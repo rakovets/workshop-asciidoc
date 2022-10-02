@@ -435,10 +435,32 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Java</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_передача_параметров_по_значению_или_по_ссылке">1. Передача параметров по значению или по ссылке</a>
+<ul class="sectlevel2">
+<li><a href="#_основы">1.1. Основы.</a></li>
+<li><a href="#_пример_удаление_узла_в_односвязном_списке">1.2. Пример: удаление узла в односвязном списке.</a></li>
+</ul>
+</li>
+<li><a href="#_руководство_по_spring_введение">2. Руководство по Spring. Введение.</a>
+<ul class="sectlevel2">
+<li><a href="#_введение">2.1. Введение</a></li>
+<li><a href="#_внедрение_зависимостей_dependency_injection">2.2. Внедрение зависимостей (Dependency Injection)</a></li>
+<li><a href="#_аспекто_ориентированное_программирование">2.3. Аспекто-ориентированное программирование</a></li>
+<li><a href="#_архитектура_spring_framework">2.4. Архитектура Spring Framework</a></li>
+<li><a href="#_прочее">2.5. Прочее</a></li>
+</ul>
+</li>
+<li><a href="#_создание_простого_приложения">3. Создание простого приложения</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -567,7 +589,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">class Node {
+<pre class="prettyprint highlight"><code data-lang="java">class Node {
     int data;
     Node next;
     Node(int d) {
@@ -579,7 +601,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">class LinkedList {
+<pre class="prettyprint highlight"><code data-lang="java">class LinkedList {
     public static void main(String[] args) {
         Node head = null;
         head = push(head, 5);
@@ -649,7 +671,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">class LinkedList {
+<pre class="prettyprint highlight"><code data-lang="java">class LinkedList {
     public static void main(String[] args) {
         Node head = null;
         head = push(head, 5);
@@ -925,8 +947,9 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-09-30 15:18:05 UTC
+Last updated 2022-10-02 06:11:13 UTC
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
 </body>
 </html>
