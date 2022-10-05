@@ -13,7 +13,7 @@
 . *Аннотации Java*
 . *Java код*
 
-image::metadata.jpg[Работа Spring Container]
+image::metadata.webp[Работа Spring Container]
 
 Java *POJO* классы поступает в *Spring Container*, который на основании инструкций, полученных через метаданные, выдаёт приложение, готовое к использованию.
 
@@ -35,19 +35,19 @@ Java *POJO* классы поступает в *Spring Container*, которы�
 _Пример_:
 
 .Структура проекта
-image::project-structure.jpg[Структура проекта]
+image::project-structure.webp[Структура проекта]
 
 .Класс `Message.java`
-image::class-message.jpg[Класс Message.java]
+image::class-message.webp[Класс Message.java]
 
 .Конфигурационный файл `message-bean.xml`
-image::message-bean.jpg[Конфигурационный файл message-bean.xml]
+image::message-bean.webp[Конфигурационный файл message-bean.xml]
 
 .Класс `MessageRunnerWithBeanFactory.java`
-image::messagerunner.jpg[Класс MessageRunnerWithBeanFactory.java]
+image::messagerunner.webp[Класс MessageRunnerWithBeanFactory.java]
 
 .Результат работы программы
-image::result.jpg[Результат работы]
+image::result.webp[Результат работы]
 
 == `ApplicationContext`
 
@@ -65,19 +65,19 @@ image::result.jpg[Результат работы]
 _Пример_:
 
 .Структура проекта
-image::project-structure2.jpg[Структура проекта]
+image::project-structure-2.webp[Структура проекта]
 
 .Класс `Message.java`
-image::class-message2.jpg[Класс Message.java]
+image::class-message-2.webp[Класс Message.java]
 
 .Конфигурационный файл `message-bean.xml`
-image::message-bean2.jpg[Конфигурационный файл message-bean.xml]
+image::message-bean-2.webp[Конфигурационный файл message-bean.xml]
 
 .Класс `MessageRunnerWithBeanFactory.java`
-image::messagerunner2.jpg[Класс MessageRunnerWithBeanFactory.java]
+image::messagerunner-2.webp[Класс MessageRunnerWithBeanFactory.java]
 
 .Результат работы программы:
-image::result2.jpg[Результат работы]
+image::result-2.webp[Результат работы]
 
 == Заключение
 
