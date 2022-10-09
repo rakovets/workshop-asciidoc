@@ -458,7 +458,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_прочее">2.5. Прочее</a></li>
 </ul>
 </li>
-<li><a href="#_создание_простого_приложения">3. Создание простого приложения</a></li>
+<li><a href="#_область_видимости_beans">3. Область видимости beans.</a>
+<ul class="sectlevel2">
+<li><a href="#_singleton">3.1. Singleton</a></li>
+<li><a href="#_prototype">3.2. Prototype</a></li>
+</ul>
+</li>
+<li><a href="#_создание_простого_приложения">4. Создание простого приложения</a></li>
 </ul>
 </div>
 </div>
@@ -848,7 +854,144 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_создание_простого_приложения">3. Создание простого приложения</h2>
+<h2 id="_область_видимости_beans">3. Область видимости beans.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>При определении <strong>bean</strong> в <strong>Spring Framework</strong>, есть возможность объявить область видимости этого компонента.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/spring-by-pivotal.webp" alt="Spring логотип">
+</div>
+</div>
+<div class="paragraph">
+<p>Например, чтобы Spring возвращал нам один и тот же <strong>bean</strong> при каждом запросе, необходимо выбрать область видимости <strong>singleton</strong>.</p>
+</div>
+<div class="paragraph">
+<p>В <strong>Spring Framework</strong> имеются пять возможных значений свойства <strong>scope</strong>:</p>
+</div>
+<div class="paragraph">
+<p><strong>singleton</strong><br>
+Определяет один единственный <strong>bean</strong> для каждого контейнера <strong>Spring IoC</strong> (используется по умолчанию).</p>
+</div>
+<div class="paragraph">
+<p><strong>prototype</strong><br>
+Позволяет иметь любое количество экземпляров <strong>bean</strong>.</p>
+</div>
+<div class="paragraph">
+<p><strong>request</strong><br>
+Создаётся один экземпляр <strong>bean</strong> на каждый HTTP запрос. Касается исключительно <code>ApplicationContext</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>session</strong><br>
+Создаётся один экземпляр <strong>bean</strong> на каждую HTTP сессию. Касается исключительно <code>ApplicationContext</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>global-session</strong><br>
+Создаётся один экземпляр <strong>bean</strong> на каждую глобальную HTTP сессию. Касается исключительно <code>ApplicationContext</code>.</p>
+</div>
+<div class="paragraph">
+<p>Рассмотрим <strong>singleton</strong> и <strong>prototype</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="_singleton">3.1. Singleton</h3>
+<div class="paragraph">
+<p>Если установим свойству scope значение <strong>singleton</strong>, то контейнер <strong>Spring IoC</strong> создаёт только один экземпляр объекта определённого в bean. Этот экземпляр помещается в cache таких же <strong>beans</strong> (<strong>singletons</strong>) и все последующие вызовы bean с таким именем будут возвращать объект из cache.</p>
+</div>
+<div class="paragraph">
+<p>По умолчанию область видимости устанавливается <strong>singleton</strong>, но можно использовать такую запись:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="xml">&lt;bean id = "someBean" scope = "singleton"&gt;
+    &lt;!--some code to configure bean--&gt;
+&lt;/bean&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/singleton-structure.webp" alt="Структура программы">
+</div>
+<div class="title">Figure 8. Структура программы</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/singleton-message.webp" alt="Класс Message.java">
+</div>
+<div class="title">Figure 9. Класс <code>Message.java</code></div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/singleton-message-runner.webp" alt="Класс MessageRunner.java">
+</div>
+<div class="title">Figure 10. Класс <code>MessageRunner.java</code></div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/singleton-message-xml.webp" alt="Конфигурационный файл message-bean.xml">
+</div>
+<div class="title">Figure 11. Конфигурационный файл message-bean.xml</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/singleton-result.webp" alt="Результат работы программы">
+</div>
+<div class="title">Figure 12. Результат работы программы</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prototype">3.2. Prototype</h3>
+<div class="paragraph">
+<p>При присвоении свойству scope значение <strong>prototype</strong>, контейнер <strong>Spring IoC</strong> создаёт новый экземпляр <strong>bean</strong> на каждый полученный запрос.</p>
+</div>
+<div class="paragraph">
+<p>Bean с областью видимости <strong>prototype</strong> можно создать следующим образом:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="xml">&lt;bean id = "someBean" scope = "prototype"&gt;
+    &lt;!--some code to configure bean--&gt;
+&lt;/bean&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/prototype-structure.webp" alt="Структура проекта">
+</div>
+<div class="title">Figure 13. Структура проекта</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/prototype-message.webp" alt="Класс Message.java">
+</div>
+<div class="title">Figure 14. Класс <code>Message.java</code></div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/prototype-message-runner.webp" alt="Класс MessageRunner.java">
+</div>
+<div class="title">Figure 15. Класс <code>MessageRunner.java</code></div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/prototype-message-bean-xml.webp" alt="Конфигурационный файл message-bean.xml">
+</div>
+<div class="title">Figure 16. Конфигурационный файл message-bean.xml</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/img/spring/prototype-result.webp" alt="Результат работы программы">
+</div>
+<div class="title">Figure 17. Результат работы программы</div>
+</div>
+<div class="paragraph">
+<p>В случае применения <strong>singleton</strong> получим два одинаковых сообщения, так как использовался один и тот же экземпляр <strong>bean</strong>. В то время как при использовании <strong>prototype</strong> получаем во втором сообщении <code>null</code>, так как был создан абсолютно новый объект, которому ничего не присваиваем.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_создание_простого_приложения">4. Создание простого приложения</h2>
 <div class="sectionbody">
 <div class="ulist">
 <div class="title">Создание простого приложения с использованием Spring.</div>
@@ -898,7 +1041,7 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 <div class="content">
 <img src="../assets/img/spring/spring-hello-world-runner-java.webp" alt="SpringHelloWorldRunner.java">
 </div>
-<div class="title">Figure 8. <code>SpringHelloWorldRunner.java</code></div>
+<div class="title">Figure 18. <code>SpringHelloWorldRunner.java</code></div>
 </div>
 <div class="paragraph">
 <p>Создание контекста происходит с помощью <strong>API</strong> <code>ClassPathXmlApplicationContext()</code>. Это <strong>API</strong> загружает конфигурационный файл <code>spring-hello-bean.xml</code> и создаёт и инициализирует все <strong>beans</strong> внутри этого файла.</p>
@@ -910,7 +1053,7 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 <div class="content">
 <img src="../assets/img/spring/spring-hello-bean-xml.webp" alt="XML connection for elements">
 </div>
-<div class="title">Figure 9. <code>spring-hello-bean.xml</code></div>
+<div class="title">Figure 19. <code>spring-hello-bean.xml</code></div>
 </div>
 <div class="paragraph">
 <p>Главным звеном этого приложения является именно <em>spring-hello-bean.xml</em>, который, как некая связующая смесь соединяет все компоненты программы в один исправный механизм.</p>
@@ -947,7 +1090,7 @@ image::spring-hello-world-java.webp[SpringHelloWorld.java]</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-10-02 06:11:13 UTC
+Last updated 2022-10-09 15:36:29 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
