@@ -12,4 +12,7 @@ include::java/passing-parameters.adoc[leveloffset=1]
 
 include::spring/intro.adoc[leveloffset=1]
 
+include::spring/spring-bean.adoc[leveloffset=1]
+
 include::spring/create-simple-application.adoc[leveloffset=1]
+
