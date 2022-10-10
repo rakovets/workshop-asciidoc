@@ -1,4 +1,4 @@
-= Spring
+= Java
 :source-highlighter: prettify
 :sectnums:
 :toc: left
@@ -6,11 +6,18 @@
 
 :toc!:
 
-Wiki for 'Spring'.
+Wiki for 'Java'.
 
+include::java/passing-parameters.adoc[leveloffset=1]
 
 include::spring/intro.adoc[leveloffset=1]
 
 include::spring/create-simple-application.adoc[leveloffset=1]
 
 include::spring/ioc-containers.adoc[leveloffset=1]
+
+
+
+include::spring/spring-bean.adoc[leveloffset=1]
+
+
